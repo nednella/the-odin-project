@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Indie+Flower&family=Quicksand:wght@300&display=swap');
+
+body {
+    text-align: center;
+    margin: auto;
+    font-family: 'Quicksand', sans-serif;
+    background-color: rgb(209, 250, 253);
+}
+
+button {
+   
+    color: black;
+    background-color: rgb(245, 245, 245);
+
+    height: 25px;
+    width: 200px;
+    margin-bottom: 10px;
+    border: 1px solid black;
+
+}
+
+.recipe {
+    text-align: justify;
+    width: 60%;
+    margin: auto;
+}
+
+/*.recipe.directions {
+    font-weight: normal;
+}
