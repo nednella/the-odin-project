@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+body {
+    height: 100vh;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        height: 56px;
+        padding: 0 100px;
+        background-color: #1f2937;
+    }
+        .header > * {
+            display: flex;
+            align-items: flex-end;
+        }    
+
+        .h-logo {
+            color: #F9FAF8;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .right-links {
+            list-style-type: none;
+            gap: 25px;
+            margin: 0;
+            pad: 0;
+        }
+
+            a {
+                text-decoration: none;
+                color: #e5e7eb;
+                font-size: 18px;
+            }
+    
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        flex: 1;
+    }
+
+        .content > * {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+        }
+
+        .hero {
+            color: white;
+            background-color: #1f2937;
+        }
+
+        .info {  
+            color: #1f2937;
+            background-color: white;
+        }
+
+        .quotes {
+            color: #1f2937;
+            background-color: #e5e7eb;
+        }
+
+        .signup {
+            flex-grow: 0.75;
+            color: #1f2937;
+            background-color: white;
+        }
+
+
+    .footer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 56px;
+        padding-top: 4px;
+        padding-bottom: 12px;
+        color: white;
+        background-color: #1f2937;
+        font-size: 18px;
+    }
