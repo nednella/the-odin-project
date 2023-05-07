@@ -8,3 +8,7 @@ Create a webpage from a design provided by TOP in the form of 2 .png files
 
 These images can be found in the ./spec directory
 
+Played around with Flexbox and other CSS properties. Overall quite productive.
+
+Live site: https://benallenden.github.io/odin-landingpage/
+
