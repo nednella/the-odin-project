@@ -1,0 +1,56 @@
+<script>
+    // returns a random int between 1 and max
+    function getRandInt(max) {
+        return Math.floor(Math.random() * max) + 1;         
+    }
+    
+    function getComputerChoice() {
+        let choice = getRandInt(3)
+        if (choice == 1) {
+            return "Rock"
+        } else if (choice == 2) {
+            return "Paper"
+        } else {
+            return "Scissors"
+        }
+    }
+    
+    // returns a message along with: 3 if player wins, 2 if computer wins, 1 if tie, 0 if error
+    function playRound(playerSelection) {
+        const computerSelection = getComputerChoice()
+        
+
+        const msgWin = `You Win! ${playerSelection} beats ${computerSelection}`
+        const msgLose = `You Lose! ${computerSelection} beats ${playerSelection}`
+        const msgTie = "Tie!"
+        const msgError = "Error"
+
+        if (playerSelection == "Rock") {
+            if (computerSelection == "Scissors") {
+                return [msgWin, 3]
+            } else if (computerSelection == "Paper") {
+                return [msgLose, 2]
+            } else {
+                return [msgTie, 1]
+            }
+        } else if (playerSelection == "Paper") {
+            if (computerSelection == "Rock") {
+                return [msgWin, 3]
+            } else if (computerSelection == "Scissors") {
+                return [msgLose, 2]
+            } else {
+                return [msgTie, 1]
+            }
+        } else if (playerSelection == "Scissors") {
+            if (computerSelection == "Paper") {
+                return [msgWin, 3]
+            } else if (computerSelection == "Rock") {
+                return [msgLose, 2]
+            } else {
+                return [msgTie, 1]
+            }
+        } else {
+            return [msgError, 0]
+        }
+    }   
+</script>
