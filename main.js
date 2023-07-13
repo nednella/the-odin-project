@@ -46,7 +46,6 @@ function playRound(playerSelection) {
 
     } else if (playerSelection == computerSelection) {
         roundResult = msgTie
-        tieCount++
 
     } else {
         roundResult = msgLose
