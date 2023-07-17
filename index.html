@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="styles.css">
+        <script src="script.js" defer></script>
+        <title>Etch-a-Sketch</title>
+    </head>
+    <body>
+        <header>
+            <h1>Etch-a-Sketch</h1>
+            <h3>A TOP Project</h3>
+        </header>
+        <main>
+            <div id="settings">
+                <div id="colourHeader">Colour Selector</div>
+                <input id="colourSelector" type="color" value="#000000">
+                <button id="btn-grab">Colour Grabber</button>
+                <button id="btn-fill">Colour Fill</button>
+
+                <button id="btn-colour">Toggle Paint</button>
+                <button id="btn-shader">Toggle Shader</button>
+                <button id="btn-brighten">Toggle Brighten</button>
+                <button id="btn-eraser">Toggle Eraser</button>
+                
+                <div id="sizeHeader">16 x 16</div>
+                <input id="sizeSelector" type="range" value="16" min="1" max="100">
+
+                <button id="btn-gridlines">Toggle Grid Lines</button>
+                <button id="btn-reset">Reset</button>
+            </div>
+            <div id="grid"></div>
+        </main>
+        <footer>
+            benallenden
+        </footer>
+    </body>
+</html>
