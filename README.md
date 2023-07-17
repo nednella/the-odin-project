@@ -1,4 +1,5 @@
 # odin-landingpage
+The Odin Project: Foundations
 
 Project Outline:
 
@@ -8,7 +9,8 @@ Create a webpage from a design provided by TOP in the form of 2 .png files
 
 These images can be found in the ./spec directory
 
-Played around with Flexbox and other CSS properties. Overall quite productive.
+Based on the lesson(s):
+
+1. https://www.theodinproject.com/lessons/foundations-landing-page
 
 Live site: https://benallenden.github.io/odin-landingpage/
-
