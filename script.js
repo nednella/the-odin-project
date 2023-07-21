@@ -55,36 +55,36 @@ function elementAdjust(rgb, adjustConstant) {
 
 // DOM nodes
 // titles
-const gridSize = document.getElementById('gridSize')                    // complete
+const gridSize = document.getElementById('gridSize')
 // selectors
-const selectorColour = document.getElementById('colourSelector')        // complete
-const selectorSize = document.getElementById('sizeSelector')            // complete
+const selectorColour = document.getElementById('colourSelector')
+const selectorSize = document.getElementById('sizeSelector')
 // modes
-const btnGrab = document.getElementById('btn-grab')                     // complete
-const btnFill = document.getElementById('btn-fill')                     // complete
-const btnShade = document.getElementById('btn-shade')                   // complete
-const btnBright = document.getElementById('btn-bright')                 // complete
-const btnErase = document.getElementById('btn-erase')                   // complete
+const btnGrab = document.getElementById('btn-grab')
+const btnFill = document.getElementById('btn-fill')
+const btnShade = document.getElementById('btn-shade')
+const btnBright = document.getElementById('btn-bright')
+const btnErase = document.getElementById('btn-erase')
 // misc
-const btnGridlines = document.getElementById('btn-gridlines')           // complete
-const btnReset = document.getElementById('btn-reset')                   // complete
+const btnGridlines = document.getElementById('btn-gridlines')
+const btnReset = document.getElementById('btn-reset')
 
 
 
 // event handling
 // selectors
-selectorColour.oninput = (e) => updateCurrentColour(e.target.value)     // complete
-selectorSize.onmousemove = (e) => updateGridSizeUI(e.target.value)      // complete
-selectorSize.onchange = (e) => updateGrid(e.target.value)               // complete
+selectorColour.oninput = (e) => updateCurrentColour(e.target.value)
+selectorSize.onmousemove = (e) => updateGridSizeUI(e.target.value)
+selectorSize.onchange = (e) => updateGrid(e.target.value)
 // modes
-btnGrab.onclick = (e) => updateCurrentMode(btnGrab.value)               // complete
-btnFill.onclick = (e) => updateCurrentMode(btnFill.value)               // complete
-btnShade.onclick = (e) => updateCurrentMode(btnShade.value)             // complete
-btnBright.onclick = (e) => updateCurrentMode(btnBright.value)           // complete
-btnErase.onclick = (e) => updateCurrentMode(btnErase.value)             // complete
+btnGrab.onclick = (e) => updateCurrentMode(btnGrab.value)
+btnFill.onclick = (e) => updateCurrentMode(btnFill.value)
+btnShade.onclick = (e) => updateCurrentMode(btnShade.value)
+btnBright.onclick = (e) => updateCurrentMode(btnBright.value)
+btnErase.onclick = (e) => updateCurrentMode(btnErase.value)
 // misc
-btnGridlines.onclick = () => toggleGridlines()                          // complete
-btnReset.onclick = () => resetGrid()                                    // complete
+btnGridlines.onclick = () => toggleGridlines()
+btnReset.onclick = () => resetGrid()
 
 
 
@@ -188,16 +188,3 @@ function drawClick(e) {
 window.onload = () => {
     createGrid(DEFAULT_SIZE)
 }
-
-// test img pikachu 51x51, 41 wide 49 tall, 51x51 and add 5 extra to each side, 2nd col 1 black spot far left ref point, 26 from bottom on 51x51
-// rgb colours
-// red 255 0 0
-// yellow 255 255 0
-// pink 255 153 153
-// grey 192 192 192
-// brown 153 51 0
-// yellow shadow 255 204 0
-// yellow highlight 255 255 102
-
-
-
