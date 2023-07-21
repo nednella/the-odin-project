@@ -5,28 +5,32 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="styles.css">
+        <script
+            src="https://kit.fontawesome.com/4c536a6bd5.js"
+            crossorigin="anonymous"
+        ></script>
         <script src="script.js" defer></script>
-        <title>Etch-a-Sketch</title>
+        <title>Digi-Sketch</title>
+        
     </head>
     <body>
         <header>
-            <h1>Etch-a-Sketch</h1>
+            <p>DIGI - SKETCH</p>
             <h3>A TOP Project</h3>
         </header>
         <main>
             <div id="settings">
                 <div id="colourHeader">Colour Selector</div>
                 <input id="colourSelector" type="color" value="#000000">
-                <button id="btn-grab">Colour Grabber</button>
-                <button id="btn-fill">Colour Fill</button>
 
-                <button id="btn-colour">Toggle Paint</button>
-                <button id="btn-shader">Toggle Shader</button>
-                <button id="btn-brighten">Toggle Brighten</button>
-                <button id="btn-eraser">Toggle Eraser</button>
+                <button id="btn-grab" value="grab">Colour Grabber</button>
+                <button id="btn-fill" value="fill">Colour Fill</button>
+                <button id="btn-shade" value="shade">Toggle Shader</button>
+                <button id="btn-bright" value="bright">Toggle Brighten</button>
+                <button id="btn-erase" value="erase">Toggle Eraser</button>
                 
-                <div id="sizeHeader">16 x 16</div>
-                <input id="sizeSelector" type="range" value="16" min="1" max="100">
+                <div id="gridSize">16 x 16</div>
+                <input id="sizeSelector" type="range" value="16" min="1" max="80">
 
                 <button id="btn-gridlines">Toggle Grid Lines</button>
                 <button id="btn-reset">Reset</button>
@@ -34,7 +38,10 @@
             <div id="grid"></div>
         </main>
         <footer>
-            benallenden
+            <p>benallenden</p>
+            <a href="https://github.com/benallenden" target="_blank">
+                <i class="fab fa-github"></i>
+            </a> 
         </footer>
     </body>
 </html>

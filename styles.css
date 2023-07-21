@@ -1,14 +1,24 @@
 /* CSS */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-/* https://www.dafont.com/game-over.font */
-
-
+@font-face {
+    font-family: 'gameover';
+    src: url('./static/game_over.woff') format('woff');
+  }
 
 :root {
-    --light-colour: #ebebeb;
-    --dark-colour: #434343;
+    --primary-colour: #434343;
+    --secondary-colour: #dddddd;
+    --font-colour: ;
+    --background-colour: ;
 }
+
+/* :root-dark {
+    --primary-colour: #E6E6E6;
+    --secondary-colour: #CDCDCD;
+    --font-colour: white;
+    --background-colour: #0B182B;
+} */
 
 body {
     height: 100vh;
@@ -16,8 +26,8 @@ body {
     font-family: 'Roboto', sans-serif;
     display: flex;
     flex-direction: column;
-    color:var(--dark-colour);
-    background-color: var(--light-colour);
+    color: var(--primary-colour);
+    background-color: var(--secondary-colour);
 }
 
 header {
@@ -26,21 +36,25 @@ header {
     align-items: center;
     justify-content: space-between;
     padding-bottom: 60px;
+    
 }
 
-    header h1 {
-        font-size: 72px;
+    header p {
+        font-family: 'gameover';
+        font-size: 150px;
+        margin: 0;
+        margin-top: 24px;
     }
 
     header h3 {
-        margin-top: -48px;
+        font-size: 16px;
     }
 
 main {
     display: flex;
     justify-content: center;
     gap: 90px;
-    padding-bottom: 300px;
+    padding-bottom: 160px;
 }
 
     #settings {
@@ -69,19 +83,19 @@ main {
             margin-bottom: 36px;
         }
 
-        #btn-colour {
+        #btn-draw {
             margin-bottom: 6px;
         }
 
-        #btn-shader {
+        #btn-shade {
             margin-bottom: 6px;
         }
 
-        #btn-brighten {
+        #btn-bright {
             margin-bottom: 6px;
         }
 
-        #btn-eraser {
+        #btn-erase {
             margin-bottom: 36px;
         }
 
@@ -104,12 +118,36 @@ main {
         height: 600px;
         background-color: white;
         box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 15px;
+        cursor: crosshair;
     }
 
 footer {
     display: flex;
     justify-content: center;
 }
+
+    footer p {
+        cursor: default;
+        user-select: none;
+    }
+
+    footer a {
+        padding-top: 12px;
+        margin-left: 6px;
+        text-decoration: none;
+        color: black;
+        
+    }
+
+    .fa-github {
+        color: var(--primary-dark);
+        font-size: 24px;
+        transition: transform 0.3s ease-in-out;
+      }
+      
+      .fa-github:hover {
+        transform: rotate(360deg) scale(1.1);
+      }
 
 
 
@@ -128,7 +166,7 @@ input, button {
 button {
     background-color: whitesmoke;
     padding: 8px 0;
-    border: 1px solid var(--dark-colour);
+    border: 1px solid var(--primary-colour);
     border-radius: 6px; 
 }
 
@@ -137,9 +175,22 @@ input[type='color']:hover {
   transform: scale(1.02);
 }
 
-button:active {
-    background-color: var(--primary-dark);
-    color: var(--primary-light);
+.active {
+    background-color: var(--primary-colour);
+    color: var(--secondary-colour);
+}
+
+.border-left {
+    border-right: 1px solid rgb(156, 156, 156);
+}
+
+.border-top {
+    border-bottom: 1px solid rgb(156, 156, 156);
+}
+
+.border-top-left {
+    border-top: 1px solid rgb(156, 156, 156);
+    border-left: 1px solid rgb(156, 156, 156);
 }
 
 input[type='color']::-webkit-color-swatch-wrapper {
@@ -152,20 +203,17 @@ input[type='color']::-webkit-color-swatch {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 5px 15px;
 }
 
-
-
-
-
-/* input[type='range'] {
+input[type='range'] {
     -webkit-appearance: none;
-    background-color: var(--light-colour);
+    background-color: var(--secondary-colour);
 }
   
 input[type='range']::-webkit-slider-runnable-track {
     height: 0px;
-    border: 1px solid var(--dark-colour);
+    border: 1px solid var(--primary-colour);
     border-radius: 25px;
-    background: var(--light-colour);
+    margin-top: 10px;
+    background: var(--secondary-colour);
 }
   
 input[type='range']::-webkit-slider-thumb {
@@ -174,5 +222,6 @@ input[type='range']::-webkit-slider-thumb {
     height: 20px;
     border-radius: 50%;
     margin-top: -9px;
-    background: var(--dark-colour);
-} */
+    background: var(--primary-colour);
+}
+
