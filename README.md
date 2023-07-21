@@ -8,4 +8,4 @@ Based on the lesson(s):
 
 Live at: https://benallenden.github.io/odin-etchasketch/
 
-![demo](https://github.com/benallenden/odin-etchasketch/assets/119449811/c6e70e36-9335-49c4-9d3f-2a55a1a7c3bd)
+![demo](https://github.com/benallenden/odin-etchasketch/assets/119449811/14b4e87b-3f2e-40b3-9552-45ac9add0a38)
