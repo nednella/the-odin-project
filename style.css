@@ -59,7 +59,6 @@ body {
                 justify-content: flex-end;
                 margin: 20px 0;
             }
-
             .calculator form .display input {
                 flex: 1;
                 font-size: 44px;
@@ -72,6 +71,7 @@ body {
             /* calculator buttons */
             .calculator form input {
                 border: 0;
+                outline: 0;
                 margin: 2px 0;
                 width: 80px;
                 height: 60px;
@@ -81,18 +81,29 @@ body {
                 cursor: pointer;
             }
 
+            /* calculator button colouring */
             .calculator form input.numpad {
                 background-color: var(--numpad);
             }
-
             .calculator form input.accent {
             background-color: var(--numpad-accent); 
             }
-            
             .calculator form input.equal {
                 width: 164px;
                 color: black;
                 background-color: var(--numpad-equal);
+            }
+
+            /* calculator button hover colouring */
+            input[type="button"].numpad:hover {
+                background-color: var(--numpad-accent);
+                
+            }
+            input[type="button"].accent:hover {
+                background-color: var(--numpad);
+            }
+            input[type="button"].equal:hover {
+                background-color: #dde9fccc;
             }
 
 
