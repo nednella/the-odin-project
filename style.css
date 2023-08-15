@@ -2,11 +2,18 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://fonts.gstatic.com/s/materialicons/v140/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
+    }  
+
 :root {
     --font-colour: white;
     --numpad: #505a69;
     --numpad-accent: #2f3846;
-    --numpad-equal: #dde9fc;
+    --numpad-equal: #e0e7f3;
     --calculator-bg: #1b2027;
     --bg-colour: #c9c9c9;
 }
@@ -22,13 +29,13 @@ body {
     justify-content: center; /* CHANGE THIS TO SPACE-BETWEEN WITH HEADER AND FOOTER */
     align-items: center;
     background-color: var(--bg-colour);
-}
+    }
 
     header {
         display: flex;
         flex-direction: column;
         align-items: center;    
-    }
+        }
 
         header h1 {
             font-size: 30px;
@@ -42,75 +49,88 @@ body {
         }
 
 
-    main {
-        
-    }
-
-
-        .calculator {
-            color: var(--font-colour);
-            background-color: var(--calculator-bg);
-            padding: 24px 12px;
-            border-radius: 8px;
+    .calculator {
+        color: var(--font-colour);
+        background-color: var(--calculator-bg);
+        padding: 24px 8px 8px 8px;
+        /* border-radius: 8px; */
         }
-            /* calculator display */
-            .calculator form .display {
-                display: flex;
-                justify-content: flex-end;
-                margin: 20px 0;
-            }
-            .calculator form .display input {
-                flex: 1;
-                font-size: 44px;
-                text-align: right;
-                background-color: transparent;
-                background-color: white;
 
-            }
+        /* calculator display */
+        .calculator .display > * {
+            display: flex;
+            justify-content: flex-end;
+            flex: 1;
+        }
+        .calculator .display .previous {
+            height: 36px;
+            margin-bottom: -12px;
+            font-size: 20px;
+            color:grey;
+            text-align: right;
+        }
+    
+        .calculator .display .current {
+            margin-bottom: 40px;
+            font-size: 44px;
+            text-align: right;
+        }
+        
 
-            /* calculator buttons */
-            .calculator form input {
-                border: 0;
-                outline: 0;
-                margin: 2px 0;
-                width: 80px;
-                height: 60px;
-                border-radius: 4px;
-                /* font-size: 16px; */
-                color: var(--font-colour);
-                cursor: pointer;
-            }
+        /* calculator buttons */
+        .calculator .keys button {
+            border: 0;
+            outline: 0;
+            margin: 2px 0;
+            width: 70px;
+            height: 46px;
+            border-radius: 4px;
+            font-size: 18px;
+            font-weight: 100;
+            color: var(--font-colour);
+            cursor: pointer;
+        }
+        /* backspace */
+        .calculator .keys .material-icons {
+            font-family: 'Material Icons';
+            font-size: 22px;
+        }
+        /* fixes button alignment issue on exponent and backspace*/
+        .calculator .keys 
+        #exponent, .material-icons {
+            vertical-align: bottom; 
+        }
 
-            /* calculator button colouring */
-            .calculator form input.numpad {
-                background-color: var(--numpad);
-            }
-            .calculator form input.accent {
-            background-color: var(--numpad-accent); 
-            }
-            .calculator form input.equal {
-                width: 164px;
-                color: black;
-                background-color: var(--numpad-equal);
-            }
+        /* calculator button colouring */
+        .calculator .keys button.numpad {
+            background-color: var(--numpad);
+        }
+        .calculator .keys button.operator {
+        background-color: var(--numpad-accent); 
+        }
+        .calculator .keys button.equal {
+            width: 144px;
+            color: black;
+            background-color: var(--numpad-equal);
+        }
 
-            /* calculator button hover colouring */
-            input[type="button"].numpad:hover {
-                background-color: var(--numpad-accent);
-                
-            }
-            input[type="button"].accent:hover {
-                background-color: var(--numpad);
-            }
-            input[type="button"].equal:hover {
-                background-color: #dde9fccc;
-            }
+        /* calculator button hover colouring */
+        button[type="button"].numpad:hover {
+            background-color: var(--numpad-accent);
+            
+        }
+        button[type="button"].operator:hover {
+            background-color: var(--numpad);
+        }
+        button[type="button"].equal:hover {
+            background-color: #dde9fccc;
+        }
 
 
     footer {
         display: flex;
         justify-content: center;
-    }
+        }
     
         footer p {
             cursor: default;
@@ -126,7 +146,6 @@ body {
         }
     
         .fa-github {
-            color: var(--primary-dark);
             font-size: 24px;
             transition: transform 0.3s ease-in-out;
             }

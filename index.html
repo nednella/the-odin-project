@@ -11,7 +11,6 @@
             src="https://kit.fontawesome.com/4c536a6bd5.js"
             crossorigin="anonymous"
         ></script>
-    </head>
     <body>
         <!-- <header>
             <h1>CALCULATOR</h1>
@@ -20,46 +19,47 @@
         <main>
             <div class="container">
                 <div class="calculator">
-                    <form>
-                        <div class="display">
-                            <input type="text" name="display" readonly>
+                    <div class="display">
+                        <div class="previous">123 +</div>
+                        <div class="current">456</div>
+                    </div>
+                    <div class="keys">
+                        <div>
+                            <button type="button" class="operator" id="brackets">( )</button>
+                            <button type="button" class="operator" id="clear">C</button>
+                            <button type="button" class="operator" id="clear-entry">CE</button>
+                            <button type="button" class="operator material-icons" id="backspace">backspace</button>
                         </div>
                         <div>
-                            <input type="button" value="AC" class="accent">
-                            <input type="button" value="CE" class="accent">
-                            <input type="button" value="C" class="accent">
-                            <input type="button" value="BKSPC" class="accent">
+                            <button type="button" class="operator" id="exponent"><span>x<sup>y</sup></span></button>
+                            <button type="button" class="operator" id="root">√x</button>
+                            <button type="button" class="operator" id="factorial">x!</button>
+                            <button type="button" class="operator" id="divide">&divide;</button>
                         </div>
                         <div>
-                            <input type="button" value="1/x" class="accent">
-                            <input type="button" value="x&#178" class="accent">
-                            <input type="button" value="√x" class="accent">
-                            <input type="button" value="÷" class="accent">
+                            <button type="button" class="numpad" id="7">7</button>
+                            <button type="button" class="numpad" id="8">8</button>
+                            <button type="button" class="numpad" id="9">9</button>
+                            <button type="button" class="operator" id="multiply">&#215;</button>
                         </div>
                         <div>
-                            <input type="button" value="7" class="numpad">
-                            <input type="button" value="8" class="numpad">
-                            <input type="button" value="9" class="numpad">
-                            <input type="button" value="×" class="accent">
+                            <button type="button" class="numpad" id="4">4</button>
+                            <button type="button" class="numpad" id="5">5</button>
+                            <button type="button" class="numpad" id="6">6</button>
+                            <button type="button" class="operator" id="plus">&plus;</button>
                         </div>
                         <div>
-                            <input type="button" value="4" class="numpad">
-                            <input type="button" value="5" class="numpad">
-                            <input type="button" value="6" class="numpad">
-                            <input type="button" value="-" class="accent">
+                            <button type="button" class="numpad" id="1">1</button>
+                            <button type="button" class="numpad" id="2">2</button>
+                            <button type="button" class="numpad" id="3">3</button>
+                            <button type="button" class="operator" id="minus">&minus;</button>
                         </div>
                         <div>
-                            <input type="button" value="1" class="numpad">
-                            <input type="button" value="2" class="numpad">
-                            <input type="button" value="3" class="numpad">
-                            <input type="button" value="+" class="accent">
+                            <button type="button" class="numpad" id="0">0</button>
+                            <button type="button" class="numpad" id="period">.</button>
+                            <button type="button" class="operator equal" id="equals">&equals;</button>
                         </div>
-                        <div>
-                            <input type="button" value="0" class="numpad">
-                            <input type="button" value="." class="numpad">
-                            <input type="button" value="=" class="equal">
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </main>
