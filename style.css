@@ -62,7 +62,7 @@ body {
             justify-content: flex-end;
             flex: 1;
         }
-        .calculator .display .output {
+        .calculator .display .previous {
             height: 36px;
             margin-bottom: -12px;
             font-size: 20px;
@@ -70,7 +70,7 @@ body {
             text-align: right;
         }
     
-        .calculator .display .input {
+        .calculator .display .current {
             height: 56px;
             margin-bottom: 40px;
             font-size: 44px;
@@ -84,7 +84,7 @@ body {
             outline: 0;
             margin: 2px 0;
             width: 70px;
-            height: 46px;
+            height: 44px;
             border-radius: 4px;
             font-size: 18px;
             font-weight: 100;
@@ -96,9 +96,9 @@ body {
             font-family: 'Material Icons';
             font-size: 22px;
         }
-        /* fixes button alignment issue on exponent and backspace*/
+        /* fixes button alignment issue on power and backspace */
         .calculator .keys 
-        #exponent, .material-icons {
+        #power, .material-icons {
             vertical-align: bottom; 
         }
 
