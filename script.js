@@ -116,7 +116,7 @@ function setOperation(value) {
     // filter out invalid operations
     if (currentVal == 'Invalid Input' || currentVal == 'NaN' || currentVal == 'undefined') {
         updateDisplay()
-        currentVal = ''
+        reset()
         return
     }
     currentOperator = value
@@ -216,23 +216,23 @@ function updateDisplay() {
         switch(currentOperator) {
             case 'percentage':
                 displayPrevious.textContent = `${previousVal}${getSymbol(currentOperator)} ${getSymbol('multiply')} ${currentVal} =`
-                displayCurrent.textContent = sumVal
+                displayCurrent.textContent = tidyDisplay(sumVal)
                 break
 
             case 'root':
                 displayPrevious.textContent = `${getSymbol(currentOperator)}${currentVal} =`
-                displayCurrent.textContent = sumVal
+                displayCurrent.textContent = tidyDisplay(sumVal)
                 break
 
             case 'factorial':
                 displayPrevious.textContent = `${currentVal}${getSymbol(currentOperator)} =`
-                displayCurrent.textContent = sumVal
+                displayCurrent.textContent = tidyDisplay(sumVal)
                 break
             
             default:
                 console.log("display activation here")
                 displayPrevious.textContent = `${previousVal} ${getSymbol(currentOperator)} ${currentVal} =`
-                displayCurrent.textContent = sumVal
+                displayCurrent.textContent = tidyDisplay(sumVal)
         }
         return
     }
@@ -253,8 +253,10 @@ function updateDisplay() {
 
     //TODO: add tidyDisplay() function to 'currentVal' outputs and limit the number of values
     // displays currentVal
-    displayCurrent.textContent = currentVal
+    displayCurrent.textContent = tidyDisplay(currentVal)
 }
+
+
 
 function clearDisplay() {
     previousVal = ''
@@ -271,6 +273,28 @@ function resetCurrentDisplay() {
     updateDisplay()
 }
 
-function tidyDisplay() {
+function tidyDisplay(value) {
+    let displayString = value.toString()
+    let integerString = displayString.split('.')[0]
+    let decimalString = displayString.split('.')[1]
 
+    let integerNum = parseFloat(integerString)
+    integerString = integerNum.toLocaleString('en').toString()
+
+    // display hard limit of 10 decimal places (does not limit the stored value)
+    if (decimalString !== undefined) {
+        decimalString = decimalString.substring(0, 10)   
+    }
+
+    if (decimalString !== undefined) {
+        return `${integerString}.${decimalString}`
+    } else return integerString
+}
+
+function reset() {
+    previousVal = ''
+    currentVal = '0'
+    sumVal = ''
+    currentOperator = null
+    forceSum = false
 }
