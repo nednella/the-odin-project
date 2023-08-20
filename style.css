@@ -24,6 +24,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
+    
     display: flex;
     flex-direction: column;
     justify-content: center; /* CHANGE THIS TO SPACE-BETWEEN WITH HEADER AND FOOTER */
@@ -61,22 +62,31 @@ body {
             display: flex;
             justify-content: flex-end;
             flex: 1;
+            font-weight: 300;
+            text-align: right;
+            overflow-wrap: break-word;
+            word-break: break-all;
         }
         .calculator .display .previous {
-            height: 36px;
+            min-height: 36px;
+            width: 290px;
             margin-bottom: -12px;
-            font-size: 20px;
+            font-size: 18px;
             color:grey;
-            text-align: right;
         }
     
         .calculator .display .current {
-            height: 56px;
-            margin-bottom: 40px;
-            font-size: 44px;
-            text-align: right;
+            min-height: 56px;
+            width: 290px;
+            /* margin-bottom: 40px; */
+            font-size: 40px;
         }
-        
+        .calculator .display .error {
+            height: 24px;
+            width: 290px;
+            margin-bottom: 20px;
+            color:grey;
+        }
 
         /* calculator buttons */
         .calculator .keys button {
@@ -87,7 +97,8 @@ body {
             height: 44px;
             border-radius: 4px;
             font-size: 18px;
-            font-weight: 100;
+            font-family: inherit;
+            font-weight: 300;
             color: var(--font-colour);
             cursor: pointer;
         }

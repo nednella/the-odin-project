@@ -5,11 +5,13 @@ let previousVal = ''
 let currentVal = '0'
 let sumVal = ''
 let currentOperator = null
+let currentError = null
 let forceSum = false
 
 // DOM nodes
 const displayPrevious = document.querySelector('.display .previous')    // partial complete - tidyDisplay() on any displayed values required
 const displayCurrent = document.querySelector('.display .current')      // partial complete - tidyDisplay() on any displayed values required
+const displayError = document.querySelector('.display .error')           //
 
 const keyBtns = document.querySelectorAll('button.key')                 // complete
 const operatorBtns = document.querySelectorAll('button.operator')       // complete
@@ -42,7 +44,6 @@ equalBtn.addEventListener('click', () => {
 function appendKey(value) {
     if (value == '.' && currentVal.includes('.')) return
     if (sumVal !== '') {            // enables fresh calculation if sum has been produced via '=' (via forceSum)
-        console.log("triggered")
         currentVal = value
         sumVal = ''
     } else if ((value == '.' && currentVal == '0') || currentVal !== '0') {
@@ -162,22 +163,29 @@ function compute(operator, a, b) {
 
     switch(operator) {
         case 'percentage':
-            return (a / 100) * b                                        // 'a'% of 'b'
+            return (a / 100) * b                    // 'a'% of 'b'
 
         case 'power':
             return Math.pow(a, b)
 
         case 'root':
-            if (b < 0) return 'Invalid Input'                           // rejects non-positive values
+            if (b < 0) {
+                setError('root')
+                return 'Invalid Input'              // rejects non-positive values
+            }
             else return Math.sqrt(b)
 
         case 'factorial':
-            if (b < 0 || !Number.isInteger(b))  return 'Invalid Input'  // only accepts positive integers
+            if (b < 0 || !Number.isInteger(b)) {
+                setError('factorial')
+                return 'Invalid Input'              // only accepts positive integers
+            }
             else return factorial(b)
 
         case 'divide':
             if (b == 0) {
-                return 'Invalid Input'                                  // rejects divison by 0
+                setError('divide')
+                return 'Invalid Input'              // rejects divison by 0
             } else return a / b
 
         case 'multiply':
@@ -208,7 +216,14 @@ function updateDisplay() {
     console.log("prev: " + previousVal)
     console.log("curr: " + currentVal)
     console.log("sum: " + sumVal)
+    console.log("error: " + currentError)
     console.log("------------------------")
+
+    // displays currentError
+    if (currentError !== null) {
+        displayError.textContent = currentError
+        currentError = null
+    } else displayError.textContent = ''
     
     //TODO: add tidyDisplay() function to 'previousVal' outputs and limit the number of values + decimals
     // prints out full calculation along with the result if 'forceSum' is true
@@ -230,14 +245,13 @@ function updateDisplay() {
                 break
             
             default:
-                console.log("display activation here")
                 displayPrevious.textContent = `${previousVal} ${getSymbol(currentOperator)} ${currentVal} =`
                 displayCurrent.textContent = tidyDisplay(sumVal)
         }
-        return
+        return // force a return so that the below code does not execute and re-write any printed results
     }
 
-    // displays continuation of calculation if additional operators are selected
+    // displays continuation of calculation if additional operators are selected and forceSum = false
     if (currentOperator !== null) {
         switch(currentOperator) {
             case 'percentage':
@@ -248,7 +262,6 @@ function updateDisplay() {
                 displayPrevious.textContent = `${previousVal} ${getSymbol(currentOperator)}`
                 break
         }
-        
     } else displayPrevious.textContent = previousVal
 
     // displays currentVal
@@ -270,6 +283,22 @@ function resetCurrentDisplay() {
     updateDisplay()
 }
 
+function setError(value) {
+    switch (value) {
+        case 'root':
+            currentError = 'Root value must be positive'
+            return
+
+        case 'factorial':
+            currentError = 'Factorial value must be a positive integer'
+            return
+
+        case 'divide':
+            currentError = 'Cannot divide by zero'
+            return
+    }
+}
+
 function reset() {
     previousVal = ''
     currentVal = '0'
@@ -285,7 +314,7 @@ function tidyDisplay(value) {
     let decimalString = displayString.split('.')[1]
 
     let integerNum = parseFloat(integerString)
-    integerString = integerNum.toLocaleString('en').toString()
+    integerString = integerNum.toLocaleString('en', {notation: "standard"}).toString()
 
     // display hard limit of 10 decimal places (does not limit the stored value)
     if (decimalString !== undefined) {
