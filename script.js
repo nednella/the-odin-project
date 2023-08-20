@@ -251,12 +251,9 @@ function updateDisplay() {
         
     } else displayPrevious.textContent = previousVal
 
-    //TODO: add tidyDisplay() function to 'currentVal' outputs and limit the number of values
     // displays currentVal
     displayCurrent.textContent = tidyDisplay(currentVal)
 }
-
-
 
 function clearDisplay() {
     previousVal = ''
@@ -273,7 +270,16 @@ function resetCurrentDisplay() {
     updateDisplay()
 }
 
+function reset() {
+    previousVal = ''
+    currentVal = '0'
+    sumVal = ''
+    currentOperator = null
+    forceSum = false
+}
+
 function tidyDisplay(value) {
+    if (value == 'Invalid Input' || value == 'NaN' || value == 'undefined') return value    // do not manipulate invalid inputs
     let displayString = value.toString()
     let integerString = displayString.split('.')[0]
     let decimalString = displayString.split('.')[1]
@@ -289,12 +295,4 @@ function tidyDisplay(value) {
     if (decimalString !== undefined) {
         return `${integerString}.${decimalString}`
     } else return integerString
-}
-
-function reset() {
-    previousVal = ''
-    currentVal = '0'
-    sumVal = ''
-    currentOperator = null
-    forceSum = false
 }
