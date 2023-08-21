@@ -9,9 +9,12 @@ let currentError = null
 let forceSum = false
 
 // DOM nodes
-const displayPrevious = document.querySelector('.display .previous')    // partial complete - tidyDisplay() on any displayed values required
-const displayCurrent = document.querySelector('.display .current')      // partial complete - tidyDisplay() on any displayed values required
-const displayError = document.querySelector('.display .error')           //
+const themeBtn = document.getElementById('theme')                       // complete
+const page = document.querySelector('html')                             // complete
+
+const displayPrevious = document.querySelector('.display .previous')    // complete
+const displayCurrent = document.querySelector('.display .current')      // complete
+const displayError = document.querySelector('.display .error')          // complete
 
 const keyBtns = document.querySelectorAll('button.key')                 // complete
 const operatorBtns = document.querySelectorAll('button.operator')       // complete
@@ -19,6 +22,13 @@ const modifierBtns = document.querySelectorAll('button.modifier')       // compl
 const equalBtn = document.getElementById('equals')                      // complete
 
 // Event listeners
+themeBtn.addEventListener('click', () => {
+    if (page.getAttribute('data-theme') == 'dark') {
+        page.setAttribute('data-theme', 'light')
+    } else page.setAttribute('data-theme', 'dark')
+    
+})
+
 keyBtns.forEach(key => { 
     const value = key.id
     key.addEventListener('click', () => appendKey(value))
@@ -275,7 +285,6 @@ function clearDisplay() {
     currentOperator = null
     forceSum = false
     updateDisplay()
-
 }
 
 function resetCurrentDisplay() {
