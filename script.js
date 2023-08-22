@@ -52,61 +52,15 @@ equalBtn.addEventListener('click', () => {
 
 // Program functions
 function appendKey(value) {
-    if (value == '.' && currentVal.includes('.')) return
-    if (sumVal !== '') {            // enables fresh calculation if sum has been produced via '=' (via forceSum)
-        currentVal = value
+    if (currentVal == sumVal) {     // enables fresh calculation if sum has been produced via '=' (via forceSum)
+        currentVal = '0'
         sumVal = ''
-    } else if ((value == '.' && currentVal == '0') || currentVal !== '0') {
+    }
+    if (value == '.' && currentVal.includes('.')) return    // rejects additional decimals
+    if ((value == '.') || currentVal !== '0') {
         currentVal += value
     } else currentVal = value
     updateDisplay()
-}
-
-function modifyDisplay(value) {
-    if (value == 'clear-entry') { 
-        if (previousVal !== '') {   // clears currentDisplay only, unless a result has been printed (previousVal == '')
-            resetCurrentDisplay()
-        } else clearDisplay()
-    } else if (value == 'clear') {
-        clearDisplay()
-    } else if (value == 'backspace') {
-        currentVal = currentVal.slice(0, -1)
-        if (currentVal == '') {
-            currentVal = '0'
-        }
-        updateDisplay()
-    } else {
-        currentVal = 'ERR'
-        updateDisplay()
-    }
-}
-
-function getSymbol(operator) {
-    switch (operator) {
-        case 'percentage':
-            return '%'
-
-        case 'power':
-            return '^'
-
-        case 'root':
-            return '√'
-
-        case 'factorial':
-            return '!'
-
-        case 'divide':
-            return '÷'
-
-        case 'multiply':
-            return '×'
-
-        case 'plus':
-            return '+'
-
-        case 'minus':
-            return '-'
-    }
 }
 
 function setOperation(value) {
@@ -141,6 +95,25 @@ function setOperation(value) {
     previousVal = currentVal
     currentVal = '0'
     updateDisplay()
+    }
+}
+
+function modifyDisplay(value) {
+    if (value == 'clear-entry') { 
+        if (previousVal !== '') {   // clears currentDisplay only, unless a result has been printed (previousVal == '')
+            resetCurrentDisplay()
+        } else clearDisplay()
+    } else if (value == 'clear') {
+        clearDisplay()
+    } else if (value == 'backspace') {
+        currentVal = currentVal.slice(0, -1)
+        if (currentVal == '') {
+            currentVal = '0'
+        }
+        updateDisplay()
+    } else {
+        currentVal = 'ERR'
+        updateDisplay()
     }
 }
 
@@ -220,6 +193,34 @@ function factorial(b) {
     return result
 }
 
+function getSymbol(operator) {
+    switch (operator) {
+        case 'percentage':
+            return '%'
+
+        case 'power':
+            return '^'
+
+        case 'root':
+            return '√'
+
+        case 'factorial':
+            return '!'
+
+        case 'divide':
+            return '÷'
+
+        case 'multiply':
+            return '×'
+
+        case 'plus':
+            return '+'
+
+        case 'minus':
+            return '-'
+    }
+}
+
 function updateDisplay() {
     
     console.log("current operator: " + currentOperator)
@@ -278,44 +279,6 @@ function updateDisplay() {
     displayCurrent.textContent = tidyDisplay(currentVal)
 }
 
-function clearDisplay() {
-    previousVal = ''
-    currentVal = '0'
-    sumVal = ''
-    currentOperator = null
-    forceSum = false
-    updateDisplay()
-}
-
-function resetCurrentDisplay() {
-    currentVal = '0'
-    updateDisplay()
-}
-
-function setError(value) {
-    switch (value) {
-        case 'root':
-            currentError = 'Root value must be positive'
-            return
-
-        case 'factorial':
-            currentError = 'Factorial value must be a positive integer'
-            return
-
-        case 'divide':
-            currentError = 'Cannot divide by zero'
-            return
-    }
-}
-
-function reset() {
-    previousVal = ''
-    currentVal = '0'
-    sumVal = ''
-    currentOperator = null
-    forceSum = false
-}
-
 function tidyDisplay(value) {
     if (value == 'Invalid Input' || value == 'NaN' || value == 'undefined') return value    // do not manipulate invalid inputs
     let displayString = value.toString()
@@ -333,4 +296,42 @@ function tidyDisplay(value) {
     if (decimalString !== undefined) {
         return `${integerString}.${decimalString}`
     } else return integerString
+}
+
+function clearDisplay() {
+    previousVal = ''
+    currentVal = '0'
+    sumVal = ''
+    currentOperator = null
+    forceSum = false
+    updateDisplay()
+}
+
+function resetCurrentDisplay() {
+    currentVal = '0'
+    updateDisplay()
+}
+
+function reset() {
+    previousVal = ''
+    currentVal = '0'
+    sumVal = ''
+    currentOperator = null
+    forceSum = false
+}
+
+function setError(value) {
+    switch (value) {
+        case 'root':
+            currentError = 'Root value must be positive'
+            return
+
+        case 'factorial':
+            currentError = 'Factorial value must be a positive integer'
+            return
+
+        case 'divide':
+            currentError = 'Cannot divide by zero'
+            return
+    }
 }
