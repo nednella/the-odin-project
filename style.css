@@ -32,7 +32,7 @@
     --numpad-shadow: #dddddd;
     --calculator-bg: #eeeeee;
     --calculator-border: #aaaaaa;
-    --bg: #f7f7f7;
+    --bg: white;
     --footer-colour: #202020;
 }
 
@@ -160,13 +160,16 @@ body {
             /* calculator button hover colouring */
             button[type="button"].numpad:hover {
                 background-color: var(--numpad-accent);
+                transition: 0.15s ease-in-out;
                 
             }
             button[type="button"].accent:hover {
                 background-color: var(--numpad);
+                transition: 0.15s ease-in-out;
             }
             button[type="button"].equal:hover {
                 background-color: var(--numpad-equal-hover);
+                transition: 0.15s ease-in-out;
             }
 
 
@@ -195,5 +198,5 @@ body {
             }
             
             .fa-github:hover {
-            transform: rotate(360deg) scale(1.1);
+            transform: scale(1.1);
             }

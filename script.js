@@ -26,7 +26,6 @@ themeBtn.addEventListener('click', () => {
     if (page.getAttribute('data-theme') == 'dark') {
         page.setAttribute('data-theme', 'light')
     } else page.setAttribute('data-theme', 'dark')
-    
 })
 
 keyBtns.forEach(key => { 
@@ -52,10 +51,7 @@ equalBtn.addEventListener('click', () => {
 
 // Program functions
 function appendKey(value) {
-    if (currentVal == sumVal) {     // enables fresh calculation if sum has been produced via '=' (via forceSum)
-        currentVal = '0'
-        sumVal = ''
-    }
+    if (currentVal == sumVal) reset()                       // enables fresh input if sum has been produced via '=' (via forceSum)
     if (value == '.' && currentVal.includes('.')) return    // rejects additional decimals
     if ((value == '.') || currentVal !== '0') {
         currentVal += value
@@ -100,7 +96,7 @@ function setOperation(value) {
 
 function modifyDisplay(value) {
     if (value == 'clear-entry') { 
-        if (previousVal !== '') {   // clears currentDisplay only, unless a result has been printed (previousVal == '')
+        if (currentVal !== sumVal) {   // clears currentDisplay only, unless a sum has been produced via '=' (via forceSum)
             resetCurrentDisplay()
         } else clearDisplay()
     } else if (value == 'clear') {
@@ -123,7 +119,7 @@ function controller() {
 
     // prints out full calculation along with the result if '=' is pressed
     if (forceSum == true) {
-        sumVal = compute(currentOperator, previousVal, currentVal)
+        sumVal = compute(currentOperator, previousVal, currentVal).toString()
         updateDisplay()
         previousVal = ''
         currentVal = sumVal
@@ -133,7 +129,7 @@ function controller() {
     }
 
     // calculates current sum before considering new operations
-    sumVal = compute(currentOperator, previousVal, currentVal)
+    sumVal = compute(currentOperator, previousVal, currentVal).toString()
     currentVal = sumVal
     sumVal = ''
     previousVal = ''
@@ -229,14 +225,13 @@ function updateDisplay() {
     console.log("sum: " + sumVal)
     console.log("error: " + currentError)
     console.log("------------------------")
-
+    
     // displays currentError
     if (currentError !== null) {
         displayError.textContent = currentError
         currentError = null
     } else displayError.textContent = ''
     
-    //TODO: add tidyDisplay() function to 'previousVal' outputs and limit the number of values + decimals
     // prints out full calculation along with the result if 'forceSum' is true
     if (forceSum == true) {
         switch(currentOperator) {
@@ -259,7 +254,7 @@ function updateDisplay() {
                 displayPrevious.textContent = `${previousVal} ${getSymbol(currentOperator)} ${currentVal} =`
                 displayCurrent.textContent = tidyDisplay(sumVal)
         }
-        return // force a return so that the below code does not execute and re-write any printed results
+        return // force a return so that the below code does not execute and overwrite any printed results
     }
 
     // displays continuation of calculation if additional operators are selected and forceSum = false
@@ -280,20 +275,31 @@ function updateDisplay() {
 }
 
 function tidyDisplay(value) {
+    value = value.toString()
     if (value == 'Invalid Input' || value == 'NaN' || value == 'undefined') return value    // do not manipulate invalid inputs
-    let displayString = value.toString()
+
+    let displayString = value.split('e')[0]
+    let scientificString = value.split('e')[1]
+
     let integerString = displayString.split('.')[0]
     let decimalString = displayString.split('.')[1]
+    
+    // console.log('~~~~~~~~~~~~~~~')
+    // console.log("intStr: " + integerString)
+    // console.log("decStr: " + decimalString)
+    // console.log("sciStr: " + scientificString)
+    // console.log('~~~~~~~~~~~~~~~')
 
-    let integerNum = parseFloat(integerString)
-    integerString = integerNum.toLocaleString('en', {notation: "standard"}).toString()
+    integerString = parseFloat(integerString).toLocaleString('en', {notation: "standard"})
+    decimalString = roundDecimal(decimalString, 6)  
+    
+    // console.log("intStr: " + integerString)
+    // console.log("decStr: " + decimalString)
+    // console.log('~~~~~~~~~~~~~~~')
 
-    // display hard limit of 10 decimal places (does not limit the stored value)
-    if (decimalString !== undefined) {
-        decimalString = decimalString.substring(0, 10)   
-    }
-
-    if (decimalString !== undefined) {
+    if (decimalString !== undefined && scientificString !== undefined) {
+        return `${integerString}.${decimalString}e${scientificString}`
+    } else if (decimalString !== undefined) {
         return `${integerString}.${decimalString}`
     } else return integerString
 }
@@ -318,6 +324,17 @@ function reset() {
     sumVal = ''
     currentOperator = null
     forceSum = false
+}
+
+function roundDecimal(n, significantFigures) {
+    if (n == undefined || n == '') return n
+    decimal = Number(n)
+    decimal = Number(decimal.toPrecision(significantFigures)).toString()
+
+    while(decimal.charAt(decimal.length -1) == '0') {
+        decimal = decimal.slice(0,-1)
+    }
+    return decimal
 }
 
 function setError(value) {
