@@ -8,7 +8,7 @@ let currentOperator = null
 let currentError = null
 let forceSum = false
 
-// DOM nodes
+// DOM node selectors
 const themeBtn = document.getElementById('theme')                       // complete
 const page = document.querySelector('html')                             // complete
 
@@ -53,6 +53,7 @@ equalBtn.addEventListener('click', () => {
 function appendKey(value) {
     if (currentVal == sumVal) reset()                       // enables fresh input if sum has been produced via '=' (via forceSum)
     if (value == '.' && currentVal.includes('.')) return    // rejects additional decimals
+    if (checkLength(currentVal)) return                     // rejects further input beyond 16 significant figures
     if ((value == '.') || currentVal !== '0') {
         currentVal += value
     } else currentVal = value
@@ -119,7 +120,7 @@ function controller() {
 
     // prints out full calculation along with the result if '=' is pressed
     if (forceSum == true) {
-        sumVal = compute(currentOperator, previousVal, currentVal).toString()
+        sumVal = roundSum(compute(currentOperator, previousVal, currentVal), 15).toString()
         updateDisplay()
         previousVal = ''
         currentVal = sumVal
@@ -129,7 +130,7 @@ function controller() {
     }
 
     // calculates current sum before considering new operations
-    sumVal = compute(currentOperator, previousVal, currentVal).toString()
+    sumVal = roundSum(compute(currentOperator, previousVal, currentVal), 15).toString()
     currentVal = sumVal
     sumVal = ''
     previousVal = ''
@@ -284,18 +285,7 @@ function tidyDisplay(value) {
     let integerString = displayString.split('.')[0]
     let decimalString = displayString.split('.')[1]
     
-    // console.log('~~~~~~~~~~~~~~~')
-    // console.log("intStr: " + integerString)
-    // console.log("decStr: " + decimalString)
-    // console.log("sciStr: " + scientificString)
-    // console.log('~~~~~~~~~~~~~~~')
-
     integerString = parseFloat(integerString).toLocaleString('en', {notation: "standard"})
-    decimalString = roundDecimal(decimalString, 6)  
-    
-    // console.log("intStr: " + integerString)
-    // console.log("decStr: " + decimalString)
-    // console.log('~~~~~~~~~~~~~~~')
 
     if (decimalString !== undefined && scientificString !== undefined) {
         return `${integerString}.${decimalString}e${scientificString}`
@@ -326,15 +316,17 @@ function reset() {
     forceSum = false
 }
 
-function roundDecimal(n, significantFigures) {
-    if (n == undefined || n == '') return n
-    decimal = Number(n)
-    decimal = Number(decimal.toPrecision(significantFigures)).toString()
-
-    while(decimal.charAt(decimal.length -1) == '0') {
-        decimal = decimal.slice(0,-1)
+function checkLength(currentVal) {
+    if (currentVal.includes('.')) {
+        integerString = currentVal.split('.')[0]
+        decimalString = currentVal.split('.')[1]
+        currentVal = integerString + decimalString
     }
-    return decimal
+    if (currentVal.length >= 16) return true
+}
+
+function roundSum(n, decimalPlaces) {
+    return Math.round(n * Math.pow(10, decimalPlaces))/(Math.pow(10, decimalPlaces))
 }
 
 function setError(value) {
