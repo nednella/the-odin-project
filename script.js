@@ -25,7 +25,10 @@ const equalBtn = document.getElementById('equals')
 
 
 // Event listeners
-window.addEventListener('keydown', (e) => keyboardInput(e.key))
+window.addEventListener('keydown', (e) => {
+    e.preventDefault()
+    keyboardInput(e.key)
+})
 
 themeToggle.addEventListener('click', () => {
     if (page.getAttribute('data-theme') == 'dark') {
@@ -243,14 +246,6 @@ function getSymbol(operator) {
 }
 
 function updateDisplay() {
-    
-    console.log("current operator: " + currentOperator)
-    console.log("prev: " + previousVal)
-    console.log("curr: " + currentVal)
-    console.log("sum: " + sumVal)
-    console.log("error: " + currentError)
-    console.log("------------------------")
-    
     // displays currentError
     if (currentError !== null) {
         displayError.textContent = currentError
