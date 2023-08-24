@@ -1,12 +1,14 @@
 // JavaScript
 
 // Default values
+const decimalPlaces = 10
 let previousVal = ''
 let currentVal = '0'
 let sumVal = ''
 let currentOperator = null
 let currentError = null
 let forceSum = false
+
 
 // DOM node selectors
 const themeBtn = document.getElementById('theme')                       // complete
@@ -21,7 +23,10 @@ const operatorBtns = document.querySelectorAll('button.operator')       // compl
 const modifierBtns = document.querySelectorAll('button.modifier')       // complete
 const equalBtn = document.getElementById('equals')                      // complete
 
+
 // Event listeners
+window.addEventListener('keydown', (e) => keyboardInput(e.key))
+
 themeBtn.addEventListener('click', () => {
     if (page.getAttribute('data-theme') == 'dark') {
         page.setAttribute('data-theme', 'light')
@@ -50,6 +55,40 @@ equalBtn.addEventListener('click', () => {
 
 
 // Program functions
+function keyboardInput(key) {
+    value = replaceValue(key)
+    if ((value >= '0' && value <= '9') || value == '.') appendKey(value)
+    else if (value == 'plus' || 
+             value == 'minus' || 
+             value == 'multiply' ||
+             value == 'divide' ||
+             value == 'percentage' ||
+             value == 'power' ||
+             value == 'factorial') setOperation(value)
+    else if (value == 'equals') {
+        console.log(value)
+        forceSum = true
+        controller()
+    } else if (value == 'backspace' || value == 'clear') modifyDisplay(value)
+    else return
+}
+
+function replaceValue(value) {
+    if (value >= 0 && value <= 9) value = value.toString()
+    else if (value == '.') return value
+    else if (value == '+') value = 'plus'
+    else if (value == '-') value = 'minus'
+    else if (value == '*') value = 'multiply'
+    else if (value == '/') value = 'divide'
+    else if (value == '%') value = 'percentage'
+    else if (value == '^') value = 'power'
+    else if (value == '!') value = 'factorial'
+    else if (value == 'Backspace') value = 'backspace'
+    else if (value == 'Enter') value = 'equals'
+    else if (value == 'Escape') value = 'clear'
+    return value
+}
+
 function appendKey(value) {
     if (currentVal == sumVal) reset()                       // enables fresh input if sum has been produced via '=' (via forceSum)
     if (value == '.' && currentVal.includes('.')) return    // rejects additional decimals
@@ -116,11 +155,11 @@ function modifyDisplay(value) {
 
 function controller() {
     // prevents any abuse and/or updateDisplay() bugs
-    if (currentVal == '' || currentOperator == null) return forceSum = false
+    if (currentVal == '' || currentOperator == null) return forceSum = false        // TODO: check if can remove currentVal == '' check
 
     // prints out full calculation along with the result if '=' is pressed
     if (forceSum == true) {
-        sumVal = roundSum(compute(currentOperator, previousVal, currentVal), 15).toString()
+        sumVal = roundSum(compute(currentOperator, previousVal, currentVal), decimalPlaces).toString()
         updateDisplay()
         previousVal = ''
         currentVal = sumVal
@@ -130,7 +169,7 @@ function controller() {
     }
 
     // calculates current sum before considering new operations
-    sumVal = roundSum(compute(currentOperator, previousVal, currentVal), 15).toString()
+    sumVal = roundSum(compute(currentOperator, previousVal, currentVal), decimalPlaces).toString()
     currentVal = sumVal
     sumVal = ''
     previousVal = ''
@@ -276,7 +315,6 @@ function updateDisplay() {
 }
 
 function tidyDisplay(value) {
-    value = value.toString()
     if (value == 'Invalid Input' || value == 'NaN' || value == 'undefined') return value    // do not manipulate invalid inputs
 
     let displayString = value.split('e')[0]
@@ -286,6 +324,7 @@ function tidyDisplay(value) {
     let decimalString = displayString.split('.')[1]
     
     integerString = parseFloat(integerString).toLocaleString('en', {notation: "standard"})
+    if (decimalString !== undefined) decimalString = decimalString.slice(0, decimalPlaces)  // only slices scientific notation as decimals are already rounded
 
     if (decimalString !== undefined && scientificString !== undefined) {
         return `${integerString}.${decimalString}e${scientificString}`
@@ -326,7 +365,8 @@ function checkLength(currentVal) {
 }
 
 function roundSum(n, decimalPlaces) {
-    return Math.round(n * Math.pow(10, decimalPlaces))/(Math.pow(10, decimalPlaces))
+    if (isNaN(n)) return n
+    else return Math.round(n * Math.pow(10, decimalPlaces))/(Math.pow(10, decimalPlaces))
 }
 
 function setError(value) {
