@@ -11,42 +11,31 @@ let forceSum = false
 
 
 // DOM node selectors
-const themeBtn = document.getElementById('theme')                       // complete
-const page = document.querySelector('html')                             // complete
+const themeToggle = document.getElementById('theme-toggle')
+const page = document.querySelector('html')
 
-const displayPrevious = document.querySelector('.display .previous')    // complete
-const displayCurrent = document.querySelector('.display .current')      // complete
-const displayError = document.querySelector('.display .error')          // complete
+const displayPrevious = document.querySelector('.display .previous')
+const displayCurrent = document.querySelector('.display .current')
+const displayError = document.querySelector('.display .error')
 
-const keyBtns = document.querySelectorAll('button.key')                 // complete
-const operatorBtns = document.querySelectorAll('button.operator')       // complete
-const modifierBtns = document.querySelectorAll('button.modifier')       // complete
-const equalBtn = document.getElementById('equals')                      // complete
+const keyBtns = document.querySelectorAll('button.key')
+const operatorBtns = document.querySelectorAll('button.operator')
+const modifierBtns = document.querySelectorAll('button.modifier')
+const equalBtn = document.getElementById('equals')
 
 
 // Event listeners
 window.addEventListener('keydown', (e) => keyboardInput(e.key))
 
-themeBtn.addEventListener('click', () => {
+themeToggle.addEventListener('click', () => {
     if (page.getAttribute('data-theme') == 'dark') {
         page.setAttribute('data-theme', 'light')
     } else page.setAttribute('data-theme', 'dark')
 })
 
-keyBtns.forEach(key => { 
-    const value = key.id
-    key.addEventListener('click', () => appendKey(value))
-})
-
-operatorBtns.forEach(operator => {
-    const value = operator.id
-    operator.addEventListener('click', () => setOperation(value))
-})
-
-modifierBtns.forEach(modifier => {
-    const value = modifier.id
-    modifier.addEventListener('click', () => modifyDisplay(value))
-})
+keyBtns.forEach(key => key.addEventListener('click', () => appendKey(key.id)))
+operatorBtns.forEach(operator => operator.addEventListener('click', () => setOperation(operator.id)))
+modifierBtns.forEach(modifier => modifier.addEventListener('click', () => modifyDisplay(modifier.id)))
 
 equalBtn.addEventListener('click', () => {
     forceSum = true
@@ -90,9 +79,9 @@ function replaceValue(value) {
 }
 
 function appendKey(value) {
-    if (currentVal == sumVal) reset()                       // enables fresh input if sum has been produced via '=' (via forceSum)
-    if (value == '.' && currentVal.includes('.')) return    // rejects additional decimals
-    if (checkLength(currentVal)) return                     // rejects further input beyond 16 significant figures
+    if (currentVal == sumVal) reset()
+    if (checkLength(currentVal)) return
+    if (value == '.' && currentVal.includes('.')) return
     if ((value == '.') || currentVal !== '0') {
         currentVal += value
     } else currentVal = value
@@ -107,9 +96,6 @@ function setOperation(value) {
         updateDisplay()
         return
     }
-
-    // prevents operator being set before any value is entered   TODO: not needed if value is default '0', as calculations can be performed with 0
-    if (currentVal == '') return
 
     // calculate current sum before considering new operations
     if (currentOperator !== null) controller()
@@ -154,8 +140,7 @@ function modifyDisplay(value) {
 }
 
 function controller() {
-    // prevents any abuse and/or updateDisplay() bugs
-    if (currentVal == '' || currentOperator == null) return forceSum = false        // TODO: check if can remove currentVal == '' check
+    if (currentOperator == null) return forceSum = false
 
     // prints out full calculation along with the result if '=' is pressed
     if (forceSum == true) {
@@ -324,7 +309,7 @@ function tidyDisplay(value) {
     let decimalString = displayString.split('.')[1]
     
     integerString = parseFloat(integerString).toLocaleString('en', {notation: "standard"})
-    if (decimalString !== undefined) decimalString = decimalString.slice(0, decimalPlaces)  // only slices scientific notation as decimals are already rounded
+    if (decimalString !== undefined) decimalString = decimalString.slice(0, decimalPlaces)  // only slices scientific notation as decimals are already rounded via roundSum()
 
     if (decimalString !== undefined && scientificString !== undefined) {
         return `${integerString}.${decimalString}e${scientificString}`
