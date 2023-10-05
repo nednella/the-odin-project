@@ -1,0 +1,160 @@
+/* CSS */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://fonts.gstatic.com/s/materialicons/v140/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
+    }
+
+:root {
+
+}
+
+body {
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    }
+
+    .left {
+        background-color: beige;
+        font-family: 'Roboto', sans-serif;
+        width:40%;
+        }
+
+        .banner {
+            background-color: black;
+            color: white;
+            margin-top: 35vh;
+            padding: 16px;
+            opacity: 30%;
+        }
+        
+        .credit {
+
+        }
+
+
+    .right {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        font-family: 'Roboto', sans-serif;
+        background-color: rgb(245, 245, 245);
+        width: 60%;
+        gap:54px;
+        }
+
+        .hero {
+            font-family: inherit;
+            padding-left: 48px;
+            /* color: ; */
+            }
+
+            .hero-header {
+                font-size: 24px;
+                margin-bottom: 24px;
+                width: 80%;
+            }
+
+            .hero-subheader {
+                font-size: 36px;
+            }
+        
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            padding: 24px 0 48px 0;
+            gap: 24px;
+            background-color: white;
+            font-family: inherit;
+            padding-left: 48px;
+            box-shadow: rgba(20, 20, 20, 0.2) 0px 10px 6px -6px;
+            }
+
+            .form-header {
+                font-family: inherit;
+                font-weight: bold;
+                font-size: 24px;
+            }
+
+            form {
+                
+                display: flex;
+                flex-flow: row wrap;
+                gap: 24px;
+                }
+
+                .form-input {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 2px;
+                    width: 35%;
+                    }
+
+                    label {
+                        color: rgb(20, 20, 20);
+                        font-family: inherit;
+                        font-weight: 500;
+                        font-size: 13px;
+                        letter-spacing: 1px;
+                    }
+
+                    input {
+                        display: flex;
+                        flex-flow: wrap;
+                        background-color: rgb(253, 253, 253);
+                        border: 1px solid rgb(220, 220, 220);
+                        border-radius: 3px;
+                        height: 24px;
+                        
+                    }
+
+                    input:focus {
+                        box-shadow: rgba(20, 20, 20, 0.2) 1px 3px 5px;
+                        border: 1px solid rgb(50, 120, 255);
+                        outline: none;
+                    }
+
+                    input:invalid {
+                        /* border: 1px solid red; */
+                        outline: none;
+                    }
+
+        .login {
+            font-family: inherit;
+            padding-left: 48px;
+
+            }
+
+            #create-btn {
+                background-color: green;
+                color: white;
+                font-family: inherit;
+                font-weight: bold;
+                font-size: 16px;
+                width: 200px;
+                min-width: 100px;
+                border: 0;
+                border-radius: 5px;
+                padding: 12px;
+                box-shadow: rgba(20, 20, 20, 0.2) 1px 3px 5px;
+            }
+
+            #create-btn:hover {
+                background-color: red;
+            }
+
+            a {
+                color: green;
+                font-weight: bold;
+            }
+
+            a:hover {
+                color: red;
+            }
