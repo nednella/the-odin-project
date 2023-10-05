@@ -10,7 +10,13 @@
     }
 
 :root {
-
+    --form-colour: rgb(20, 20, 20);
+    --accent-colour: green;
+    --shadow-colour: rgba(20, 20, 20, 0.2);
+    --input-border-focus: rgb(50, 120, 255);
+    --input-border-invalid: red;
+    --button-hover-colour: rgb(0, 90, 0);
+    --link-hover-colour: rgb(0, 90, 0);
 }
 
 body {
@@ -22,9 +28,12 @@ body {
     }
 
     .left {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         background-color: beige;
         font-family: 'Roboto', sans-serif;
-        width:40%;
+        width: 40%;
         }
 
         .banner {
@@ -45,15 +54,16 @@ body {
         flex-flow: column nowrap;
         justify-content: center;
         font-family: 'Roboto', sans-serif;
-        background-color: rgb(245, 245, 245);
+        background-color: rgb(250, 250, 250);
+        /* background-color: #1b2027; */
+        /* color: white; */
         width: 60%;
-        gap:54px;
+        gap: 54px;
         }
 
         .hero {
             font-family: inherit;
             padding-left: 48px;
-            /* color: ; */
             }
 
             .hero-header {
@@ -74,17 +84,16 @@ body {
             background-color: white;
             font-family: inherit;
             padding-left: 48px;
-            box-shadow: rgba(20, 20, 20, 0.2) 0px 10px 6px -6px;
+            box-shadow: var(--shadow-colour) 0px 10px 6px -6px;
             }
 
             .form-header {
                 font-family: inherit;
-                font-weight: bold;
+                font-weight: 500;
                 font-size: 24px;
             }
 
             form {
-                
                 display: flex;
                 flex-flow: row wrap;
                 gap: 24px;
@@ -98,7 +107,7 @@ body {
                     }
 
                     label {
-                        color: rgb(20, 20, 20);
+                        color: var(--form-colour);
                         font-family: inherit;
                         font-weight: 500;
                         font-size: 13px;
@@ -112,28 +121,31 @@ body {
                         border: 1px solid rgb(220, 220, 220);
                         border-radius: 3px;
                         height: 24px;
-                        
+                        font-family: inherit;
+                        font-size: 14px;
+                        color: var(--form-colour);
+                        font-weight: 400;
+                        padding: 2px 8px 2px 8px;
                     }
 
                     input:focus {
-                        box-shadow: rgba(20, 20, 20, 0.2) 1px 3px 5px;
-                        border: 1px solid rgb(50, 120, 255);
+                        box-shadow: var(--shadow-colour) 1px 3px 5px;
+                        border: 1px solid var(--input-border-focus);
                         outline: none;
                     }
 
-                    input:invalid {
-                        /* border: 1px solid red; */
+                    .invalid {
+                        border: 1px solid var(--input-border-invalid);
                         outline: none;
                     }
 
         .login {
             font-family: inherit;
             padding-left: 48px;
-
             }
 
             #create-btn {
-                background-color: green;
+                background-color: var(--accent-colour);
                 color: white;
                 font-family: inherit;
                 font-weight: bold;
@@ -143,18 +155,18 @@ body {
                 border: 0;
                 border-radius: 5px;
                 padding: 12px;
-                box-shadow: rgba(20, 20, 20, 0.2) 1px 3px 5px;
+                box-shadow: var(--shadow-colour) 1px 3px 5px;
             }
 
             #create-btn:hover {
-                background-color: red;
+                background-color: var(--button-hover-colour);
             }
 
             a {
-                color: green;
+                color: var(--accent-colour);
                 font-weight: bold;
             }
 
             a:hover {
-                color: red;
+                color: var(--link-hover-colour);
             }
