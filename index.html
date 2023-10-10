@@ -7,87 +7,82 @@
         <title>Sign up</title>
         <link rel="stylesheet" href="style.css">
         <script src="script.js" defer></script>
+        <script
+            src="https://kit.fontawesome.com/4c536a6bd5.js"
+            crossorigin="anonymous"
+        ></script>
     </head>
     <body>
-        <div class="left">
-
-            <div class="banner">ODIN</div>
-            <div class="credit">credit authors</div>
-            
-        </div>
-        <div class="right">
-            <div class="hero">
-                <div class="hero-header"><strong>This is not a real online service!</strong> <i>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</i></div>
-                <div class="hero-subheader">Just do it!</div>
+        <div class="background"></div>
+        <div class="content">
+            <div class="left">
+                <div class="banner"><a href="https://www.theodinproject.com/"><img src="./static/odinLogo.svg"></a></div>
+                <div class="credit">Photo by <a href="https://www.pexels.com/@alexander-suhorucov/">Alexander Suhorucov</a> on <a href="https://www.pexels.com/">Pexels</a></div>
             </div>
-            <div class="form-container">
-                <div class="form-header">Sign up now</div>
-                <form action="" method="" id="signupForm">
-                    <div class="formInput">
-                        <label for="firstName">FIRST NAME</label>
-                        <input 
-                            required
-                            type="text"
-                            id="firstName"
-                        >
-                        <div class="errorMsg"></div>
+            <div class="right">
+                <div class="hero">
+                    <div class="hero-subheader"><strong>This is not a real online service!</strong> <i>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</i></div>
+                    <div class="hero-header">Just do it.</div>
+                </div>
+                <div class="form-container">
+                    <div class="form-header">Sign up now,</div>
+                    <form action="" method="" id="signupForm">
+                        <div class="formInput">
+                            <label for="firstName">FIRST NAME</label>
+                            <input 
+                                required
+                                type="text"
+                                id="firstName"
+                            >
+                            <div class="errorMsg"></div>
+                        </div>
+                        <div class="formInput">
+                            <label for="emailAddress">EMAIL ADDRESS</label>
+                            <input
+                                required
+                                pattern="\S+@\S+"
+                                type="email"
+                                id="emailAddress"
+                            >
+                            <div class="errorMsg"></div>
+                        </div>
+                        <div class="formInput">
+                            <label for="password">PASSWORD</label>
+                            <input
+                                required
+                                custommaxlength="12"
+                                minlength="4"
+                                type="password"
+                                id="password"
+                            >
+                            <div class="errorMsg"></div>
+                        </div>
+                        <div class="formInput">
+                            <label for="confirmPassword">CONFIRM PASSWORD</label>
+                            <input
+                                required
+                                match="password"
+                                custommaxlength="12"
+                                minlength="4"
+                                type="password"
+                                id="confirmPassword"
+                            >
+                            <div class="errorMsg"></div>
+                        </div>
+                    </form>
+                    <div>
+                        <button id="register" form="signupForm">Register</button>
+                        <br><br>
+                        Already have an account? <a>Log in here</a>
                     </div>
-                    <div class="formInput">
-                        <label for="lastName">LAST NAME</label>
-                        <input
-                            type="text"
-                            id="lastName"
-                        >
-                        <div class="errorMsg"></div>
-                    </div>
-                    <div class="formInput">
-                        <label for="emailAddress">EMAIL ADDRESS</label>
-                        <input
-                            required
-                            pattern="\S+@\S+"
-                            type="email"
-                            id="emailAddress"
-                        >
-                        <div class="errorMsg"></div>
-                    </div>
-                    <div class="formInput">
-                        <label for="phoneNumber">PHONE NUMBER</label>
-                        <input
-                            type="text"
-                            id="phoneNumber"
-                        >
-                        <div class="errorMsg"></div>
-                    </div>
-                    <div class="formInput">
-                        <label for="password">PASSWORD</label>
-                        <input
-                            required
-                            custommaxlength="12"
-                            minlength="4"
-                            type="password"
-                            id="password"
-                        >
-                        <div class="errorMsg"></div>
-                    </div>
-                    <div class="formInput">
-                        <label for="confirmPassword">CONFIRM PASSWORD</label>
-                        <input
-                            required
-                            match="password"
-                            custommaxlength="12"
-                            minlength="4"
-                            type="password"
-                            id="confirmPassword"
-                        >
-                        <div class="errorMsg"></div>
-                    </div>
-                </form>
-            </div>
-            <div class="login">
-                <button id="register" form="signupForm">Register</button>
-                <br><br>
-                Already have an account? <a>Log in</a>
-            </div>
-        </div>
+                </div>
+                <div class="footer">
+                    <p>nednella</p>
+                    <a href="https://github.com/nednella" target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a> 
+                </div>
+            </div>    
+        </div>  
     </body>
 </html>
