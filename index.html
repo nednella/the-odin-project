@@ -44,6 +44,7 @@
                         <label for="emailAddress">EMAIL ADDRESS</label>
                         <input
                             required
+                            pattern="\S+@\S+"
                             type="email"
                             id="emailAddress"
                         >
@@ -52,8 +53,6 @@
                     <div class="formInput">
                         <label for="phoneNumber">PHONE NUMBER</label>
                         <input
-                            minlength="11"
-                            maxlength="13"
                             type="text"
                             id="phoneNumber"
                         >
@@ -63,6 +62,8 @@
                         <label for="password">PASSWORD</label>
                         <input
                             required
+                            custommaxlength="12"
+                            minlength="4"
                             type="password"
                             id="password"
                         >
@@ -72,6 +73,9 @@
                         <label for="confirmPassword">CONFIRM PASSWORD</label>
                         <input
                             required
+                            match="password"
+                            custommaxlength="12"
+                            minlength="4"
                             type="password"
                             id="confirmPassword"
                         >

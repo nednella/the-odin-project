@@ -7,16 +7,17 @@
     font-style: normal;
     font-weight: 400;
     src: url(https://fonts.gstatic.com/s/materialicons/v140/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
-    }
+}
 
 :root {
     --form-colour: rgb(20, 20, 20);
     --accent-colour: green;
     --shadow-colour: rgba(20, 20, 20, 0.2);
     --input-border-focus: rgb(50, 120, 255);
-    --input-border-invalid: red;
     --button-hover-colour: rgb(0, 90, 0);
     --link-hover-colour: rgb(0, 90, 0);
+    --valid-colour: rgb(0, 140, 0);
+    --invalid-colour: rgb(200, 0, 0);
 }
 
 body {
@@ -45,7 +46,7 @@ body {
         }
         
         .credit {
-
+            font-size: 14px;
         }
 
 
@@ -99,7 +100,7 @@ body {
                 gap: 24px;
                 }
 
-                .form-input {
+                .formInput {
                     display: flex;
                     flex-direction: column;
                     gap: 2px;
@@ -134,8 +135,18 @@ body {
                         outline: none;
                     }
 
+                    .errorMsg {
+                        color: var(--invalid-colour);
+                        font-size: 14px;
+                    }
+
+                    .valid {
+                        border: 1px solid var(--valid-colour);
+                        outline: none;
+                    }
+
                     .invalid {
-                        border: 1px solid var(--input-border-invalid);
+                        border: 1px solid var(--invalid-colour);
                         outline: none;
                     }
 
@@ -144,7 +155,7 @@ body {
             padding-left: 48px;
             }
 
-            #create-btn {
+            #register {
                 background-color: var(--accent-colour);
                 color: white;
                 font-family: inherit;
