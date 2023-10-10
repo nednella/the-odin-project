@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>Sign up</title>
         <link rel="stylesheet" href="style.css">
         <script src="script.js" defer></script>
     </head>
@@ -22,35 +22,65 @@
             </div>
             <div class="form-container">
                 <div class="form-header">Sign up now</div>
-                <form id="signup">
-                    <div class="form-input">
-                        <label for="first-name">FIRST NAME</label>
-                        <input type="text" id="first-name" required>
+                <form action="" method="" id="signupForm">
+                    <div class="formInput">
+                        <label for="firstName">FIRST NAME</label>
+                        <input 
+                            required
+                            type="text"
+                            id="firstName"
+                        >
+                        <div class="errorMsg"></div>
                     </div>
-                    <div class="form-input">
-                        <label for="surname">SURNAME</label>
-                        <input type="text" id="surname">
+                    <div class="formInput">
+                        <label for="lastName">LAST NAME</label>
+                        <input
+                            type="text"
+                            id="lastName"
+                        >
+                        <div class="errorMsg"></div>
                     </div>
-                    <div class="form-input">
-                        <label for="email-address">EMAIL ADDRESS</label>
-                        <input type="email" id="email-address" required>
+                    <div class="formInput">
+                        <label for="emailAddress">EMAIL ADDRESS</label>
+                        <input
+                            required
+                            type="email"
+                            id="emailAddress"
+                        >
+                        <div class="errorMsg"></div>
                     </div>
-                    <div class="form-input">
-                        <label for="phone-number">PHONE NUMBER</label>
-                        <input type="text" id="phone-number" minlength="11" maxlength="13">
+                    <div class="formInput">
+                        <label for="phoneNumber">PHONE NUMBER</label>
+                        <input
+                            minlength="11"
+                            maxlength="13"
+                            type="text"
+                            id="phoneNumber"
+                        >
+                        <div class="errorMsg"></div>
                     </div>
-                    <div class="form-input">
+                    <div class="formInput">
                         <label for="password">PASSWORD</label>
-                        <input type="password" id="password" required>
+                        <input
+                            required
+                            type="password"
+                            id="password"
+                        >
+                        <div class="errorMsg"></div>
                     </div>
-                    <div class="form-input">
-                        <label for="confirm-password">CONFIRM PASSWORD</label>
-                        <input type="password" id="confirm-password" required>
+                    <div class="formInput">
+                        <label for="confirmPassword">CONFIRM PASSWORD</label>
+                        <input
+                            required
+                            type="password"
+                            id="confirmPassword"
+                        >
+                        <div class="errorMsg"></div>
                     </div>
                 </form>
             </div>
             <div class="login">
-                <button id="create-btn" form="signup">Create Account</button>
+                <button id="register" form="signupForm">Register</button>
                 <br><br>
                 Already have an account? <a>Log in</a>
             </div>
