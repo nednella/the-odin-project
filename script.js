@@ -76,7 +76,13 @@ function validateForm(formSelector) {
     function validateFormInputs(formToValidate) {                   
         const formInputs = Array.from(formToValidate.querySelectorAll('.formInput'))
 
-        return formInputs.every(formInput => validateInput(formInput))  // loop through array and return T/F for each input
+        let validCount = 0
+        formInputs.forEach(formInput => {
+            const isInputValid = validateInput(formInput)
+            if (isInputValid) validCount += 1
+        })
+        if (validCount == 4) return true
+        else return false
     }
 
     formElement.addEventListener('submit', e => {
