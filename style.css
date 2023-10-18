@@ -1,0 +1,37 @@
+/* CSS */
+
+:root {
+    --top-nav-height: 60px;
+    --side-nav-width: 200px;
+}
+
+body {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+    .grid-container {
+        height: 100vh;
+        width: 100%;
+        display: grid;
+        grid-template-columns: var(--side-nav-width) 1fr;
+        grid-template-rows: var(--top-nav-height) 1fr;
+        grid-template-areas:
+            "side-nav top-nav"
+            "side-nav main-content";
+    }
+
+        .side-nav {
+            grid-area: side-nav;
+            background-color: lightcoral;
+        }
+
+        .top-nav {
+            grid-area: top-nav;
+            background-color: lightgoldenrodyellow;
+        }
+
+        .main-content {
+            grid-area: main-content;
+        }
