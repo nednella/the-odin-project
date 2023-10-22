@@ -3,6 +3,10 @@
 :root {
     --top-nav-height: 60px;
     --side-nav-width: 200px;
+
+    
+    --background-colour-page: rgb(245, 245, 245);
+    --background-colour-card: white;
 }
 
 body {
@@ -34,4 +38,46 @@ body {
 
         .main-content {
             grid-area: main-content;
+            background-color: var(--background-colour-page);
+            display: grid;
+            grid-template-rows: max-content;
+            grid-template-columns: 1fr 300px;
+            padding: 24px;
+            gap: 24px;
         }
+
+            .projects {
+                display: grid;
+                grid-auto-rows: max-content;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 24px;
+            }
+
+            .news {
+                display: grid;
+                grid-auto-rows: max-content;
+                grid-template-columns: 1fr;
+                gap: 24px;
+
+            }
+
+                .content-header {
+                    grid-column: 1 / -1;
+                }
+
+                .card {
+                    background-color: var(--background-colour-card);
+                    text-align: center;
+                    border-radius: 10px;
+                    height: 300px;
+
+                }
+
+                
+
+                
+
+            
+
+            
+
