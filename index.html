@@ -9,33 +9,84 @@
     <script src="script.js" defer></script>
 </head>
     <body>
-        
         <div class="grid-container">
-            <div class="side-nav">Side Nav</div>
+            <div class="side-nav">
+                <div>
+                    Side Nav
+                    <br>
+                    <br>
+                    Logo Here
+                </div>
+                <ul>
+                    <li>Overview</li>
+                    <li>Cards</li>
+                    <li>Transactions</li>
+                    <br>
+                    <li>Account</li>
+                    <li>Settings</li>
+                    <li>Support</li>
+                    <br>
+                    <li>Log Out</li>
+                </ul>
+            </div>
             <div class="top-nav">Top Nav</div>
             <div class="main-content">
-                <div class="projects"> 
-                    <div class="content-header">Projects</div>
-                    <div class="card">1</div>
-                    <div class="card">2</div>
-                    <div class="card">3</div>
-                    <div class="card">4</div>
-                    <div class="card">5</div>
-                    <div class="card">6</div>
-                    <div class="card">7</div>
-                    <div class="card">8</div>
-                    <div class="card">9</div>
-                    <div class="card">10</div>
-                    <div class="card">11</div>
-                    <div class="card">12</div>
+                <div class="left">
+                    <div class="section">
+                        <div class="section-header">Balance</div>
+                        <div id="balance">
+                            £539,740.88
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-header">My Cards</div>
+                        <div class="cards">
+                            Insert Cards Here
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-header">Send Money</div>
+                        <form id="send-money">
+                            <div class="card-select">
+                                <select name="" id="">
+                                    <option>7155</option>
+                                    <option>8933</option>
+                                </select>
+                            </div>
+                            <div class="form-input">
+                                <label for="recipient">Recipient</label>
+                                <input 
+                                    required
+                                    type="text"
+                                    id="recipient"
+                                    placeholder="Enter the card number"
+                                >
+                            </div>
+                            <div class="form-input">
+                                <label for="amount">Enter the amount</label>
+                                <input 
+                                    required
+                                    type="text"
+                                    id="amount"
+                                >
+                            </div>
+                            <button type="submit">Send money</button>
+                        </form>
+                    </div>
                 </div>
-                <div class="news">
-                    <div class="content-header">Announcements</div>
-                    <div class="card">1</div>
-                    <div class="card">2</div>
-                    <div class="content-header">Trending</div>
-                    <div class="card">3</div>
-                    <div class="card">4</div>
+                <div class="right">
+                    <div class="section">
+                        <div class="section-header">Expenditure</div>
+                        <div class="expenditure">
+                            Insert Chart Here
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-header">Recent Activity</div>
+                        <div class="recent-activity">
+                            Insert Table Here
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
