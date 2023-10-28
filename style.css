@@ -3,165 +3,275 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 :root {
-    --top-nav-height: 80px;
-    --side-nav-width: 240px;
+    --top-nav-height: 5rem;
+    --side-nav-width: 13rem;
 
-    --font-colour-main: white;
+    --font-colour-primary: white;
+    --font-colour-secondary: rgb(180, 180, 180);
     
     --bg-colour-primary: rgb(20, 20, 20);
     --bg-colour-secondary: rgb(31, 31, 31);
-    --bg-colour-accent: rgb(168, 137, 92);
+    --bg-colour-accent: rgb(170, 136, 84);
+
+    --grid-gap: 2rem;
+    --card-border-radius: 1.25rem;
+    --card-padding: 1rem;
 }
 
-body {
-    box-sizing: border-box;
-    padding: 0;
+/* ==================== MATERIAL SYMBOL CUSTOMISATION ==================== */
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 300,
+    'GRAD' 0,
+    'opsz' 0;
+}
+
+
+
+/* ==================== REMOVE BROWSER STYLING ==================== */
+* {
     margin: 0;
+    padding: 0;
+    outline: 0;
+    border: 0;
+    appearance: none;
     text-decoration: none;
-    color: var(--font-colour-main);
-    background-color: var(--bg-colour-primary);
-    font-family: 'Roboto', sans-serif;
+    list-style: none;
+    box-sizing: border-box;
 }
 
-    .grid-container {
-        height: 100vh;
-        /* width: calc(100% - var(--side-nav-width)); */
-        /* margin-left: var(--side-nav-width); */
-        display: grid;
-        grid-template-columns: var(--side-nav-width) 1fr;
-        grid-template-rows: var(--top-nav-height) 1fr;
-        grid-template-areas:
-            "side-nav top-nav"
-            "side-nav main-content";
-    } 
 
-        .side-nav {
-            grid-area: side-nav;
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100vh;
-            width: var(--side-nav-width);
-            color: var(--font-colour-main);
-            background-color: var(--bg-colour-primary);
-        }
 
-        .top-nav {
-            grid-area: top-nav;
-            position: sticky;
-            top: 0;
-            color: var(--font-colour-main);
-            background-color: var(--bg-colour-primary);
-        }
+/* ==================== DEFAULT STYLING ==================== */
+body {
+    font-size: 16px;
+    font-weight: 300;
+    font-family: 'Roboto', sans-serif;
 
-        .main-content {
-            grid-area: main-content;
-            background-color: var(--bg-colour-secondary);
+
+    user-select: none;
+    overflow-x: hidden;
+    
+
+    /* maybe remove these from body */
+    color: var(--font-colour-primary);
+    background-color: var(--bg-colour-primary);
+    
+}
+
+a {
+    color: var(--font-colour-secondary)
+}
+
+img {
+    display: block;
+    width: 100%;
+}
+
+h1 {
+    font-size: 1.8rem;
+    font-weight: 800;
+}
+
+h2 {
+    font-size: 1.2rem;
+    font-weight: 400;
+}
+
+h3 {
+    font-size: 0.87rem;
+    font-weight: 400;
+    transition: all 200ms ease;
+}
+
+
+
+/* ==================== GRID CONTAINER ==================== */
+.grid-container {
+    height: 100vh;
+    width: 100%;
+    display: grid;
+    grid-template-columns: var(--side-nav-width) 1fr;
+    grid-template-rows: var(--top-nav-height) 1fr;
+    grid-template-areas:
+        "logo top-nav"
+        "side-nav main-content";
+} 
+
+    /* ==================== LOGO ==================== */
+    .logo {
+        grid-area: logo;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: var(--top-nav-height);
+        width: var(--side-nav-width);
+    }
+
+    /* ==================== SIDE NAV ==================== */
+    .side-nav {
+        grid-area: side-nav;
+        position: fixed;
+        top: var(--top-nav-height);
+        left: 0;
+        height: calc(100vh - var(--top-nav-height));
+        width: var(--side-nav-width);
+        color: var(--font-colour-primary);
+        background-color: var(--bg-colour-primary);
+    }
+
+        .side-nav .directory {
+            height: 100%;
             display: grid;
-            grid-template-rows: 1fr;
-            grid-template-columns: 2fr 3fr;
-            grid-template-areas: 
-                "left right";
-            padding: 32px;
-            gap: 32px;
-            border-radius: 20px 0 0 0;  /* doesn't apply when scrolling */
+            grid-template-rows: 3.7rem 3.7rem 3.7rem 3.7rem 3.7rem 3.7rem 1fr 3.7rem 3.7rem;
         }
 
-            .left {
-                grid-area: left;
+            .side-nav .directory a {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                margin-left: 2rem;
+                transition: all 300ms ease;
+            }
+
+            .side-nav .directory a.active {
+                color: var(--font-colour-primary);
+                background-color: var(--bg-colour-secondary);
+                margin-left: 0rem;
+                padding-left: 1rem;
+            }
+
+            .side-nav .directory a:hover h3 {
+                color: var(--font-colour-primary);
+                font-size: 1rem;
+            }
+
+
+    /* ==================== TOP NAV ==================== */
+    .top-nav {
+        grid-area: top-nav;
+        position: sticky;
+        top: 0;
+        color: var(--font-colour-primary);
+        background-color: var(--bg-colour-primary);
+    }
+
+    /* ==================== MAIN CONTENT ==================== */
+    .main-content {
+        grid-area: main-content;
+        background-color: var(--bg-colour-secondary);
+        display: grid;
+        grid-template-rows: 1fr;
+        grid-template-columns: 3fr 5fr;
+        grid-template-areas: 
+            "left right";
+        padding: var(--grid-gap);
+        gap: var(--grid-gap);
+        /* border-radius: var(--card-border-radius) 0 0 0;  doesn't apply when scrolling */
+    }
+
+        .left {
+            grid-area: left;
+            display: grid;
+            grid-template-rows: 1fr 2fr 3fr;
+            gap: var(--grid-gap);
+        }
+
+        .right {
+            grid-area: right;
+            display: grid;
+            grid-template-rows: 2fr 3fr;
+            gap: var(--grid-gap);
+        }
+
+            .content-card {
                 display: grid;
-                grid-template-rows: 1fr 2fr 3fr;
+                grid-template-rows: max-content 1fr;     
+            }
+
+                .content-card-header {
+                    padding: 0 4px 12px 4px;
+                }
+
+                .content-card > *:not(.content-card-header):not(#send-money) {     /*   :not(.cards)   */
+                    background-color: var(--bg-colour-primary);
+                    border-radius: var(--card-border-radius);
+                    padding: var(--card-padding);
+                }
+
+
+
+
+
+
+
+            .balance {
+
+            }
+
+            .cards {
+
+            }
+
+
+            #send-money {
+                display: grid;
+                grid-template-rows: repeat(4, max-content);
                 gap: 32px;
             }
 
-            .right {
-                grid-area: right;
-                display: grid;
-                grid-template-rows: 2fr 3fr;
-                gap: 32px;
-            }
+                .card-select {
+                    height: 60px;
+                    border-radius: 60px;
+                    background-color: var(--bg-colour-primary);
+                    display: flex;
+                    align-items: center;
+                    justify-content: end;
+                    
 
-                .section {
-                   display: grid;
-                   grid-template-rows: max-content 1fr;     
                 }
 
-                    .section-header {
-                        padding: 0 4px 12px 4px;
-                        font-size: 24px;
+                    select {
+                        border: none;
+                        margin-right: 25px;
+                        font-size: 18px;
+                        color: var(--font-colour-primary);
+                        background-color: transparent;
+                        appearance: auto;
                     }
 
-                    .section > *:not(.section-header):not(#send-money) {     /*   :not(.cards)   */
-                        background-color: var(--bg-colour-primary);
-                        border-radius: 20px;
-                        padding: 16px;
-                    }
-
-                #balance {
-
+                .form-input {
+                    background-color: var(--bg-colour-primary);
+                    border-radius: var(--card-border-radius);
+                    padding: var(--card-padding);
+                    display: flex;
+                    flex-direction: column;
                 }
 
-                .cards {
-
-                }
-
-
-                #send-money {
-                    display: grid;
-                    grid-template-rows: repeat(4, max-content);
-                    gap: 32px;
-                }
-
-                    .card-select {
+                #send-money > button {
                         height: 60px;
+                        border: 0;
                         border-radius: 60px;
-                        background-color: var(--bg-colour-primary);
-                        display: flex;
-                        align-items: center;
-                        justify-content: end;
-                        
-
-                    }
-
-                        select {
-                            border: none;
-                            margin-right: 25px;
-                            font-size: 20px;
-                            color: var(--font-colour-main);
-                            background-color: transparent;
-                        }
-
-                    .form-input {
-                        background-color: var(--bg-colour-primary);
-                        border-radius: 20px;
-                        padding: 16px;
-                        display: flex;
-                        flex-direction: column;
-                    }
-
-                    #send-money > button {
-                            height: 60px;
-                            border: 0;
-                            border-radius: 60px;
-                            font-size: 20px;
-                            font-weight: 700;
-                            color: var(--font-colour-main);
-                            background-color: var(--bg-colour-accent);
-                    }
-
-                .expenditure,
-                .recent-activity {
-                    border: 1px solid rgb(65, 65, 65);
+                        font-size: 18px;
+                        font-weight: 700;
+                        color: var(--font-colour-primary);
+                        background-color: var(--bg-colour-accent);
                 }
 
-                .expenditure {
+            .expenditure,
+            .recent-activity {
+                border: 1px solid rgb(65, 65, 65);
+            }
 
-                }
+            .expenditure {
 
-                .recent-activity {
+            }
 
-                }
-  
+            .recent-activity {
 
-            
+            }
+
+
+        
 

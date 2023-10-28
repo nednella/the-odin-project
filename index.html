@@ -5,47 +5,79 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
     <body>
         <div class="grid-container">
-            <div class="side-nav">
-                <div>
-                    Side Nav
-                    <br>
-                    <br>
-                    Logo Here
-                </div>
-                <ul>
-                    <li>Overview</li>
-                    <li>Cards</li>
-                    <li>Transactions</li>
-                    <br>
-                    <li>Account</li>
-                    <li>Settings</li>
-                    <li>Support</li>
-                    <br>
-                    <li>Log Out</li>
-                </ul>
+            <!------------------- LOGO ------------------->
+            <div class="logo">
+                <img>
+                <h1>ODIN BANK</h1>
             </div>
+
+            <!------------------- SIDE NAV ------------------->
+            <div class="side-nav">
+                <div class="directory">
+                    <a href="#" class="active">
+                        <span class="material-symbols-outlined">home</span>
+                        <h3>Overview</h3>
+                    </a>
+                    <a href="#">
+                        <span class="material-symbols-outlined">credit_card</span>
+                        <h3>Cards</h3>
+                    </a>
+                    <a href="#">
+                        <span class="material-symbols-outlined">sync_alt</span>
+                        <h3>Transactions</h3>
+                    </a>
+                    <a href="#">
+                        <span class="material-symbols-outlined">account_circle</span>
+                        <h3>Account</h3>
+                    </a>
+                    <a href="#">
+                        <span class="material-symbols-outlined">settings</span>
+                        <h3>Settings</h3>
+                    </a>
+                    <a href="#">
+                        <span class="material-symbols-outlined">support_agent</span>
+                        <h3>Support</h3>
+                    </a>
+                    <div></div>
+                    <a href="#">
+                        <span class="material-symbols-outlined">logout</span>
+                        <h3>Logout</h3>
+                    </a>
+                </div>     
+            </div>
+
+            <!------------------- TOP NAV ------------------->
             <div class="top-nav">Top Nav</div>
+
+
+
+            <!------------------- MAIN CONTENT ------------------->
             <div class="main-content">
+                <!------------------- LEFT ------------------->
                 <div class="left">
-                    <div class="section">
-                        <div class="section-header">Balance</div>
-                        <div id="balance">
+
+                    <div class="content-card">
+                        <h2 class="content-card-header">Balance</h2>
+                        <div class="balance" >
                             £539,740.88
                         </div>
                     </div>
-                    <div class="section">
-                        <div class="section-header">My Cards</div>
+
+                    <div class="content-card">
+                        <h2 class="content-card-header">My Cards</h2>
                         <div class="cards">
                             Insert Cards Here
                         </div>
                     </div>
-                    <div class="section">
-                        <div class="section-header">Send Money</div>
+
+                    <div class="content-card">
+                        <h2 class="content-card-header">Send Money</h2>
                         <form id="send-money">
                             <div class="card-select">
                                 <select name="" id="">
@@ -73,20 +105,29 @@
                             <button type="submit">Send money</button>
                         </form>
                     </div>
+
                 </div>
+
+                <!------------------- RIGHT ------------------->
                 <div class="right">
-                    <div class="section">
-                        <div class="section-header">Expenditure</div>
+
+                    <div class="content-card">
+                        <h2 class="content-card-header">Expenditure</h2>
                         <div class="expenditure">
                             Insert Chart Here
                         </div>
                     </div>
-                    <div class="section">
-                        <div class="section-header">Recent Activity</div>
+
+                    <div class="content-card">
+                        <h2 class="content-card-header">Recent Activity</h2>
                         <div class="recent-activity">
                             Insert Table Here
                         </div>
                     </div>
+
+
+
+
                 </div>
             </div>
         </div>
