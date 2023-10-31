@@ -13,6 +13,8 @@
     --bg-colour-secondary: rgb(31, 31, 31);
     --bg-colour-accent: rgb(170, 136, 84);
 
+    --colour-border: rgb(65, 65, 65);
+
     --grid-gap: 2rem;
     --card-border-radius: 1.25rem;
     --card-padding: 1rem;
@@ -50,6 +52,7 @@ body {
     font-family: 'Roboto', sans-serif;
 
 
+    /* not sure about these */
     user-select: none;
     overflow-x: hidden;
     
@@ -83,6 +86,10 @@ h3 {
     font-size: 0.87rem;
     font-weight: 400;
     transition: all 200ms ease;
+}
+
+.card-border {
+    border: 1px solid var(--colour-border);
 }
 
 
@@ -119,34 +126,29 @@ h3 {
         width: var(--side-nav-width);
         color: var(--font-colour-primary);
         background-color: var(--bg-colour-primary);
+        display: grid;
+        grid-template-rows: repeat(6, 3.7rem) 1fr repeat(2, 3.7rem); 
     }
 
-        .side-nav .directory {
-            height: 100%;
-            display: grid;
-            grid-template-rows: 3.7rem 3.7rem 3.7rem 3.7rem 3.7rem 3.7rem 1fr 3.7rem 3.7rem;
+        .side-nav a {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-left: 32px;
+            transition: all 300ms ease;
         }
 
-            .side-nav .directory a {
-                display: flex;
-                align-items: center;
-                gap: 1rem;
-                margin-left: 2rem;
-                transition: all 300ms ease;
-            }
+        .side-nav a.active {
+            color: var(--font-colour-primary);
+            background-color: var(--bg-colour-secondary);
+            margin-left: 0;
+            padding-left: 16px;
+        }
 
-            .side-nav .directory a.active {
-                color: var(--font-colour-primary);
-                background-color: var(--bg-colour-secondary);
-                margin-left: 0rem;
-                padding-left: 1rem;
-            }
-
-            .side-nav .directory a:hover h3 {
-                color: var(--font-colour-primary);
-                font-size: 1rem;
-            }
-
+        .side-nav a:hover h3 {
+            color: var(--font-colour-primary);
+            font-size: 1rem;
+        }
 
     /* ==================== TOP NAV ==================== */
     .top-nav {
@@ -163,7 +165,7 @@ h3 {
         background-color: var(--bg-colour-secondary);
         display: grid;
         grid-template-rows: 1fr;
-        grid-template-columns: 3fr 5fr;
+        grid-template-columns: 2.5fr 5fr;
         grid-template-areas: 
             "left right";
         padding: var(--grid-gap);
@@ -171,40 +173,36 @@ h3 {
         /* border-radius: var(--card-border-radius) 0 0 0;  doesn't apply when scrolling */
     }
 
+        .content-card {
+            display: grid;
+            grid-template-rows: max-content 1fr;     
+        }
+
+            .content-card-header {
+                padding: 0 4px 12px 4px;
+            }
+
+            .content-card > *:not(.content-card-header):not(#send-money) {     /*   :not(.cards)   */
+                background-color: var(--bg-colour-primary);
+                border-radius: var(--card-border-radius);
+                padding: var(--card-padding);
+            }
+
+
+
+
+
+            /* below needs adjusting for rem etc */
+
+
+            
+        /* ==================== LEFT ==================== */
         .left {
             grid-area: left;
             display: grid;
             grid-template-rows: 1fr 2fr 3fr;
             gap: var(--grid-gap);
         }
-
-        .right {
-            grid-area: right;
-            display: grid;
-            grid-template-rows: 2fr 3fr;
-            gap: var(--grid-gap);
-        }
-
-            .content-card {
-                display: grid;
-                grid-template-rows: max-content 1fr;     
-            }
-
-                .content-card-header {
-                    padding: 0 4px 12px 4px;
-                }
-
-                .content-card > *:not(.content-card-header):not(#send-money) {     /*   :not(.cards)   */
-                    background-color: var(--bg-colour-primary);
-                    border-radius: var(--card-border-radius);
-                    padding: var(--card-padding);
-                }
-
-
-
-
-
-
 
             .balance {
 
@@ -250,27 +248,102 @@ h3 {
                 }
 
                 #send-money > button {
-                        height: 60px;
-                        border: 0;
-                        border-radius: 60px;
-                        font-size: 18px;
-                        font-weight: 700;
-                        color: var(--font-colour-primary);
-                        background-color: var(--bg-colour-accent);
+                    height: 60px;
+                    border: 0;
+                    border-radius: 60px;
+                    font-size: 18px;
+                    font-weight: 700;
+                    color: var(--font-colour-primary);
+                    background-color: var(--bg-colour-accent);
                 }
 
-            .expenditure,
-            .recent-activity {
-                border: 1px solid rgb(65, 65, 65);
-            }
+
+
+
+
+        /* ==================== RIGHT ==================== */
+        .right {
+            grid-area: right;
+            display: grid;
+            grid-template-rows: 2fr 3fr;
+            gap: var(--grid-gap);
+        }
+
+            
+            
 
             .expenditure {
 
             }
 
-            .recent-activity {
+            .recent-activity-header {
+                display: flex;
+                justify-content: space-between;
+                }
 
+            .recent-activity-header > ul {
+                display: flex;
+                align-items: center;
+                font-size: 1rem;
             }
+
+                .recent-activity-header > ul > li {
+                    padding: 0 16px;
+                    text-align: center;
+                }
+
+                .recent-activity-header > ul > li:nth-child(2) > a {
+                    color: var(--font-colour-primary);
+                }
+
+                .recent-activity-header > ul > li:not(:first-child) {
+                    border-left: 1px solid var(--colour-border);
+                }
+
+            .recent-activity {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+                .recent-activity > .table-scroll {
+                    max-height: 570px;
+                    width: 100%;
+                    overflow: auto;
+                }
+
+                .recent-activity > .table-scroll::-webkit-scrollbar {
+                    width: 12px;
+                }
+
+                .recent-activity > .table-scroll::-webkit-scrollbar-track {
+                    background-color: var(--bg-colour-secondary);
+                    border-radius: 10px;
+                }
+
+                .recent-activity > .table-scroll::-webkit-scrollbar-thumb {
+                    background-color: var(--colour-border);
+                    border-radius: 10px;
+                }
+
+                    .recent-activity > .table-scroll > table {
+                        width: 100%;
+                        padding-right: 16px;
+                    }
+
+                        .recent-activity > .table-scroll > table > tbody > tr > td {
+                            height: 2.75rem;
+                        }
+
+                        span.transaction-type {
+                            font-size: 0.75rem;
+                            font-weight: 400;
+                            color: rgb(156, 156, 156);
+                        }
+
+            
 
 
         
