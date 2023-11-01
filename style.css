@@ -88,6 +88,10 @@ h3 {
     transition: all 200ms ease;
 }
 
+.logo-colour {
+    color: var(--bg-colour-accent);
+}
+
 .card-border {
     border: 1px solid var(--colour-border);
 }
@@ -114,7 +118,14 @@ h3 {
         left: 0;
         height: var(--top-nav-height);
         width: var(--side-nav-width);
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
+
+        .logo > a {
+            color: var(--font-colour-primary)
+        }
 
     /* ==================== SIDE NAV ==================== */
     .side-nav {
