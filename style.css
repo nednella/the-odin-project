@@ -1,6 +1,7 @@
 /* CSS */
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 :root {
     --top-nav-height: 5rem;
@@ -50,17 +51,13 @@ body {
     font-size: 16px;
     font-weight: 300;
     font-family: 'Roboto', sans-serif;
+    color: var(--font-colour-primary);
+    background-color: var(--bg-colour-primary);
 
 
     /* not sure about these */
     user-select: none;
     overflow-x: hidden;
-    
-
-    /* maybe remove these from body */
-    color: var(--font-colour-primary);
-    background-color: var(--bg-colour-primary);
-    
 }
 
 a {
@@ -94,6 +91,21 @@ h3 {
 
 .card-border {
     border: 1px solid var(--colour-border);
+}
+
+.content-card {
+    display: grid;
+    grid-template-rows: max-content 1fr;     
+}
+
+.content-card-header {
+    padding: 0 4px 12px 4px;
+}
+
+.content-card > *:not(.content-card-header):not(.cards):not(#send-money) {
+    background-color: var(--bg-colour-primary);
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
 }
 
 
@@ -181,37 +193,13 @@ h3 {
             "left right";
         padding: var(--grid-gap);
         gap: var(--grid-gap);
-        /* border-radius: var(--card-border-radius) 0 0 0;  doesn't apply when scrolling */
     }
-
-        .content-card {
-            display: grid;
-            grid-template-rows: max-content 1fr;     
-        }
-
-            .content-card-header {
-                padding: 0 4px 12px 4px;
-            }
-
-            .content-card > *:not(.content-card-header):not(#send-money) {     /*   :not(.cards)   */
-                background-color: var(--bg-colour-primary);
-                border-radius: var(--card-border-radius);
-                padding: var(--card-padding);
-            }
-
-
-
-
-
-            /* below needs adjusting for rem etc */
-
-
-            
+  
         /* ==================== LEFT ==================== */
         .left {
             grid-area: left;
             display: grid;
-            grid-template-rows: 1fr 2fr 3fr;
+            grid-template-rows: 1fr max-content 3fr;
             gap: var(--grid-gap);
         }
 
@@ -220,9 +208,81 @@ h3 {
             }
 
             .cards {
-
+                height: 300px;
+                position: relative;
             }
 
+                .card-1 {
+                    position: absolute;
+                    overflow: hidden;
+                    height: 240px;
+                    width: 100%;
+                    border-radius: 12px;
+                    box-shadow: 0 15px 25px #0a0a0af0;
+                    background-color: rgba(192, 98, 204, 0.5);  
+                }
+
+                .card-2 {
+                    top: 18%;
+                    position: absolute;   
+                    overflow: hidden;
+                    height: 240px;
+                    width: 100%;
+                    border-radius: 12px;
+                    box-shadow: 0 5px 25px #0a0a0af0;
+                    background-color: rgba(10, 82, 85, 0.95);   
+                }
+
+                    .face {
+                        background: transparent;
+                        height: 100%;
+                        width: 100%;
+                        padding: 24px;
+                        display: grid;
+                        grid-template-rows: 1fr 2fr;
+                        font-weight: 500;
+                    }
+
+                        .face-top {
+                            display: flex;
+                            justify-content: space-between;
+                            font-size: 1.1rem;
+                        }
+
+                        .face-bottom {
+                            display: grid;
+                            grid-template-rows: 1fr 1fr 1fr;
+                            align-items: center;
+                        }
+
+                            .face-number {
+                                z-index: 999;
+                                font-family: 'Orbitron', sans-serif;
+                                letter-spacing: 5px;
+                                text-shadow: 2px 4px 4px rgb(0, 0, 0);
+                            }
+
+                            .face-valid {
+                                display: grid;
+                                grid-template-columns: repeat(2,max-content);
+                                gap: var(--grid-gap);
+                                align-items: center;
+                                font-size: 0.9rem;
+                                font-weight: 300;
+                            }
+
+                    .card-bg {
+                        z-index: 0;
+                        content: '';
+                        position: absolute;
+                        right: -40%;
+                        bottom: -80%;
+                        height: 340px;
+                        width: 340px;
+                        border-radius: 50%;
+                        background: linear-gradient(#f00, #f0f);
+                        
+                    }
 
             #send-money {
                 display: grid;
@@ -268,10 +328,6 @@ h3 {
                     background-color: var(--bg-colour-accent);
                 }
 
-
-
-
-
         /* ==================== RIGHT ==================== */
         .right {
             grid-area: right;
@@ -279,9 +335,6 @@ h3 {
             grid-template-rows: 2fr 3fr;
             gap: var(--grid-gap);
         }
-
-            
-            
 
             .expenditure {
 
