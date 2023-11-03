@@ -199,13 +199,41 @@ h3 {
         .left {
             grid-area: left;
             display: grid;
-            grid-template-rows: 1fr max-content 3fr;
+            grid-template-rows: max-content max-content 3fr;
             gap: var(--grid-gap);
         }
 
-            .balance {
+            .cards-header {
+                display: flex;
+                justify-content: space-between;
+                }
 
-            }
+                .cards-header-left {
+                    display: flex;
+                    gap: 32px;
+                }
+
+                    .cards-header-left ul {
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        font-size: 1rem;
+                        color: var(--font-colour-secondary);
+                    }
+
+                    .cards-header-left ul li:first-child {
+                        font-size: 1.2rem;
+                        color: var(--font-colour-primary);
+                    }
+
+                .cards-header-right {
+                    display: flex;
+                    gap: 16px;
+                }
+
+                    .card-icons {
+                        font-size: 1.2rem;
+                    }
 
             .cards {
                 height: 300px;
@@ -230,11 +258,10 @@ h3 {
                     width: 100%;
                     border-radius: 12px;
                     box-shadow: 0 5px 25px #0a0a0af0;
-                    background-color: rgba(10, 82, 85, 0.95);   
+                    background-color: rgba(10, 82, 85, 0.95); 
                 }
 
                     .face {
-                        background: transparent;
                         height: 100%;
                         width: 100%;
                         padding: 24px;
@@ -249,40 +276,63 @@ h3 {
                             font-size: 1.1rem;
                         }
 
-                        .face-bottom {
+                        .face-middle {
+                            z-index: 999;
                             display: grid;
                             grid-template-rows: 1fr 1fr 1fr;
                             align-items: center;
                         }
 
                             .face-number {
-                                z-index: 999;
                                 font-family: 'Orbitron', sans-serif;
+                                font-size: 1.1rem;
                                 letter-spacing: 5px;
                                 text-shadow: 2px 4px 4px rgb(0, 0, 0);
                             }
 
                             .face-valid {
                                 display: grid;
-                                grid-template-columns: repeat(2,max-content);
+                                grid-template-columns: repeat(2, max-content);
                                 gap: var(--grid-gap);
                                 align-items: center;
                                 font-size: 0.9rem;
                                 font-weight: 300;
                             }
 
+                        .face-bottom {
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            font-size: 1.1rem;
+                            letter-spacing: 1px;
+                        }
+
                     .card-bg {
                         z-index: 0;
                         content: '';
                         position: absolute;
-                        right: -40%;
-                        bottom: -80%;
-                        height: 340px;
-                        width: 340px;
+                        right: -50%;
+                        bottom: -140%;
+                        height: 500px;
+                        width: 500px;
                         border-radius: 50%;
-                        background: linear-gradient(#f00, #f0f);
-                        
+                        background: linear-gradient(#f00, #f0f );
                     }
+
+            .card-balance {
+                text-align: center;
+                font-size: 2rem;
+                font-weight: 200;
+            }
+
+                .balance-integer {
+                    font-weight: 700;
+                }
+
+                .balance-decimal {
+                    font-size: 1.4rem;
+                    font-weight: 300;
+                }       
 
             #send-money {
                 display: grid;
@@ -291,19 +341,16 @@ h3 {
             }
 
                 .card-select {
-                    height: 60px;
-                    border-radius: 60px;
                     background-color: var(--bg-colour-primary);
+                    border-radius: var(--card-border-radius);
+                    padding: var(--card-padding);
                     display: flex;
                     align-items: center;
-                    justify-content: end;
-                    
-
+                    justify-content: space-between;
                 }
 
                     select {
                         border: none;
-                        margin-right: 25px;
                         font-size: 18px;
                         color: var(--font-colour-primary);
                         background-color: transparent;
@@ -332,37 +379,42 @@ h3 {
         .right {
             grid-area: right;
             display: grid;
-            grid-template-rows: 2fr 3fr;
+            grid-template-rows: 2fr max-content;
             gap: var(--grid-gap);
         }
 
-            .expenditure {
-
-            }
-
+            .expenditure-header,
             .recent-activity-header {
                 display: flex;
                 justify-content: space-between;
                 }
 
-            .recent-activity-header > ul {
+            .expenditure-header ul,
+            .recent-activity-header ul {
                 display: flex;
                 align-items: center;
                 font-size: 1rem;
             }
 
-                .recent-activity-header > ul > li {
+                .expenditure-header ul li,
+                .recent-activity-header ul li {
                     padding: 0 16px;
                     text-align: center;
                 }
 
-                .recent-activity-header > ul > li:nth-child(2) > a {
+                .expenditure-header ul li:nth-child(4) a,
+                .recent-activity-header ul li:nth-child(2) a {
                     color: var(--font-colour-primary);
                 }
 
-                .recent-activity-header > ul > li:not(:first-child) {
+                .expenditure-header ul li:not(:first-child),
+                .recent-activity-header ul li:not(:first-child) {
                     border-left: 1px solid var(--colour-border);
                 }
+
+            .expenditure {
+
+            }
 
             .recent-activity {
                 width: 100%;
@@ -372,32 +424,32 @@ h3 {
                 align-items: center;
             }
 
-                .recent-activity > .table-scroll {
+                .recent-activity .table-scroll {
                     max-height: 570px;
                     width: 100%;
                     overflow: auto;
                 }
 
-                .recent-activity > .table-scroll::-webkit-scrollbar {
+                .recent-activity .table-scroll::-webkit-scrollbar {
                     width: 12px;
                 }
 
-                .recent-activity > .table-scroll::-webkit-scrollbar-track {
+                .recent-activity .table-scroll::-webkit-scrollbar-track {
                     background-color: var(--bg-colour-secondary);
                     border-radius: 10px;
                 }
 
-                .recent-activity > .table-scroll::-webkit-scrollbar-thumb {
+                .recent-activity .table-scroll::-webkit-scrollbar-thumb {
                     background-color: var(--colour-border);
                     border-radius: 10px;
                 }
 
-                    .recent-activity > .table-scroll > table {
+                    .recent-activity .table-scroll > table {
                         width: 100%;
                         padding-right: 16px;
                     }
 
-                        .recent-activity > .table-scroll > table > tbody > tr > td {
+                        .recent-activity .table-scroll table tbody tr td {
                             height: 2.75rem;
                         }
 
