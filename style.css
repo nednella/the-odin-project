@@ -440,7 +440,9 @@ h3 {
                 }
 
             .expenditure {
-
+                width: 100%;
+                min-width: 0;
+                min-height: 0;
             }
 
             .recent-activity {
