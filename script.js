@@ -95,6 +95,9 @@ new Chart(context, {
                 },
                 ticks: {
                     color: 'rgb(180, 180, 180)',
+                    font: {
+                        size: 14,
+                    }
                 },
             },
             y: {
@@ -107,7 +110,11 @@ new Chart(context, {
                     drawTicks: false,
                 },
                 ticks: {
+                    padding: 16,
                     color: 'rgb(180, 180, 180)',
+                    font: {
+                        size: 14,
+                    },
                     callback: value => `${value / 1000}K`
                 },
             }
