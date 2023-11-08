@@ -30,6 +30,12 @@
     'opsz' 0;
 }
 
+.fa-github {
+    font-size: 22px;
+    width: 24px;
+    display: block;
+    text-align: center;
+}
 
 
 /* ==================== REMOVE BROWSER STYLING ==================== */
@@ -65,7 +71,7 @@ body {
 }
 
 a {
-    color: var(--font-colour-secondary)
+    color: var(--font-colour-secondary);
 }
 
 img {
@@ -156,7 +162,7 @@ h3 {
         color: var(--font-colour-primary);
         background-color: var(--bg-colour-primary);
         display: grid;
-        grid-template-rows: repeat(6, 3.7rem) 1fr repeat(2, 3.7rem); 
+        grid-template-rows: repeat(6, 3.7rem) 1fr repeat(3, 3.7rem); 
     }
 
         .side-nav a {
