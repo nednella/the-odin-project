@@ -4,7 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 :root {
-    --top-nav-height: 5rem;
+    --top-nav-height: 4.5rem;
     --side-nav-width: 13rem;
 
     --font-colour-primary: white;
@@ -102,11 +102,11 @@ h3 {
     grid-template-rows: max-content 1fr;     
 }
 
-.content-card-header {
+.content-header {
     padding: 0 4px 12px 4px;
 }
 
-.content-card > *:not(.content-card-header):not(.cards):not(#send-money) {
+.main-content > * > *:not(.content-header):not(.cards):not(#send-money) {
     background-color: var(--bg-colour-primary);
     border-radius: var(--card-border-radius);
     padding: var(--card-padding);
@@ -143,6 +143,8 @@ h3 {
             color: var(--font-colour-primary)
         }
 
+
+
     /* ==================== SIDE NAV ==================== */
     .side-nav {
         grid-area: side-nav;
@@ -176,6 +178,8 @@ h3 {
             font-size: 1rem;
         }
 
+
+
     /* ==================== TOP NAV ==================== */
     .top-nav {
         grid-area: top-nav;
@@ -185,27 +189,48 @@ h3 {
         background-color: var(--bg-colour-primary);
     }
 
-    /* ==================== MAIN CONTENT ==================== */
+
+
+    /* ==================== MAIN CONTENT GRID ==================== */
     .main-content {
         grid-area: main-content;
         background-color: var(--bg-colour-secondary);
         display: grid;
-        grid-template-rows: 1fr;
-        grid-template-columns: 2.5fr 5fr;
-        grid-template-areas: 
-            "left right";
         padding: var(--grid-gap);
-        gap: var(--grid-gap);
+        gap: var(--grid-gap);    
+        grid-template-columns: 340px minmax(485px, 1fr);
+        grid-template-rows: auto auto 1fr;
+        grid-template-areas: 
+            "my-cards expenditure"
+            "card-balance expenditure"
+            "send-money recent-activity";
     }
-  
-        /* ==================== LEFT ==================== */
-        .left {
-            grid-area: left;
-            display: grid;
-            grid-template-rows: max-content max-content 3fr;
-            gap: var(--grid-gap);
+
+        .content-my-cards {
+            grid-area: my-cards;
         }
 
+        .content-balance {
+            grid-area: card-balance;
+        }
+
+        .content-send-money {
+            grid-area: send-money;
+        }
+
+        .content-expenditure {
+            grid-area: expenditure;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content-recent-activity {
+            grid-area: recent-activity;
+        }
+
+
+
+            /* ==================== CARDS ==================== */
             .cards-header {
                 display: flex;
                 justify-content: space-between;
@@ -239,7 +264,7 @@ h3 {
                     }
 
             .cards {
-                height: 300px;
+                height: 270px;
                 position: relative;
             }
 
@@ -257,7 +282,7 @@ h3 {
                     top: 18%;
                     position: absolute;   
                     overflow: hidden;
-                    height: 240px;
+                    height: 220px;
                     width: 100%;
                     border-radius: 12px;
                     box-shadow: 0 5px 25px #0a0a0af0;
@@ -314,17 +339,20 @@ h3 {
                         z-index: 0;
                         content: '';
                         position: absolute;
-                        right: -50%;
-                        bottom: -140%;
+                        right: -60%;
+                        bottom: -155%;
                         height: 500px;
                         width: 500px;
                         border-radius: 50%;
                         background: linear-gradient(#f00, #f0f );
                     }
 
+
+
+            /* ==================== CARD BALANCE ==================== */
             .card-balance {
                 text-align: center;
-                font-size: 2rem;
+                font-size: 1.8rem;
                 font-weight: 200;
             }
 
@@ -333,10 +361,13 @@ h3 {
                 }
 
                 .balance-decimal {
-                    font-size: 1.4rem;
+                    font-size: 1.3rem;
                     font-weight: 300;
-                }       
+                }   
+                
+                
 
+            /* ==================== SEND MONEY ==================== */
             #send-money {
                 display: grid;
                 grid-template-rows: repeat(4, max-content);
@@ -394,9 +425,9 @@ h3 {
                         }
 
                 #send-money button {
-                    height: 60px;
+                    height: 66px;
                     border: 0;
-                    border-radius: 60px;
+                    border-radius: var(--card-border-radius); /* old radius was 60px */
                     font-size: 18px;
                     font-weight: 700;
                     color: var(--font-colour-primary);
@@ -407,14 +438,9 @@ h3 {
                     transform: scale(0.99);
                 }
 
-        /* ==================== RIGHT ==================== */
-        .right {
-            grid-area: right;
-            display: grid;
-            grid-template-rows: 2fr max-content;
-            gap: var(--grid-gap);
-        }
 
+
+            /* ==================== EXPENDITURE ==================== */
             .expenditure-header,
             .recent-activity-header {
                 display: flex;
@@ -440,24 +466,35 @@ h3 {
                 }
 
             .expenditure {
-                min-width: 0;
-                min-height: 0;
+                flex-grow: 1;
                 display: flex;
                 align-items: center;
                 justify-content: center;
             }
 
+                #expenditure-chart {
+                    padding: var(--card-padding);
+                    padding-left: 0;
+                }
+
+
+
+            /* ==================== RECENT ACTIVITY ==================== */
             .recent-activity {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
                 align-items: center;
+                gap: 8px;
+                max-height: 515px;
+                min-height: 0;
+                min-width: 0;
+                overflow: hidden;
             }
 
                 .recent-activity .table-scroll {
-                    max-height: 570px;
                     width: 100%;
-                    overflow: auto;
+                    overflow-y: auto;
                 }
 
                 .recent-activity .table-scroll::-webkit-scrollbar {
@@ -488,4 +525,4 @@ h3 {
                             font-size: 0.75rem;
                             font-weight: 400;
                             color: rgb(156, 156, 156);
-                        }
+                        } 
