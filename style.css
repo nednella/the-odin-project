@@ -58,12 +58,7 @@ body {
     font-weight: 300;
     font-family: 'Roboto', sans-serif;
     color: var(--font-colour-primary);
-    background-color: var(--bg-colour-primary);
-
-
-    /* not sure about these */
-    user-select: none;
-    overflow-x: hidden;
+    background-color: var(--bg-colour-secondary);
 }
 
 .active {
@@ -140,6 +135,7 @@ h3 {
         left: 0;
         height: var(--top-nav-height);
         width: var(--side-nav-width);
+        background-color: var(--bg-colour-primary);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -200,10 +196,11 @@ h3 {
     /* ==================== MAIN CONTENT GRID ==================== */
     .main-content {
         grid-area: main-content;
-        background-color: var(--bg-colour-secondary);
         display: grid;
         padding: var(--grid-gap);
         gap: var(--grid-gap);    
+
+        height: calc(100vh - var(--top-nav-height));
         grid-template-columns: 340px minmax(485px, 1fr);
         grid-template-rows: auto auto 1fr;
         grid-template-areas: 
@@ -226,309 +223,314 @@ h3 {
 
         .content-expenditure {
             grid-area: expenditure;
-            display: flex;
+
+            /* ensures the chart container takes up its entire alloted space in the grid */
+            display: flex; 
             flex-direction: column;
         }
 
         .content-recent-activity {
             grid-area: recent-activity;
+
+            /* ensures the recent-activty table content scrolls properly - nothing pushed out of the viewport */
+            display: flex; 
+            flex-direction: column;
+            overflow: hidden;
         }
 
 
 
-            /* ==================== CARDS ==================== */
-            .cards-header {
+    /* ==================== CARDS ==================== */
+    .cards-header {
+        display: flex;
+        justify-content: space-between;
+        }
+
+        .cards-header-left {
+            display: flex;
+            gap: 32px;
+        }
+
+            .cards-header-left ul {
                 display: flex;
-                justify-content: space-between;
-                }
-
-                .cards-header-left {
-                    display: flex;
-                    gap: 32px;
-                }
-
-                    .cards-header-left ul {
-                        display: flex;
-                        align-items: center;
-                        gap: 8px;
-                        font-size: 1rem;
-                        color: var(--font-colour-secondary);
-                    }
-
-                    .cards-header-left ul li:first-child {
-                        font-size: 1.2rem;
-                        color: var(--font-colour-primary);
-                    }
-
-                .cards-header-right {
-                    display: flex;
-                    gap: 16px;
-                }
-
-                    .card-icons {
-                        font-size: 1.2rem;
-                    }
-
-            .cards {
-                height: 270px;
-                position: relative;
+                align-items: center;
+                gap: 8px;
+                font-size: 1rem;
+                color: var(--font-colour-secondary);
             }
 
-                .card-1 {
-                    position: absolute;
-                    overflow: hidden;
-                    height: 240px;
-                    width: 100%;
-                    border-radius: 12px;
-                    box-shadow: 0 15px 25px #0a0a0af0;
-                    background-color: rgba(192, 98, 204, 0.5);  
-                }
-
-                .card-2 {
-                    top: 18%;
-                    position: absolute;   
-                    overflow: hidden;
-                    height: 220px;
-                    width: 100%;
-                    border-radius: 12px;
-                    box-shadow: 0 5px 25px #0a0a0af0;
-                    background-color: rgba(10, 82, 85, 0.95); 
-                }
-
-                    .face {
-                        height: 100%;
-                        width: 100%;
-                        padding: 24px;
-                        display: grid;
-                        grid-template-rows: 1fr 2fr;
-                        font-weight: 500;
-                    }
-
-                        .face-top {
-                            display: flex;
-                            justify-content: space-between;
-                            font-size: 1.1rem;
-                        }
-
-                        .face-middle {
-                            z-index: 999;
-                            display: grid;
-                            grid-template-rows: 1fr 1fr 1fr;
-                            align-items: center;
-                        }
-
-                            .face-number {
-                                font-family: 'Orbitron', sans-serif;
-                                font-size: 1.1rem;
-                                letter-spacing: 5px;
-                                text-shadow: 2px 4px 4px rgb(0, 0, 0);
-                            }
-
-                            .face-valid {
-                                display: grid;
-                                grid-template-columns: repeat(2, max-content);
-                                gap: var(--grid-gap);
-                                align-items: center;
-                                font-size: 0.9rem;
-                                font-weight: 300;
-                            }
-
-                        .face-bottom {
-                            display: flex;
-                            align-items: center;
-                            justify-content: space-between;
-                            font-size: 1.1rem;
-                            letter-spacing: 1px;
-                        }
-
-                    .card-bg {
-                        z-index: 0;
-                        content: '';
-                        position: absolute;
-                        right: -60%;
-                        bottom: -155%;
-                        height: 500px;
-                        width: 500px;
-                        border-radius: 50%;
-                        background: linear-gradient(#f00, #f0f );
-                    }
-
-
-
-            /* ==================== CARD BALANCE ==================== */
-            .card-balance {
-                text-align: center;
-                font-size: 1.8rem;
-                font-weight: 200;
+            .cards-header-left ul li:first-child {
+                font-size: 1.2rem;
+                color: var(--font-colour-primary);
             }
 
-                .balance-integer {
-                    font-weight: 700;
-                }
+        .cards-header-right {
+            display: flex;
+            gap: 16px;
+        }
 
-                .balance-decimal {
-                    font-size: 1.3rem;
-                    font-weight: 300;
-                }   
-                
-                
+            .card-icons {
+                font-size: 1.2rem;
+            }
 
-            /* ==================== SEND MONEY ==================== */
-            #send-money {
+    .cards {
+        height: 270px;
+        position: relative;
+    }
+
+        .card-1 {
+            position: absolute;
+            overflow: hidden;
+            height: 240px;
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 15px 25px #0a0a0af0;
+            background-color: rgba(192, 98, 204, 0.5);  
+        }
+
+        .card-2 {
+            top: 18%;
+            position: absolute;   
+            overflow: hidden;
+            height: 220px;
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 5px 25px #0a0a0af0;
+            background-color: rgba(10, 82, 85, 0.95); 
+        }
+
+            .face {
+                height: 100%;
+                width: 100%;
+                padding: 24px;
                 display: grid;
-                grid-template-rows: repeat(4, max-content);
-                gap: 32px;
+                grid-template-rows: 1fr 2fr;
+                font-weight: 500;
             }
 
-                .card-select {
-                    background-color: var(--bg-colour-primary);
-                    border-radius: var(--card-border-radius);
-                    padding: var(--card-padding);
+                .face-top {
+                    display: flex;
+                    justify-content: space-between;
+                    font-size: 1.1rem;
+                }
+
+                .face-middle {
+                    z-index: 999;
+                    display: grid;
+                    grid-template-rows: 1fr 1fr 1fr;
+                    align-items: center;
+                }
+
+                    .face-number {
+                        font-family: 'Orbitron', sans-serif;
+                        font-size: 1.1rem;
+                        letter-spacing: 5px;
+                        text-shadow: 2px 4px 4px rgb(0, 0, 0);
+                    }
+
+                    .face-valid {
+                        display: grid;
+                        grid-template-columns: repeat(2, max-content);
+                        gap: var(--grid-gap);
+                        align-items: center;
+                        font-size: 0.9rem;
+                        font-weight: 300;
+                    }
+
+                .face-bottom {
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
+                    font-size: 1.1rem;
+                    letter-spacing: 1px;
                 }
 
-                    .card-select select {
-                        background: none;
-                        appearance: auto;
-                        font-size: 1.1rem;
-                        color: var(--font-colour-primary);
-                    }
-
-                    .card-select select:invalid {
-                        color: var(--font-colour-secondary)
-                    }
-
-                    .card-select option {
-                        color: black;
-                    }
-
-                .form-input {
-                    background-color: var(--bg-colour-primary);
-                    border-radius: var(--card-border-radius);
-                    padding: var(--card-padding);
-                    padding-bottom: 0.5rem;
-                    display: flex;
-                    flex-direction: column;
-                }
-
-                    .form-input label {
-                        font-weight: 400;
-                    }
-                  
-                    .form-input input {
-                        height: 40px;
-                        background: transparent;
-                        font-size: 1rem;
-                        color: var(--font-colour-secondary);
-                    }
-
-                        .form-input .form-amount {
-                            display: grid;
-                            grid-template-columns: 1fr max-content;
-                            align-items: center;
-                        }
-
-                #send-money button {
-                    height: 66px;
-                    border: 0;
-                    border-radius: var(--card-border-radius); /* old radius was 60px */
-                    font-size: 18px;
-                    font-weight: 700;
-                    color: var(--font-colour-primary);
-                    background-color: var(--bg-colour-accent);
-                }
-
-                #send-money button:active {
-                    transform: scale(0.99);
-                }
+            .card-bg {
+                z-index: 0;
+                content: '';
+                position: absolute;
+                right: -60%;
+                bottom: -155%;
+                height: 500px;
+                width: 500px;
+                border-radius: 50%;
+                background: linear-gradient(#f00, #f0f );
+            }
 
 
 
-            /* ==================== EXPENDITURE ==================== */
-            .expenditure-header,
-            .recent-activity-header {
-                display: flex;
-                justify-content: space-between;
-                }
+    /* ==================== CARD BALANCE ==================== */
+    .card-balance {
+        text-align: center;
+        font-size: 1.8rem;
+        font-weight: 200;
+    }
 
-            .expenditure-header ul,
-            .recent-activity-header ul {
-                display: flex;
-                align-items: center;
+        .balance-integer {
+            font-weight: 700;
+        }
+
+        .balance-decimal {
+            font-size: 1.3rem;
+            font-weight: 300;
+        }   
+        
+        
+
+    /* ==================== SEND MONEY ==================== */
+    #send-money {
+        display: grid;
+        grid-template-rows: repeat(4, max-content);
+        gap: 32px;
+    }
+
+        .card-select {
+            background-color: var(--bg-colour-primary);
+            border-radius: var(--card-border-radius);
+            padding: var(--card-padding);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+            .card-select select {
+                background: none;
+                appearance: auto;
+                font-size: 1.1rem;
+                color: var(--font-colour-primary);
+            }
+
+            .card-select select:invalid {
+                color: var(--font-colour-secondary)
+            }
+
+            .card-select option {
+                color: black;
+            }
+
+        .form-input {
+            background-color: var(--bg-colour-primary);
+            border-radius: var(--card-border-radius);
+            padding: var(--card-padding);
+            padding-bottom: 0.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+            .form-input label {
+                font-weight: 400;
+            }
+            
+            .form-input input {
+                height: 40px;
+                background: transparent;
                 font-size: 1rem;
+                color: var(--font-colour-secondary);
             }
 
-                .expenditure-header ul li,
-                .recent-activity-header ul li {
-                    padding: 0 16px;
-                    text-align: center;
+                .form-input .form-amount {
+                    display: grid;
+                    grid-template-columns: 1fr max-content;
+                    align-items: center;
                 }
 
-                .expenditure-header ul li:not(:first-child),
-                .recent-activity-header ul li:not(:first-child) {
-                    border-left: 1px solid var(--colour-border);
-                }
+        #send-money button {
+            height: 66px;
+            border: 0;
+            border-radius: var(--card-border-radius); /* old radius was 60px */
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--font-colour-primary);
+            background-color: var(--bg-colour-accent);
+        }
 
-            .expenditure {
-                flex-grow: 1;
-                display: flex;
-                align-items: center;
-                justify-content: center;
+        #send-money button:active {
+            transform: scale(0.99);
+        }
+
+
+
+    /* ==================== EXPENDITURE ==================== */
+    .expenditure-header,
+    .recent-activity-header {
+        display: flex;
+        justify-content: space-between;
+        }
+
+    .expenditure-header ul,
+    .recent-activity-header ul {
+        display: flex;
+        align-items: center;
+        font-size: 1rem;
+    }
+
+        .expenditure-header ul li,
+        .recent-activity-header ul li {
+            padding: 0 16px;
+            text-align: center;
+        }
+
+        .expenditure-header ul li:not(:first-child),
+        .recent-activity-header ul li:not(:first-child) {
+            border-left: 1px solid var(--colour-border);
+        }
+
+    .expenditure {
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        #expenditure-chart {
+            padding: var(--card-padding);
+            padding-left: 0;
+        }
+
+
+
+    /* ==================== RECENT ACTIVITY ==================== */
+    .recent-activity {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+        overflow-y: hidden;
+    }
+
+        .recent-activity .table-scroll {
+            width: 100%;
+            max-height: 100%;
+            overflow-y: auto;
+        }
+
+        .recent-activity .table-scroll::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        .recent-activity .table-scroll::-webkit-scrollbar-track {
+            background-color: var(--bg-colour-secondary);
+            border-radius: 10px;
+        }
+
+        .recent-activity .table-scroll::-webkit-scrollbar-thumb {
+            background-color: var(--colour-border);
+            border-radius: 10px;
+        }
+
+            .recent-activity .table-scroll table {
+                width: 100%;
+                padding-right: 16px;
             }
 
-                #expenditure-chart {
-                    padding: var(--card-padding);
-                    padding-left: 0;
+                .recent-activity .table-scroll table tbody tr td {
+                    height: 2.75rem;
+                    padding: 0 8px;
                 }
 
-
-
-            /* ==================== RECENT ACTIVITY ==================== */
-            .recent-activity {
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                align-items: center;
-                gap: 8px;
-                max-height: 515px;
-                min-height: 0;
-                min-width: 0;
-                overflow: hidden;
-            }
-
-                .recent-activity .table-scroll {
-                    width: 100%;
-                    overflow-y: auto;
-                }
-
-                .recent-activity .table-scroll::-webkit-scrollbar {
-                    width: 12px;
-                }
-
-                .recent-activity .table-scroll::-webkit-scrollbar-track {
-                    background-color: var(--bg-colour-secondary);
-                    border-radius: 10px;
-                }
-
-                .recent-activity .table-scroll::-webkit-scrollbar-thumb {
-                    background-color: var(--colour-border);
-                    border-radius: 10px;
-                }
-
-                    .recent-activity .table-scroll table {
-                        width: 100%;
-                        padding-right: 16px;
-                    }
-
-                        .recent-activity .table-scroll table tbody tr td {
-                            height: 2.75rem;
-                            padding: 0 8px;
-                        }
-
-                        span.transaction-type {
-                            font-size: 0.75rem;
-                            font-weight: 400;
-                            color: rgb(156, 156, 156);
-                        } 
+                span.transaction-type {
+                    font-size: 0.75rem;
+                    font-weight: 400;
+                    color: rgb(156, 156, 156);
+                } 
