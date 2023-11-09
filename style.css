@@ -5,7 +5,7 @@
 
 :root {
     --top-nav-height: 4.5rem;
-    --side-nav-width: 13rem;
+    --side-nav-width: 12rem;
 
     --font-colour-primary: white;
     --font-colour-secondary: rgb(180, 180, 180);
@@ -21,7 +21,7 @@
     --card-padding: 1rem;
 }
 
-/* ==================== MATERIAL SYMBOL CUSTOMISATION ==================== */
+/* ==================== ICON CUSTOMISATION ==================== */
 .material-symbols-outlined {
     font-variation-settings:
     'FILL' 0,
@@ -189,7 +189,29 @@ h3 {
         top: 0;
         color: var(--font-colour-primary);
         background-color: var(--bg-colour-primary);
+        z-index: 999;
     }
+
+        .burger-menu {
+            position: absolute;
+            top: 14px;
+            left: 2rem;
+            font-size: 2.75rem;
+
+            display: none;
+        }
+
+        .top-nav-logo {
+            position: absolute;
+            top: 19px;
+            right: 2rem;
+
+            display: none;
+        }
+
+        .top-nav-logo > a {
+            color: var(--font-colour-primary)
+        }
 
 
 
@@ -273,9 +295,15 @@ h3 {
                 font-size: 1.2rem;
             }
 
+                .card-icons:hover {
+                color: var(--font-colour-primary);
+                transition: all 300ms ease;
+            }
+
     .cards {
         height: 270px;
         position: relative;
+        cursor: default;
     }
 
         .card-1 {
@@ -315,7 +343,7 @@ h3 {
                 }
 
                 .face-middle {
-                    z-index: 999;
+                    z-index: 100;
                     display: grid;
                     grid-template-rows: 1fr 1fr 1fr;
                     align-items: center;
@@ -390,7 +418,7 @@ h3 {
             padding: var(--card-padding);
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: space-between;  
         }
 
             .card-select select {
@@ -398,6 +426,7 @@ h3 {
                 appearance: auto;
                 font-size: 1.1rem;
                 color: var(--font-colour-primary);
+                cursor: pointer;
             }
 
             .card-select select:invalid {
@@ -442,6 +471,7 @@ h3 {
             font-weight: 700;
             color: var(--font-colour-primary);
             background-color: var(--bg-colour-accent);
+            cursor: pointer;
         }
 
         #send-money button:active {
@@ -470,6 +500,12 @@ h3 {
             text-align: center;
         }
 
+            .expenditure-header ul li a:hover,
+            .recent-activity-header ul li a:hover {
+                color: var(--font-colour-primary);
+                transition: all 300ms ease;
+            }
+
         .expenditure-header ul li:not(:first-child),
         .recent-activity-header ul li:not(:first-child) {
             border-left: 1px solid var(--colour-border);
@@ -496,6 +532,9 @@ h3 {
         justify-content: space-between;
         align-items: center;
         gap: 8px;
+
+        /* TABLE-SCROLL */
+        max-height: 100vh;
         overflow-y: hidden;
     }
 
@@ -524,13 +563,140 @@ h3 {
                 padding-right: 16px;
             }
 
-                .recent-activity .table-scroll table tbody tr td {
-                    height: 2.75rem;
-                    padding: 0 8px;
+                .recent-activity .table-scroll table tbody tr {
+                    padding: 40px;
                 }
+
+                    .recent-activity .table-scroll table tbody tr td {
+                        height: 3rem;
+                        padding: 8px 8px;
+                    }
 
                 span.transaction-type {
                     font-size: 0.75rem;
                     font-weight: 400;
                     color: rgb(156, 156, 156);
-                } 
+                }
+
+                td.transaction-status {
+                    font-weight: 500;
+                    color: var(--bg-colour-accent);
+                    text-align: center;
+                }
+
+
+                
+            .recent-activity a:hover {
+                color: var(--font-colour-primary);
+                transition: all 300ms ease;
+            }
+
+/* ==================== MEDIA QUERIES ==================== */
+@media only screen and (max-width: 1150px) {
+
+    .main-content {
+        height: 100%;
+        grid-template-columns: minmax(340px, 1fr) minmax(340px, 1fr);
+        grid-template-rows: auto auto 550px 1fr;
+        grid-template-areas: 
+            "my-cards send-money"
+            "card-balance send-money"
+            "expenditure expenditure"
+            "recent-activity recent-activity"; 
+    }
+
+    .content-send-money {
+        display: flex;
+        flex-direction: column;
+    }
+
+        #send-money {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+    
+    .content-expenditure,
+    .content-recent-activity {
+        padding-top: 2rem;
+    }
+
+        .recent-activity {
+            max-height: 100%;
+        }
+}  
+
+@media only screen and (max-width: 970px) {
+
+    /* REMOVE FIXED LOGO AND SIDEBAR */
+    .grid-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: var(--top-nav-height) 1fr;
+        grid-template-areas:
+            "top-nav"
+            "main-content";
+    }
+
+        .logo {
+            display: none;
+        }
+
+        .side-nav {
+            display: none;
+        }
+
+        .top-nav .burger-menu {
+            display: block;
+        }
+
+        .top-nav-logo {
+            display: block;
+        }
+
+    .main-content {
+        grid-template-columns: minmax(300px, 1fr) minmax(300px, 1fr);
+        grid-template-rows: auto auto 550px 1fr;
+        grid-template-areas: 
+            "my-cards send-money"
+            "card-balance send-money"
+            "expenditure expenditure"
+            "recent-activity recent-activity"; 
+    }
+} 
+
+@media only screen and (max-width: 710px) {
+
+    .main-content {
+        grid-template-columns: auto;
+        grid-template-rows: 1fr;
+        grid-template-areas: 
+            "my-cards"
+            "card-balance"
+            "send-money"
+            "expenditure"
+            "recent-activity"; 
+    }
+
+    .content-my-cards,
+    .content-balance,
+    .content-send-money {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        align-self: stretch;
+    }
+
+    .content-my-cards > *,
+    .content-balance > *,
+    .content-send-money > * {
+        width: 100%;
+        max-width: 350px;
+    }
+
+    .content-balance,
+    .content-send-money {
+        padding-top: 2rem;
+    } 
+}
