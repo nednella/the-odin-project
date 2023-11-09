@@ -9,4 +9,4 @@ Based on the lesson(s):
 1. https://www.theodinproject.com/lessons/foundations-rock-paper-scissors
 2. https://www.theodinproject.com/lessons/foundations-revisiting-rock-paper-scissors
 
-Live at: https://benallenden.github.io/odin-rps/
+Live at: https://nednella.github.io/odin-rps/
