@@ -49,3 +49,38 @@ function addBookToLibrary(title, author, pages, read) {
     let newBook = new Book(title, author, pages, read)
     myLibrary.push(newBook)
 }
+
+
+
+// Library Display
+function reloadLibrary() {
+    tableBody.innerHTML = ''
+    let arrayIndex = 0
+    myLibrary.forEach(book => {
+        let newRow = tableBody.insertRow(-1)
+        for (property in book) {
+            let newCell = newRow.insertCell(-1)
+            if (property == 'read') {
+                if (book[property] == true) {
+                    newCell.innerHTML = `<span class="material-symbols-outlined book-read" data-key="${arrayIndex}">check</span>`
+                } else {
+                    newCell.innerHTML = `<span class="material-symbols-outlined book-unread" data-key="${arrayIndex}">close</span>`
+                }
+            } else {
+                newCell.innerHTML = book[property]
+            }
+        }
+        newCell = newRow.insertCell(-1)
+        newCell.innerHTML = `<span class="material-symbols-outlined book-remove" data-key="${arrayIndex}">delete</span>`
+        arrayIndex++
+    })
+    // let testing = tableBody.rows[1]
+    // console.log(testing)
+}
+
+
+
+// Refresh Library
+window.onload = () => {
+    reloadLibrary()
+}
