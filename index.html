@@ -32,5 +32,45 @@
             <p>nednella</p>
             <a href="https://github.com/nednella" target="_blank" class="github-link"><span class="fab fa-github"></span></a> 
         </footer>
+        <dialog class="modal" id="modal">
+            <div class="modal-content">
+                <span class="material-symbols-outlined" id="modal-close">close</span>
+                <form id="add-book" action="">
+                    <div class="formInput">
+                        <input
+                            required
+                            type="text"
+                            placeholder="Title"
+                            id="add-book-title"
+                        >
+                    </div>
+                    <div class="formInput">
+                        <input
+                            required
+                            type="text"
+                            placeholder="Author"
+                            id="add-book-author"
+                        >                        
+                    </div>
+                    <div class="formInput">
+                        <input 
+                            required
+                            type="text"
+                            placeholder="Number of Pages"
+                            id="add-book-pages"
+                        >
+                    </div>
+                    <div class="formInput radioInput">
+                        <label for="">Have you read this yet?</label>
+                        <input
+                            required
+                            type="checkbox"
+                            id="add-book-read"
+                        >
+                    </div>
+                </form>
+                <button id="add-book-submit" form="add-book">Add</button>
+            </div>
+        </dialog>
     </body>
 </html>

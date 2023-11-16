@@ -90,6 +90,109 @@ button:active {
     border-radius: 10px;
 }
 
+
+
+/* ==================== MODAL ==================== */ 
+.modal {
+    box-sizing: border-box;
+    position: fixed;
+    z-index: 1;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 28%;
+    width: 22%;
+    background: none;
+    border-radius: 16px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4),0 6px 20px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* .modal-show {
+    visibility: visible;
+} */
+
+.modal::backdrop {
+    background-color: rgb(0, 0, 0, 0.6);
+}
+
+    .modal-content {
+        position: relative;
+        height: 100%;
+        padding: 16px;
+        border-radius: 16px;
+        background-color: white;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 32px;
+    }
+
+        #modal-close {
+            position: absolute;
+            top: 3%;
+            right: 3%;
+            cursor: pointer;
+            font-size: 30px;
+        }
+
+        .modal-content form {
+            margin-top: 16px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+            .modal-content form .formInput {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 4px;
+            }
+
+            .modal-content form input:not(#add-book-read) {
+                height: 24px;
+                width: 80%;
+                padding: 2px 8px 2px 8px;
+                border-radius: 4px;
+                border: 1px solid black;
+                font-family: inherit;
+                color: inherit;
+                font-size: 16px;
+                font-weight: 400;
+            }
+
+            .modal-content form .radioInput {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                gap: 1.5rem;
+            }
+
+                .modal-content form .radioInput input[type=checkbox] {
+                    width: 20px;
+                    height: 20px;
+                }
+
+
+        .modal-content > button {
+            font-family: inherit;
+            font-weight: 500;
+            height: 40px;
+            width: 200px;
+            border-radius: 10px;
+        }
+
+            .modal-content button:hover {
+                background-color: rgb(170, 170, 170);
+            }
+
+
+
 /* ==================== FOOTER ==================== */  
 footer {
     position: fixed;
