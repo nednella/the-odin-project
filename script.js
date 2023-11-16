@@ -80,6 +80,33 @@ function reloadLibrary() {
 
 
 
+// Library Form
+const modalForm = document.getElementById('add-book')
+const modalFormSubmit = document.getElementById('add-book-submit')
+
+const modalFormTitle = document.getElementById('add-book-title')
+const modalFormAuthor = document.getElementById('add-book-author')
+const modalFormPages = document.getElementById('add-book-pages')
+const modalFormRead = document.getElementById('add-book-read')
+
+modalFormSubmit.addEventListener('click', (e) => {
+    e.preventDefault()
+
+    // insert form validation
+
+    let valueTitle = modalFormTitle.value,
+        valueAuthor = modalFormAuthor.value,
+        valuePages = modalFormPages.value,
+        valueRead = modalFormRead.checked
+
+    addBookToLibrary(valueTitle, valueAuthor, valuePages, valueRead)
+    reloadLibrary()
+    modal.close()
+    modalForm.reset()
+})
+
+
+
 // Refresh Library
 window.onload = () => {
     reloadLibrary()
