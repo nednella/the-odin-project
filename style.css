@@ -1,3 +1,120 @@
 /* CSS */
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
+
+
+/* ==================== ICON CUSTOMISATION ==================== */
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 0;
+}
+
+
+
+/* ==================== REMOVE BROWSER STYLING ==================== */
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    border: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+
+
+/* ==================== DEFAULT STYLING ==================== */
+body {
+    height: 100vh;
+    font-family: 'Roboto', sans-serif;
+    background-color: rgb(31, 31, 31);
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem; 
+}
+
+button {
+    font-size: 16px;
+    background-color: rgb(230, 230, 230);
+}
+
+button:hover {
+    background-color: rgb(190, 190, 190);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+
+
+/* ==================== NAV ==================== */
+.title {
+    padding-top: 200px;
+    font-size: 30px;
+}
+
+
+
+/* ==================== TABLE ==================== */
+.table-container {
+    width: 50%;
+    border: 1px solid grey;
+    border-radius: 10px;
+    padding: 16px;
+    color: white;
+    background-color: rgb(20, 20, 20);
+}
+
+    table {
+        width: 100%;
+        text-align: center;
+    }
+
+        thead {
+            font-size: 20px;
+        }
+
+#modal-open {
+    font-family: inherit;
+    font-weight: 500;
+    height: 40px;
+    width: 200px;
+    border-radius: 10px;
+}
+
+/* ==================== FOOTER ==================== */  
+footer {
+    position: fixed;
+    bottom: 5%;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+    footer p {
+        font-size: 20px;
+        cursor: default;
+        user-select: none;
+    }
+
+    footer a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+        .fa-github {
+            font-size: 24px;
+            transition: transform 0.3s ease-in-out;
+        }
+    
+        .fa-github:hover {
+            transform: rotate(360deg) scale(1.2);
+        }
