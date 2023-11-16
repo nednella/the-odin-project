@@ -107,6 +107,34 @@ modalFormSubmit.addEventListener('click', (e) => {
 
 
 
+// Update Library
+tableBody.addEventListener('click', (e) => {
+    if (e.target && e.target.nodeName == 'SPAN') {
+
+        if (e.target.classList.contains('book-read')) {
+            // console.log('Read')
+            bookIndex = e.target.dataset.key
+            myLibrary[bookIndex].read = false
+        }
+
+        if(e.target.classList.contains('book-unread')) {
+            // console.log('Unread')
+            bookIndex = e.target.dataset.key
+            myLibrary[bookIndex].read = true
+        }
+
+        if(e.target.classList.contains('book-remove')) {
+            // console.log('Delete')
+            bookIndex = e.target.dataset.key
+            console.log(bookIndex)
+            myLibrary.splice(bookIndex, 1) 
+        }
+        reloadLibrary()
+    }
+})
+
+
+
 // Refresh Library
 window.onload = () => {
     reloadLibrary()
