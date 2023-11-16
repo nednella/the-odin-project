@@ -25,15 +25,15 @@ modal.addEventListener('click', (e) => {
 const tableBody = document.getElementById('libraryTable').getElementsByTagName('tbody')[0]
 const myLibrary = [
     {
-        title: 'Harry Potter',
+        title: `Harry Potter and the Philosopher's Stone`,
         author: 'J. K. Rowling',
-        pages: '300',
+        pages: '223',
         read: true
     },
     {
-        title: 'Lord of the Rings',
-        author: 'J. R. R. Tolkien',
-        pages: '900',
+        title: 'The Hunger Games',
+        author: 'Suzanne Collins',
+        pages: '374',
         read: false
     }
 ]
