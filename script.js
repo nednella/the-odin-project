@@ -1,60 +1,30 @@
 // JavaScript
 
 const game = (() => {
-
     let gameBoard = Array(9).fill(undefined)
-    /* 
-        0 1 2
-        3 4 5
-        6 7 8
-    */
-
-    const displayGameBoard = () => { // Temporary for Console Version
-        tmp = "";
-
-        // First row
-        tmp += gameBoard[0] == "" ? "  " : ` ${gameBoard[0]}`;
-        tmp += "|";
-        tmp += gameBoard[1] == "" ? " " : `${gameBoard[1]}`;
-        tmp += "|";
-        tmp += gameBoard[2] == "" ? "  \n" : `${gameBoard[2]}\n`;
-
-        // Filler
-        tmp += "--|-|--\n";
-
-        // Second row
-        tmp += gameBoard[3] == "" ? "  " : ` ${gameBoard[3]}`;
-        tmp += "|";
-        tmp += gameBoard[4] == "" ? " " : `${gameBoard[4]}`;
-        tmp += "|";
-        tmp += gameBoard[5] == "" ? "  \n" : `${gameBoard[5]}\n`;
-
-        // Filler
-        tmp += "--|-|--\n";
-
-        // Third row
-        tmp += gameBoard[6] == "" ? "  " : ` ${gameBoard[6]}`;
-        tmp += "|";
-        tmp += gameBoard[7] == "" ? " " : `${gameBoard[7]}`;
-        tmp += "|";
-        tmp += gameBoard[8] == "" ? "  \n" : `${gameBoard[8]}\n`;
-
-        console.log( "" );
-        console.log( tmp );
-        console.log( "" );
-    }
 
     const resetGameBoard = () => gameBoard.forEach((element, index) => gameBoard[index] = undefined)
     const setGameBoard = (i, sign) => gameBoard[i] = sign
     const getGameBoard = () => gameBoard
     const getGameBoardAtIndex = (i) => gameBoard[i]
+    const displayGameBoard = () => {
+        let tmp = ''
+        tmp += (' ' + '\n')
+        tmp += (' ' + (gameBoard[0] || '0 ') + ' | ' + (gameBoard[1] || ' 1 ') + ' | ' + (gameBoard[2] || ' 2 ') + '\n')
+        tmp += ('---------------' + '\n')
+        tmp += (' ' + (gameBoard[3] || '3 ') + ' | ' + (gameBoard[4] || ' 4 ') + ' | ' + (gameBoard[5] || ' 5 ') + '\n')
+        tmp += ('---------------'  + '\n')
+        tmp += (' ' + (gameBoard[6] || '6 ') + ' | ' + (gameBoard[7] || ' 7 ') + ' | ' + (gameBoard[8] || ' 8 ') + '\n')
+        tmp += (' ')
+        console.log(tmp)
+    }
 
     return {
-        displayGameBoard,
         resetGameBoard,
         setGameBoard,
         getGameBoard,
         getGameBoardAtIndex,
+        displayGameBoard,
     }
 })()
 
@@ -75,125 +45,121 @@ const player = (sign, isCurrent) => {
     }
 } 
 
-const controller = (() => {
-
-    const playerX = player('X', false)
-    const playerO = player('O', false)
-    let currentSign
-    let isGameOver
-    let gameResult
+const ttt = (() => {
+    console.log('%cTo play a game, type "ttt.newGame()"', 'font-size: x-large')
+    
+    const playerX = player('💚', false)
+    const playerO = player('❤️', false)
+    let currentPlayer, currentRound, isGameOver, gameResult
 
     const newGame = () => {
-        welcome()
+        console.log('%cWelcome to JS Tic Tac Toe (Browser Console Version)', 'font-size: x-large')
+        game.displayGameBoard()
+        currentRound = 0
         do {
             playRound()
         } while (!isGameOver)
         gameOver()
     }
     const resetGame = () => {
-        currentSign = ''
+        currentPlayer = ''
         isGameOver  = ''
         gameResult = ''
         game.resetGameBoard()
+        playerX.unsetCurrentPlayer()
+        playerO.unsetCurrentPlayer()
     }
-
-    const welcomeMsg = 'Welcome to JS Tic Tac Toe (Browser Console Version)' // Temporary for Console Version
-    const welcome = () => console.log(welcomeMsg) // Temporary for Console Version
 
     const playRound = () => {
-        game.displayGameBoard()
         gameLogic.newTurn()
-        gameLogic.promptMove()
         gameLogic.handleMove()
-        checkBoard.checkWin(currentSign)
-        checkBoard.checkDraw()
+        gameLogic.checkBoard()
+        game.displayGameBoard()
+        console.log(currentRound)
     }
     const gameOver = () => {
-        game.displayGameBoard()
-        let tmp = `Game Over! `
-        if (gameResult == 'Win') {
-            tmp += `${currentSign} Wins.`
-        } else {
-            tmp += `It's a Tie.`
-        }
-        console.log(tmp)
+        console.log(`%cGame Over...`, 'font-size: x-large')
+         if (gameResult == 'win') {
+            console.log(`%c${currentPlayer} Wins!`, 'font-size: x-large')
+        } else if (gameResult == 'tie') {
+            console.log(`%cIt's a Tie!`, 'font-size: x-large')
+        } else console.log(`Game has been cancelled.`, 'font-size: x-large')
+        resetGame()
     }
 
     const gameLogic = (() => {
         const newTurn = () => {
-            if (playerX.isCurrentPlayer() == false && playerO.isCurrentPlayer() == false) {
-                playerX.setCurrentPlayer() 
-            } else if (playerX.isCurrentPlayer() == true && playerO.isCurrentPlayer() == false) {
-                playerX.unsetCurrentPlayer()
-                playerO.setCurrentPlayer()
-            } else {
-                playerO.unsetCurrentPlayer()
+            if (currentRound == 0) {
                 playerX.setCurrentPlayer()
+                // TODO: Add logic to alternate currentPlayer for 1st round based on previous winner
             }
+
+            if (playerX.isCurrentPlayer()) { playerX.unsetCurrentPlayer(), playerO.setCurrentPlayer() } 
+            else { playerO.unsetCurrentPlayer(), playerX.setCurrentPlayer() }
             setPlayer()
         }
-        const promptMove = () => { // Temporary for Console Version
-            do {
-                move = window.prompt("Enter the cell you'd like to place your marker (1 - 9)")
-            } while (game.getGameBoardAtIndex(move) !== undefined)
-        }
+
         const handleMove = () => {
-            game.setGameBoard(move, currentSign)
+            do {
+                move = window.prompt(`Enter where you'd like to place your marker (0 - 8) [type "C" to exit]`)
+                if ( move == 'C') {
+                    helperFns.setGameStatus('exit')
+                    break
+                }
+            } while (game.getGameBoardAtIndex(move) !== undefined)
+            game.setGameBoard(move, currentPlayer)
         }
-        const setPlayer = () => {
-            if (playerX.isCurrentPlayer()) currentSign = playerX.getSign()
-            else if (playerO.isCurrentPlayer()) currentSign = playerO.getSign()
-            else currentSign = null
+
+        const checkBoard = () => {
+            currentRound++
+            if (helperFns.checkWin(currentPlayer)) helperFns.setGameStatus('win')
+            else if (currentRound == 9) helperFns.setGameStatus('tie')
         }
+
+        const helperFns = (() => {
+            const checkWin = (sign) => {
+                gameBoard = game.getGameBoard()
+                return false
+                    // Rows
+                    || (gameBoard[0] == sign && gameBoard[1] == sign && gameBoard[2] == sign)
+                    || (gameBoard[3] == sign && gameBoard[4] == sign && gameBoard[5] == sign)
+                    || (gameBoard[6] == sign && gameBoard[7] == sign && gameBoard[8] == sign)
+                    // Columns
+                    || (gameBoard[0] == sign && gameBoard[3] == sign && gameBoard[6] == sign)
+                    || (gameBoard[1] == sign && gameBoard[4] == sign && gameBoard[7] == sign)
+                    || (gameBoard[2] == sign && gameBoard[5] == sign && gameBoard[8] == sign)
+                    // Diagonals
+                    || (gameBoard[0] == sign && gameBoard[4] == sign && gameBoard[8] == sign)
+                    || (gameBoard[2] == sign && gameBoard[4] == sign && gameBoard[6] == sign)
+            }
+    
+            const setPlayer = () => {
+                if (playerX.isCurrentPlayer()) currentPlayer = playerX.getSign()
+                else  currentPlayer = playerO.getSign()
+            }
+    
+            const setGameStatus = (result) => {
+                gameResult = result
+                setGameOver()  
+            }
+    
+            const setGameOver = () => {
+                return isGameOver = true
+            }
+
+            return {
+                checkWin,
+                setPlayer,
+                setGameStatus
+            }
+        })()
+
         return {
             newTurn,
-            promptMove,
-            handleMove
+            handleMove,
+            checkBoard,
         }
-    })()
 
-    const checkBoard = (() => {
-        const checkWin = (sign) => {
-            gameBoard = game.getGameBoard()
-            if (checkRows(gameBoard, sign) || checkColumns(gameBoard, sign) || checkDiagonals(gameBoard, sign)) {
-                gameResult = 'Win'
-                isGameOver = true
-            }
-        }
-        const checkDraw = () => {
-            gameBoard = game.getGameBoard()
-            if (gameBoard.every(cell => cell !== '?')) {
-                gameResult = 'Tie'
-                isGameOver = true
-            }
-        }
-        const checkRows = (board, sign) => {
-            gameBoard = board
-            if (gameBoard[0] == sign && gameBoard[1] == sign && gameBoard[2] == sign
-                || gameBoard[3] == sign && gameBoard[4] == sign && gameBoard[5] == sign
-                || gameBoard[6] == sign && gameBoard[7] == sign && gameBoard[8] == sign)
-            return true
-            else return false
-        }
-        const checkColumns = (board, sign) => {
-            gameBoard = board
-            if (gameBoard[0] == sign && gameBoard[3] == sign && gameBoard[6] == sign
-                || gameBoard[1] == sign && gameBoard[4] == sign && gameBoard[7] == sign
-                || gameBoard[2] == sign && gameBoard[5] == sign && gameBoard[8] == sign)
-            return true
-            else return false
-        }
-        const checkDiagonals = (board, sign) => {
-            gameBoard = board
-            if (gameBoard[0] == sign && gameBoard[4] == sign && gameBoard[8] == sign
-                || gameBoard[2] == sign && gameBoard[4] == sign && gameBoard[6] == sign) 
-            return true
-            else return false
-        }
-        return {
-            checkWin,
-            checkDraw,
-        }
     })()
 
     return {
