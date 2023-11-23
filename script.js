@@ -4,17 +4,17 @@ const game = (() => {
     let gameBoard = Array(9).fill(undefined)
 
     const resetGameBoard = () => gameBoard.forEach((element, index) => gameBoard[index] = undefined)
-    const setGameBoard = (i, sign) => gameBoard[i] = sign
+    const setGameBoard = (i, sign) => gameBoard[i - 1] = sign
     const getGameBoard = () => gameBoard
-    const getGameBoardAtIndex = (i) => gameBoard[i]
+    const getGameBoardAtIndex = (i) => gameBoard[i - 1]
     const displayGameBoard = () => {
         let tmp = ''
         tmp += (' ' + '\n')
-        tmp += (' ' + (gameBoard[0] || '0 ') + ' | ' + (gameBoard[1] || ' 1 ') + ' | ' + (gameBoard[2] || ' 2 ') + '\n')
+        tmp += (' ' + (gameBoard[0] || '1 ') + ' | ' + (gameBoard[1] || ' 2 ') + ' | ' + (gameBoard[2] || ' 3 ') + '\n')
         tmp += ('---------------' + '\n')
-        tmp += (' ' + (gameBoard[3] || '3 ') + ' | ' + (gameBoard[4] || ' 4 ') + ' | ' + (gameBoard[5] || ' 5 ') + '\n')
+        tmp += (' ' + (gameBoard[3] || '4 ') + ' | ' + (gameBoard[4] || ' 5 ') + ' | ' + (gameBoard[5] || ' 6 ') + '\n')
         tmp += ('---------------'  + '\n')
-        tmp += (' ' + (gameBoard[6] || '6 ') + ' | ' + (gameBoard[7] || ' 7 ') + ' | ' + (gameBoard[8] || ' 8 ') + '\n')
+        tmp += (' ' + (gameBoard[6] || '7 ') + ' | ' + (gameBoard[7] || ' 8 ') + ' | ' + (gameBoard[8] || ' 9 ') + '\n')
         tmp += (' ')
         console.log(tmp)
     }
@@ -28,91 +28,118 @@ const game = (() => {
     }
 })()
 
-const player = (sign, isCurrent) => {
-    let playerSign = sign
-    let currentPlayer = isCurrent
+const player = (sign, icon, isCurrent, isHuman, aiMode) => {
+    let player_Name = `Player ${sign}`
+    let player_Sign = icon
+    let player_isCurrent = isCurrent
+    let player_isHuman = isHuman
+    let ai_difficulty = aiMode
 
-    const getSign = () => { return playerSign }
-    const isCurrentPlayer = () => { return currentPlayer }
-    const setCurrentPlayer = () => { return currentPlayer = true }
-    const unsetCurrentPlayer = () => { return currentPlayer = false }
+    const getPlayerName = () => { return player_Name }
+    const getPlayerSign = () => { return player_Sign }
+    const isPlayerCurrent = () => { return player_isCurrent }
+    const setPlayerCurrent = () => { return player_isCurrent = true }
+    const unsetPlayerCurrent = () => { return player_isCurrent = false }
+    const isPlayerHuman = () => { return player_isHuman }
+    const isAiDifficulty = () => { return ai_difficulty }
 
     return {
-        getSign,
-        isCurrentPlayer,
-        setCurrentPlayer,
-        unsetCurrentPlayer,
+        name: getPlayerName,
+        sign: getPlayerSign,
+        isCurrent: isPlayerCurrent,
+        setCurrent: setPlayerCurrent,
+        unsetCurrent: unsetPlayerCurrent,
+        isHuman: isPlayerHuman,
+        difficulty: isAiDifficulty,
     }
-} 
+}
+
+const defaultConfig = (() => {
+    const playerX = player('X', '❤️', false, true, 'n/a')
+    const playerO = player('O', '💚', false, true, 'n/a')
+    return {
+        playerX,
+        playerO,
+    }
+})()
 
 const ttt = (() => {
     console.log('%cTo play a game, type "ttt.newGame()"', 'font-size: x-large')
-    
-    const playerX = player('💚', false)
-    const playerO = player('❤️', false)
+
+    const playerX = defaultConfig.playerX
+    const playerO = defaultConfig.playerO
     let currentPlayer, currentRound, isGameOver, gameResult
 
     const newGame = () => {
+        console.clear()
         console.log('%cWelcome to JS Tic Tac Toe (Browser Console Version)', 'font-size: x-large')
         game.displayGameBoard()
         currentRound = 0
         do {
+            currentRound++
             playRound()
         } while (!isGameOver)
         gameOver()
     }
+
     const resetGame = () => {
         currentPlayer = ''
         isGameOver  = ''
         gameResult = ''
         game.resetGameBoard()
-        playerX.unsetCurrentPlayer()
-        playerO.unsetCurrentPlayer()
+        playerX.unsetCurrent()
+        playerO.unsetCurrent()
     }
 
     const playRound = () => {
         gameLogic.newTurn()
         gameLogic.handleMove()
         gameLogic.checkBoard()
-        game.displayGameBoard()
-        console.log(currentRound)
+        if (gameResult !== 'quit') {
+            console.log('%cCurrent Round: ' + currentRound, 'font-weight: bold')
+            game.displayGameBoard()    
+        }
     }
+
     const gameOver = () => {
         console.log(`%cGame Over...`, 'font-size: x-large')
          if (gameResult == 'win') {
-            console.log(`%c${currentPlayer} Wins!`, 'font-size: x-large')
+            console.log(`%c${currentPlayer.name()} (${currentPlayer.sign()}) Wins!`, 'font-size: x-large')
         } else if (gameResult == 'tie') {
             console.log(`%cIt's a Tie!`, 'font-size: x-large')
-        } else console.log(`Game has been cancelled.`, 'font-size: x-large')
+        } else console.log(`%cGame has been cancelled.`, 'font-size: x-large')
         resetGame()
     }
 
     const gameLogic = (() => {
         const newTurn = () => {
             if (currentRound == 0) {
-                playerX.setCurrentPlayer()
-                // TODO: Add logic to alternate currentPlayer for 1st round based on previous winner
+                playerX.setCurrent()
             }
-
-            if (playerX.isCurrentPlayer()) { playerX.unsetCurrentPlayer(), playerO.setCurrentPlayer() } 
-            else { playerO.unsetCurrentPlayer(), playerX.setCurrentPlayer() }
-            setPlayer()
+            if (playerX.isCurrent()) { playerX.unsetCurrent(), playerO.setCurrent() } 
+            else { playerO.unsetCurrent(), playerX.setCurrent() }
+            helperFns.setPlayer()
         }
 
         const handleMove = () => {
-            do {
-                move = window.prompt(`Enter where you'd like to place your marker (0 - 8) [type "C" to exit]`)
-                if ( move == 'C') {
-                    helperFns.setGameStatus('exit')
-                    break
-                }
-            } while (game.getGameBoardAtIndex(move) !== undefined)
-            game.setGameBoard(move, currentPlayer)
+            if (currentPlayer.isHuman()) {
+                do {
+                    move = window.prompt(`Enter where you'd like to place your marker (1 - 9) ["C" to Quit]`)
+                    if ( move == 'C') {
+                        helperFns.setGameStatus('quit')
+                        break
+                    }
+                } while (game.getGameBoardAtIndex(move) !== undefined)       
+            } else {
+                console.log(`currentPlayer (${currentPlayer.name()}) is not Human`)
+            // TODO: Add CPU player functionality
+            }
+            
+            game.setGameBoard(move, currentPlayer.sign())
         }
 
         const checkBoard = () => {
-            currentRound++
-            if (helperFns.checkWin(currentPlayer)) helperFns.setGameStatus('win')
+            if (helperFns.checkWin(currentPlayer.sign())) helperFns.setGameStatus('win')
             else if (currentRound == 9) helperFns.setGameStatus('tie')
         }
 
@@ -134,8 +161,8 @@ const ttt = (() => {
             }
     
             const setPlayer = () => {
-                if (playerX.isCurrentPlayer()) currentPlayer = playerX.getSign()
-                else  currentPlayer = playerO.getSign()
+                if (playerX.isCurrent()) currentPlayer = playerX
+                else  currentPlayer = playerO
             }
     
             const setGameStatus = (result) => {
