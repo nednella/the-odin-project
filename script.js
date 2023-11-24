@@ -68,7 +68,7 @@ const ttt = (() => {
 
     const playerX = defaultConfig.playerX
     const playerO = defaultConfig.playerO
-    let currentPlayer, currentRound, isGameOver, gameResult
+    let currentPlayer, currentRound, isGameOver, gameStatus
 
     const newGame = () => {
         console.clear()
@@ -85,7 +85,7 @@ const ttt = (() => {
     const resetGame = () => {
         currentPlayer = ''
         isGameOver  = ''
-        gameResult = ''
+        gameStatus = ''
         game.resetGameBoard()
         playerX.unsetCurrent()
         playerO.unsetCurrent()
@@ -95,7 +95,7 @@ const ttt = (() => {
         gameLogic.newTurn()
         gameLogic.handleMove()
         gameLogic.checkBoard()
-        if (gameResult !== 'quit') {
+        if (gameStatus !== 'quit') {
             console.log('%cCurrent Round: ' + currentRound, 'font-weight: bold')
             game.displayGameBoard()    
         }
@@ -103,9 +103,9 @@ const ttt = (() => {
 
     const gameOver = () => {
         console.log(`%cGame Over...`, 'font-size: x-large')
-         if (gameResult == 'win') {
+         if (gameStatus == 'win') {
             console.log(`%c${currentPlayer.name()} (${currentPlayer.sign()}) Wins!`, 'font-size: x-large')
-        } else if (gameResult == 'tie') {
+        } else if (gameStatus == 'tie') {
             console.log(`%cIt's a Tie!`, 'font-size: x-large')
         } else console.log(`%cGame has been cancelled.`, 'font-size: x-large')
         resetGame()
@@ -131,8 +131,10 @@ const ttt = (() => {
                     }
                 } while (game.getGameBoardAtIndex(move) !== undefined)       
             } else {
-                console.log(`currentPlayer (${currentPlayer.name()}) is not Human`)
-            // TODO: Add CPU player functionality
+
+                // TODO: Add CPU player functionality
+                console.log(`currentPlayer (${currentPlayer.name()}) is AI`)
+            
             }
             
             game.setGameBoard(move, currentPlayer.sign())
@@ -166,7 +168,7 @@ const ttt = (() => {
             }
     
             const setGameStatus = (result) => {
-                gameResult = result
+                gameStatus = result
                 setGameOver()  
             }
     
