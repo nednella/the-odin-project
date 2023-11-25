@@ -6,58 +6,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
     <title>Tic Tac Toe</title>
 </head>
     <body>
         <div class="content">
-            <div class="title-container title-display-2">
-                <div class="title-header">
+            <div id="title-container" class="title-display-1" >
+                <h1 class="title-header">
                     Tic Tac Toe
-                </div>
+                </h1>
                 <div class="title-buttons">
-                    Buttons Here
+                    <button id="gameMode1" class="title-btns">vs AI</button>
+                    <button id="gameMode2" class="title-btns">vs Player</button>
+                    
                 </div>
             </div>
+            
 
-            <div class="game-container">
+            <div id="game-container" class="hidden">
 
             </div>
 
-            <div class="left-scorecard">
-                <div class="scorecard-player">
+            <div id="left-scorecard" class="hidden">
+                <h2 class="scorecard-player">
                     Player One
-                </div>
+                </h2>
 
-                <div class="scorecard-name">
+                <h2 class="scorecard-name">
                     Dave
-                </div>
+                </h2>
 
-                <div class="scorecard-symbol">
+                <h2 class="scorecard-symbol">
                     X
-                </div>
+                </h2>
 
-                <div class="scorecard-score">
+                <h2 class="scorecard-score">
                     0
-                </div>
+                </h2>
             </div>
 
-            <div class="right-scorecard">
-                <div class="scorecard-player">
+            <div id="right-scorecard" class="hidden">
+                <h2 class="scorecard-player">
                     Player Two
-                </div>
+                </h2>
 
-                <div class="scorecard-name">
+                <h2 class="scorecard-name">
                     Rodger
-                </div>
+                </h2>
 
-                <div class="scorecard-symbol">
+                <h2 class="scorecard-symbol">
                     O
-                </div>
+                </h2>
 
-                <div class="scorecard-score">
+                <h2 class="scorecard-score">
                     0
-                </div>
+                </h2>
             </div>
         </div> 
     </body>

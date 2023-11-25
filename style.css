@@ -1,13 +1,16 @@
 /* CSS */
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 :root {
-    --title-1-container-height: 400px;
-    --title-1-container-width: 640px;
+    --title-pos-1-container-height: 400px;
+    --title-pos-1-container-width: 640px;
+    --title-pos-2-container-height: 180px;
+    --title-pos-2-container-width: 640px;
 
-    --title-2-container-height: 180px;
-    --title-2-container-width: 640px;
+    --title-font-colour-primary: rgb(165, 165, 165);
+    --title-font-colour-secondary: black;
 
     --game-element-top-offset: 55%;
 
@@ -41,10 +44,84 @@ body {
     background-color: #ffd4d4;
 }
 
-/* insert some default element styling here */
+h1 {
+    font-size: 5rem;
+    font-weight: 800;
+}
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: 400;
+}
+
+/* h3 {
+    font-size: 0.87rem;
+    font-weight: 400;
+    transition: all 200ms ease;
+} */
 
 .hidden {
     display: none;
+    opacity: 0;
+    animation: game-elements2 1s;
+}
+
+
+
+/* ==================== ANIMATIONS ==================== */
+
+@keyframes title-container {
+    from {
+        top: 50%;
+        transform: translate(-50%, -50%);
+        height: var(--title-pos-1-container-height);
+        width: var(--title-pos-1-container-width);
+    }
+    to {
+        top: 40px;
+        transform: translate(-50%);
+        height: var(--title-pos-2-container-height);
+        width: var(--title-pos-2-container-width);
+    }
+}
+
+@keyframes game-elements {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 100;
+    }
+}
+
+@keyframes game-elements2 {
+    from {
+        opacity: 100;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+
+
+/* ==================== TITLE DISPLAYS ==================== */
+.title-display-1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: var(--title-pos-1-container-height);
+    width: var(--title-pos-1-container-width);
+} 
+
+.title-display-2 {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translate(-50%);
+    height: var(--title-pos-2-container-height);
+    width: var(--title-pos-2-container-width);
 }
 
 
@@ -58,37 +135,16 @@ body {
 
 
 
-/* ==================== TITLE DISPLAYS ==================== */
-.title-display-1 {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: var(--title-1-container-height);
-    width: var(--title-1-container-width);
-} 
-
-.title-display-2 {
-    position: absolute;
-    top: 40px;
-    left: 50%;
-    transform: translate(-50%);
-    height: var(--title-2-container-height);
-    width: var(--title-2-container-width);
-
-}
-
-
-
 /* ==================== TITLE CONTAINER ==================== */
-.title-container {
+#title-container {
     padding: 1rem;
+
 
 
     background-color: rgb(175, 77, 77);
 }
 
-    .title-container > * {
+    #title-container > * {
         position: absolute;
         left: 50%;
         transform: translate(-50%, 0);
@@ -96,18 +152,39 @@ body {
 
     .title-header {
         top: 32px;
-
+        font-family: 'Montserrat Alternates', sans-serif;
+        color: var(--title-font-colour-primary);
+        text-shadow: 4px 4px var(--title-font-colour-secondary);
+        width: max-content;
     }
 
     .title-buttons {
-        top: 80px;
+        top: 144px;
+        width: max-content;
+    }
 
+    #gameMode1,
+    #gameMode2 {
+        height: 48px;
+        width: 144px;
+        border-radius: 4px;
+        font-size: 1rem;
+        font-weight: bold;
+        color: white;
+    }
+
+    #gameMode1 {
+        background-color: var(--title-font-colour-primary);
+    }
+    
+    #gameMode2 {
+        background-color: var(--title-font-colour-secondary);
     }
 
 
 
 /* ==================== GAME CONTAINER ==================== */
-.game-container {
+#game-container {
     position: absolute;
     top: var(--game-element-top-offset);
     left: 50%;
@@ -118,34 +195,38 @@ body {
 
 
     background-color: #a7a7a7;
+    animation: game-elements 1.5s;
 }
 
 
 
 /* ==================== SCORECARD ELEMENTS ==================== */
-.left-scorecard,
-.right-scorecard {
+#left-scorecard,
+#right-scorecard {
     position: absolute;
     top: var(--game-element-top-offset);
     height: var(--scorecard-height);
     width: var(--scorecard-width);
     transform: translate(0, -50%);
 
+
+
     background-color: rgb(175, 77, 77);
+    animation: game-elements 1s;
 }
 
-.left-scorecard {
+#left-scorecard {
     left: 40px;
 
 }
 
-.right-scorecard {
+#right-scorecard {
     right: 40px;
     text-align: right;
 }
 
-    .left-scorecard > *,
-    .right-scorecard > * {
+    #left-scorecard > *,
+    #right-scorecard > * {
         /* position: absolute; */
         
     }

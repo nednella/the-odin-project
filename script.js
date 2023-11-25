@@ -196,3 +196,55 @@ const ttt = (() => {
         resetGame,
     }
 })()
+
+const titleScreen = (() => {
+    titleContainer = document.getElementById('title-container')
+    titleButtons = document.querySelectorAll('.title-btns')
+    gameMode1 = document.getElementById('gameMode2') // Player vs AI
+    gameMode2 = document.getElementById('gameMode1') // Two Player
+    gameContainer = document.getElementById('game-container')
+    leftScorecard = document.getElementById('left-scorecard')
+    rightScorecard = document.getElementById('right-scorecard')
+
+    // titleButtons.forEach(button => {
+    //     button.addEventListener('click', () => { 
+    //         titleAnimation()
+    //         leftScorecard.classList.remove('hidden')
+    //         rightScorecard.classList.remove('hidden')
+    //         setTimeout(() => {
+    //             gameContainer.classList.remove('hidden')
+    //         }, 250)
+    //     }, {once: true})
+    // })
+    
+    gameMode1.addEventListener('click', () => {
+        titleAnimation()
+        //leftScorecard.classList.remove('hidden')
+        //rightScorecard.classList.remove('hidden')
+        setTimeout(() => {
+            gameContainer.classList.remove('hidden')
+        }, 150)
+
+    })
+
+    gameMode2.addEventListener('click', () => {
+        titleAnimation()
+        leftScorecard.classList.remove('hidden')
+        rightScorecard.classList.remove('hidden')
+        setTimeout(() => {
+            gameContainer.classList.remove('hidden')
+        }, 150)
+
+    })
+
+    
+
+    const titleAnimation = () => {
+        if(titleContainer.classList.contains('title-display-1')) {
+            titleContainer.style.animation = 'title-container .7s'
+            titleContainer.classList.remove('title-display-1')
+            titleContainer.classList.add('title-display-2')
+        } else return
+    }
+
+})()
