@@ -7,6 +7,17 @@ const game = (() => {
     const setGameBoard = (i, sign) => gameBoard[i - 1] = sign
     const getGameBoard = () => gameBoard
     const getGameBoardAtIndex = (i) => gameBoard[i - 1]
+    const getGameBoardEmptyFields = () => {
+        let emptyFields = []
+
+        gameBoard.forEach((element, index) => {
+            if (element == undefined) {
+                emptyFields.push(index + 1)
+            }
+        })
+
+        return emptyFields
+    }
     const displayGameBoard = () => {
         let tmp = ''
         tmp += (' ' + '\n')
@@ -24,6 +35,7 @@ const game = (() => {
         setGameBoard,
         getGameBoard,
         getGameBoardAtIndex,
+        getGameBoardEmptyFields,
         displayGameBoard,
     }
 })()
@@ -54,9 +66,58 @@ const player = (sign, icon, isCurrent, isHuman, aiMode) => {
     }
 }
 
+const aiLogic = (() => {
+
+    const findMove = (currentPlayer) => {
+        // TODO: handle call to return a move for the AI
+
+        if (!currentPlayer && currentPlayer.isHuman()) return // function call failsafe
+
+        // Initialise Variables
+        let aiMode = currentPlayer.difficulty()
+        let precision = setPrecision(aiMode)
+        let gameBoard = game.getGameBoard()
+        let possibleMoves = game.getGameBoardEmptyFields()
+        
+        move = bestMove(precision, gameBoard, possibleMoves)
+        return move
+    }
+
+    const bestMove = (precision, gameBoard, possibleMoves) => {
+        // TODO: Add AI logic for finding the best possible move
+        console.log("precision" + precision)
+        console.log('gameBoard' + gameBoard)
+        console.log('possibleMoves' + possibleMoves)
+
+
+        return move
+    }
+
+    const setPrecision = (mode) => {
+        switch(mode) {
+            case 'easy':
+                val = '0'
+                break
+
+            case 'hard':
+                val = '0.5'
+                break
+
+            case 'impossible':
+                val = '0.75'
+                break
+        }
+        return val
+    }
+
+    return {
+        findMove,
+    }
+})()
+
 const defaultConfig = (() => {
-    const playerX = player('X', '❤️', false, true, 'n/a')
-    const playerO = player('O', '💚', false, true, 'n/a')
+    const playerX = player('X', '❤️', false, true, )
+    const playerO = player('O', '💚', false, false, 'easy')
     return {
         playerX,
         playerO,
@@ -131,10 +192,9 @@ const ttt = (() => {
                     }
                 } while (game.getGameBoardAtIndex(move) !== undefined)       
             } else {
-
+                console.log(`currentPlayer (${currentPlayer.name()}) is not Human`)
                 // TODO: Add CPU player functionality
-                console.log(`currentPlayer (${currentPlayer.name()}) is AI`)
-            
+                move = aiLogic.findMove(currentPlayer)
             }
             
             game.setGameBoard(move, currentPlayer.sign())
