@@ -6,71 +6,120 @@ const display = (() => {
     leftScorecard = document.getElementById('left-scorecard')
     rightScorecard = document.getElementById('right-scorecard')
     variableColourElements = document.querySelectorAll('.variableColour')
-
-    // Player vs AI
+    
     gameMode1 = document.getElementById('gameMode1')
-    gameMode1.addEventListener('click', () => {
-        titleAnimation()
-        unhideElements()
-        changeElementColour()
-        
-        ttt.resetGame()
-        // TODO: Implement config editor to set game mode
-        
-    })
-
-    // Two Player
     gameMode2 = document.getElementById('gameMode2') 
-    gameMode2.addEventListener('click', () => {
-        let mode = 2
-        titleAnimation()
-        unhideElements(2)
-        changeElementColour(2)
+    gameModes = [gameMode1, gameMode2]
+    gameInitialised = false
 
-        ttt.resetGame()
-        // TODO: Implement config editor to set game mode
+    const initGame = (() => {
+        console.log("initGame")
 
-    })
 
-    gridItems = document.querySelectorAll('.grid-item')
-    gridItems.forEach(item => {
+
+        // Set Game Mode
+        gameModes.forEach(button => {
+            button.addEventListener('click', (e) => {
+                helperFns.setGameMode(e.target.getAttribute("data-gameMode"))
+                ttt.resetGame()
+                console.log('gameMode set')
+            })
+        })
+
+
+        
+        // AI Difficulty
+        difficultySelector = document.getElementById('difficultySelector')
+        difficultySelector.addEventListener('click', () => {
+            if (gameMode == 2){
+                // TODO: Implement AI difficulty updater
+                
+
+            }
+            ttt.resetGame()
+        })
+
+
+
+        // Render gameBoard
+        const renderGameBoard = () => {
+
+        }
+
+
+
+        // Handle Move
+        gridItems = document.querySelectorAll('.grid-item')
+        gridItems.forEach(item => {
         item.addEventListener('click', () => {
             console.log(item.dataset.gridPos)
+
             // TODO: Implement game integration using gridPos dataset values
-            
+
+            })
         })
-    })
 
-    const titleAnimation = () => {
-        if(titleContainer.classList.contains('title-display-1')) {
-            titleContainer.style.animation = 'title-container .7s'
-            titleContainer.classList.remove('title-display-1')
-            titleContainer.classList.add('title-display-2')
-        } else return
-    }
 
-    const unhideElements = (gameMode) => {
-        if (gameMode == 2) {
+
+    })()
+
+    const helperFns = (() => {
+        const setGameMode = (gameMode) => {
+            if (!gameInitialised) {
+                titleAnimation()
+                unhideElements()
+                gameInitialised = true
+            }
+            
+            toggleDifficultySelector(gameMode)
+            changeElementColour(gameMode)
+
+            // TODO: Implement config editor to set game mode
+            ttt.resetGame()
+
+        }
+
+        const titleAnimation = () => {
+            if(titleContainer.classList.contains('title-display-1')) {
+                titleContainer.style.animation = 'title-container .7s'
+                titleContainer.classList.remove('title-display-1')
+                titleContainer.classList.add('title-display-2')
+            } else return
+        }
+
+        const unhideElements = () => {
             leftScorecard.classList.remove('hidden')
             rightScorecard.classList.remove('hidden')
+            setTimeout(() => {
+                gameContainer.classList.remove('hidden')
+            }, 150)
         }
-        setTimeout(() => {
-            gameContainer.classList.remove('hidden')
-        }, 150)
-    }
 
-    const changeElementColour = (gameMode) => {
-        if (gameMode == 2) {
-            variableColourElements.forEach(element => {
-                element.style.backgroundColor = 'var(--colour-secondary)'
-            })
-        } else {
-            variableColourElements.forEach(element => {
-                element.style.backgroundColor = 'var(--colour-primary)'
-            })
+        const changeElementColour = (gameMode) => {
+            if (gameMode == 1) {
+                variableColourElements.forEach(element => {
+                    element.style.backgroundColor = 'var(--colour-primary)'
+                })
+            } else {
+                variableColourElements.forEach(element => {
+                    element.style.backgroundColor = 'var(--colour-secondary)'
+                })
+            }
         }
-    }
 
+        const toggleDifficultySelector = (gameMode) => {
+            const element = document.querySelector('.difficultyForm')
+            if (gameMode == 1) {
+                element.classList.remove('hide')
+            } else {
+                element.classList.add('hide')
+            }
+        }
+
+        return {
+            setGameMode,
+        }
+    })()
 })()
 
 const game = (() => {
