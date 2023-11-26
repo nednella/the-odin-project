@@ -200,8 +200,8 @@ const ttt = (() => {
 const titleScreen = (() => {
     titleContainer = document.getElementById('title-container')
     titleButtons = document.querySelectorAll('.title-btns')
-    gameMode1 = document.getElementById('gameMode2') // Player vs AI
-    gameMode2 = document.getElementById('gameMode1') // Two Player
+    gameMode1 = document.getElementById('gameMode1') // Player vs AI
+    gameMode2 = document.getElementById('gameMode2') // Two Player
     gameContainer = document.getElementById('game-container')
     leftScorecard = document.getElementById('left-scorecard')
     rightScorecard = document.getElementById('right-scorecard')
@@ -216,7 +216,7 @@ const titleScreen = (() => {
     //         }, 250)
     //     }, {once: true})
     // })
-    
+
     gameMode1.addEventListener('click', () => {
         titleAnimation()
         //leftScorecard.classList.remove('hidden')

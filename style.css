@@ -4,18 +4,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 :root {
-    --title-pos-1-container-height: 400px;
-    --title-pos-1-container-width: 640px;
-    --title-pos-2-container-height: 180px;
-    --title-pos-2-container-width: 640px;
-
-    --title-font-colour-primary: rgb(165, 165, 165);
-    --title-font-colour-secondary: black;
-
-    --game-element-top-offset: 55%;
-
+    --title-container-height: 240px;
+    --title-container-width: 640px;
     --scorecard-height: 500px;
     --scorecard-width: 240px;
+    --game-element-top-offset: 55%;
+
+    --colour-primary: rgb(20, 30, 50);
+    --colour-secondary: rgb(140, 0, 230);
+
+    
 
 }
 
@@ -40,8 +38,6 @@ body {
     font-size: 16px;
     font-weight: 300;
     font-family: 'Roboto', sans-serif;
-    color: var(--font-colour-primary);
-    background-color: #ffd4d4;
 }
 
 h1 {
@@ -68,20 +64,29 @@ h2 {
 
 
 
-/* ==================== ANIMATIONS ==================== */
+/* ==================== TITLE POSITIONS ==================== */
+.title-display-1 {
+    top: 40%;
+    transform: translate(-50%, -50%);
+} 
+
+.title-display-2 {
+    top: 40px;
+    transform: translate(-50%, 0);
+}
+
+
+
+/* ==================== ANIMATION ==================== */
 
 @keyframes title-container {
     from {
-        top: 50%;
+        top: 40%;
         transform: translate(-50%, -50%);
-        height: var(--title-pos-1-container-height);
-        width: var(--title-pos-1-container-width);
     }
     to {
         top: 40px;
-        transform: translate(-50%);
-        height: var(--title-pos-2-container-height);
-        width: var(--title-pos-2-container-width);
+        transform: translate(-50%, 0);
     }
 }
 
@@ -105,43 +110,21 @@ h2 {
 
 
 
-/* ==================== TITLE DISPLAYS ==================== */
-.title-display-1 {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: var(--title-pos-1-container-height);
-    width: var(--title-pos-1-container-width);
-} 
-
-.title-display-2 {
-    position: absolute;
-    top: 40px;
-    left: 50%;
-    transform: translate(-50%);
-    height: var(--title-pos-2-container-height);
-    width: var(--title-pos-2-container-width);
-}
-
-
-
 /* ==================== CONTENT ==================== */
 .content {
     height: 100vh;
     width: 100%;
-    background-color: #d1d1d17e;
+    background-color: #ffeeee;
 }
 
 
 
 /* ==================== TITLE CONTAINER ==================== */
 #title-container {
-    padding: 1rem;
-
-
-
-    background-color: rgb(175, 77, 77);
+    position: absolute;
+    left: 50%;
+    height: var(--title-container-height);
+    width: var(--title-container-width);
 }
 
     #title-container > * {
@@ -153,14 +136,16 @@ h2 {
     .title-header {
         top: 32px;
         font-family: 'Montserrat Alternates', sans-serif;
-        color: var(--title-font-colour-primary);
-        text-shadow: 4px 4px var(--title-font-colour-secondary);
+        color: var(--colour-primary);
+        text-shadow: 4px 2px var(--colour-secondary);
         width: max-content;
     }
 
     .title-buttons {
         top: 144px;
         width: max-content;
+        display: flex;
+        gap: 2rem;
     }
 
     #gameMode1,
@@ -171,14 +156,15 @@ h2 {
         font-size: 1rem;
         font-weight: bold;
         color: white;
+        cursor: pointer;
     }
 
     #gameMode1 {
-        background-color: var(--title-font-colour-primary);
+        background-color: var(--colour-primary);
     }
     
     #gameMode2 {
-        background-color: var(--title-font-colour-secondary);
+        background-color: var(--colour-secondary);
     }
 
 
@@ -188,13 +174,10 @@ h2 {
     position: absolute;
     top: var(--game-element-top-offset);
     left: 50%;
-    transform: translate(-50%, -50%);
     height: 500px;
     width: 500px;
-
-
-
-    background-color: #a7a7a7;
+    transform: translate(-50%, -50%);
+    background-color: rgb(175, 77, 77);
     animation: game-elements 1.5s;
 }
 
@@ -208,9 +191,6 @@ h2 {
     height: var(--scorecard-height);
     width: var(--scorecard-width);
     transform: translate(0, -50%);
-
-
-
     background-color: rgb(175, 77, 77);
     animation: game-elements 1s;
 }
