@@ -3,18 +3,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+:root[data-theme= "dark"] {
+
+}
+
+:root[data-theme= "light"] {
+
+}
+
 :root {
     --title-container-height: 240px;
     --title-container-width: 640px;
-    --scorecard-height: 500px;
+    --game-container-height: 518px;
+    --game-container-width: 458px;
     --scorecard-width: 240px;
+
     --game-element-top-offset: 55%;
 
-    --colour-primary: rgb(20, 30, 50);
-    --colour-secondary: rgb(140, 0, 230);
+    --colour-primary: rgb(15, 42, 94);
+    --colour-secondary: rgb(122, 188, 206);
 
-    
-
+    --colour-background: #eeeeee;
 }
 
 /* ==================== ICON CUSTOMISATION ==================== */
@@ -55,6 +64,14 @@ h2 {
     font-weight: 400;
     transition: all 200ms ease;
 } */
+
+button {
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+}
 
 .hidden {
     display: none;
@@ -114,7 +131,7 @@ h2 {
 .content {
     height: 100vh;
     width: 100%;
-    background-color: #ffeeee;
+    background-color: var(--colour-background);
 }
 
 
@@ -152,20 +169,25 @@ h2 {
     #gameMode2 {
         height: 48px;
         width: 144px;
-        border-radius: 4px;
-        font-size: 1rem;
-        font-weight: bold;
-        color: white;
-        cursor: pointer;
     }
 
     #gameMode1 {
         background-color: var(--colour-primary);
     }
+
+        #gameMode1:hover {
+            color: var(--colour-primary);
+            background-color: white;
+        }
     
     #gameMode2 {
         background-color: var(--colour-secondary);
     }
+
+        #gameMode2:hover {
+            color: var(--colour-secondary);
+            background-color: white;
+        }
 
 
 
@@ -174,12 +196,47 @@ h2 {
     position: absolute;
     top: var(--game-element-top-offset);
     left: 50%;
-    height: 500px;
-    width: 500px;
+    height: var(--game-container-height);
+    width: var(--game-container-width);
     transform: translate(-50%, -50%);
-    background-color: rgb(175, 77, 77);
     animation: game-elements 1.5s;
 }
+
+#game-container > * {
+    position: absolute; 
+}
+
+    .game-grid {  
+        height: var(--game-container-width);
+        width: var(--game-container-width);
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 0.25rem;
+    }
+
+        .game-grid > * {
+            cursor: pointer;
+            transition: background-color .5s;
+        }
+
+    #game-restart {
+        left: 0;
+        bottom: 0;
+        height: 32px;
+        width: 96px;
+        transition: background-color .5s;
+    }
+
+    #game-info {
+        right: 0;
+        bottom: 0;
+        height: max-content;
+        width: max-content;
+        padding-right: 2px;
+        font-size: 1.2rem;
+        font-weight: bold;  
+    }
 
 
 
@@ -188,9 +245,10 @@ h2 {
 #right-scorecard {
     position: absolute;
     top: var(--game-element-top-offset);
-    height: var(--scorecard-height);
+    height: var(--game-container-height);
     width: var(--scorecard-width);
     transform: translate(0, -50%);
+
     background-color: rgb(175, 77, 77);
     animation: game-elements 1s;
 }

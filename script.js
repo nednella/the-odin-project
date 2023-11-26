@@ -1,5 +1,78 @@
 // JavaScript
 
+const display = (() => {
+    titleContainer = document.getElementById('title-container')
+    gameContainer = document.getElementById('game-container')
+    leftScorecard = document.getElementById('left-scorecard')
+    rightScorecard = document.getElementById('right-scorecard')
+    variableColourElements = document.querySelectorAll('.variableColour')
+
+    // Player vs AI
+    gameMode1 = document.getElementById('gameMode1')
+    gameMode1.addEventListener('click', () => {
+        titleAnimation()
+        unhideElements()
+        changeElementColour()
+        
+        ttt.resetGame()
+        // TODO: Implement config editor to set game mode
+        
+    })
+
+    // Two Player
+    gameMode2 = document.getElementById('gameMode2') 
+    gameMode2.addEventListener('click', () => {
+        let mode = 2
+        titleAnimation()
+        unhideElements(2)
+        changeElementColour(2)
+
+        ttt.resetGame()
+        // TODO: Implement config editor to set game mode
+
+    })
+
+    gridItems = document.querySelectorAll('.grid-item')
+    gridItems.forEach(item => {
+        item.addEventListener('click', () => {
+            console.log(item.dataset.gridPos)
+            // TODO: Implement game integration using gridPos dataset values
+            
+        })
+    })
+
+    const titleAnimation = () => {
+        if(titleContainer.classList.contains('title-display-1')) {
+            titleContainer.style.animation = 'title-container .7s'
+            titleContainer.classList.remove('title-display-1')
+            titleContainer.classList.add('title-display-2')
+        } else return
+    }
+
+    const unhideElements = (gameMode) => {
+        if (gameMode == 2) {
+            leftScorecard.classList.remove('hidden')
+            rightScorecard.classList.remove('hidden')
+        }
+        setTimeout(() => {
+            gameContainer.classList.remove('hidden')
+        }, 150)
+    }
+
+    const changeElementColour = (gameMode) => {
+        if (gameMode == 2) {
+            variableColourElements.forEach(element => {
+                element.style.backgroundColor = 'var(--colour-secondary)'
+            })
+        } else {
+            variableColourElements.forEach(element => {
+                element.style.backgroundColor = 'var(--colour-primary)'
+            })
+        }
+    }
+
+})()
+
 const game = (() => {
     let gameBoard = Array(9).fill(undefined)
 
@@ -195,56 +268,4 @@ const ttt = (() => {
         newGame,
         resetGame,
     }
-})()
-
-const titleScreen = (() => {
-    titleContainer = document.getElementById('title-container')
-    titleButtons = document.querySelectorAll('.title-btns')
-    gameMode1 = document.getElementById('gameMode1') // Player vs AI
-    gameMode2 = document.getElementById('gameMode2') // Two Player
-    gameContainer = document.getElementById('game-container')
-    leftScorecard = document.getElementById('left-scorecard')
-    rightScorecard = document.getElementById('right-scorecard')
-
-    // titleButtons.forEach(button => {
-    //     button.addEventListener('click', () => { 
-    //         titleAnimation()
-    //         leftScorecard.classList.remove('hidden')
-    //         rightScorecard.classList.remove('hidden')
-    //         setTimeout(() => {
-    //             gameContainer.classList.remove('hidden')
-    //         }, 250)
-    //     }, {once: true})
-    // })
-
-    gameMode1.addEventListener('click', () => {
-        titleAnimation()
-        //leftScorecard.classList.remove('hidden')
-        //rightScorecard.classList.remove('hidden')
-        setTimeout(() => {
-            gameContainer.classList.remove('hidden')
-        }, 150)
-
-    })
-
-    gameMode2.addEventListener('click', () => {
-        titleAnimation()
-        leftScorecard.classList.remove('hidden')
-        rightScorecard.classList.remove('hidden')
-        setTimeout(() => {
-            gameContainer.classList.remove('hidden')
-        }, 150)
-
-    })
-
-    
-
-    const titleAnimation = () => {
-        if(titleContainer.classList.contains('title-display-1')) {
-            titleContainer.style.animation = 'title-container .7s'
-            titleContainer.classList.remove('title-display-1')
-            titleContainer.classList.add('title-display-2')
-        } else return
-    }
-
 })()
