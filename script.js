@@ -69,26 +69,33 @@ const player = (sign, icon, isCurrent, isHuman, aiMode) => {
 const aiLogic = (() => {
 
     const findMove = (currentPlayer) => {
-        // TODO: handle call to return a move for the AI
-
         if (!currentPlayer && currentPlayer.isHuman()) return // function call failsafe
 
-        // Initialise Variables
+        // Initialise variables
         let aiMode = currentPlayer.difficulty()
         let precision = setPrecision(aiMode)
+
+        // Obtain current game state
         let gameBoard = game.getGameBoard()
         let possibleMoves = game.getGameBoardEmptyFields()
         
-        move = bestMove(precision, gameBoard, possibleMoves)
+        // Determine a move
+        move = minimax(precision, gameBoard, possibleMoves)
+
+        // Return move to the game controller
         return move
     }
 
-    const bestMove = (precision, gameBoard, possibleMoves) => {
-        // TODO: Add AI logic for finding the best possible move
-        console.log("precision" + precision)
-        console.log('gameBoard' + gameBoard)
-        console.log('possibleMoves' + possibleMoves)
+    const minimax = (precision, gameBoard, possibleMoves) => {
+        
+        if (precision == 0) {
+            console.log('possibleMoves: ' + possibleMoves)
+            arrayIndex = Math.floor(Math.random() * possibleMoves.length)
+            move = possibleMoves[arrayIndex]
+            console.log('Chosen Move: ' + move)
+        }
 
+        // TODO: Add AI logic for finding the best possible move using the Mini Max algorithm
 
         return move
     }
@@ -96,15 +103,15 @@ const aiLogic = (() => {
     const setPrecision = (mode) => {
         switch(mode) {
             case 'easy':
-                val = '0'
+                val = 0
                 break
 
             case 'hard':
-                val = '0.5'
+                val = 0.5
                 break
 
             case 'impossible':
-                val = '0.75'
+                val = 0.75
                 break
         }
         return val
