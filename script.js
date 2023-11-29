@@ -71,50 +71,112 @@ const aiLogic = (() => {
     const findMove = (currentPlayer) => {
         if (!currentPlayer && currentPlayer.isHuman()) return // function call failsafe
 
-        // Initialise variables
-        let aiMode = currentPlayer.difficulty()
-        let precision = setPrecision(aiMode)
-
         // Obtain current game state
         let gameBoard = game.getGameBoard()
         let possibleMoves = game.getGameBoardEmptyFields()
-        
+
         // Determine a move
-        move = minimax(precision, gameBoard, possibleMoves)
+        move = getMove(gameBoard, possibleMoves, currentPlayer)
 
-        // Return move to the game controller
+        //console.log(`\n\nFINDING BEST MOVE w/ MINIMAX...\n\n`)
+        //move = getBestMove(gameBoard, possibleMoves, currentPlayer)
+
+
+
+        // Return move to game controller
         return move
     }
 
-    const minimax = (precision, gameBoard, possibleMoves) => {
-        
-        if (precision == 0) {
-            console.log('possibleMoves: ' + possibleMoves)
-            arrayIndex = Math.floor(Math.random() * possibleMoves.length)
-            move = possibleMoves[arrayIndex]
-            console.log('Chosen Move: ' + move)
-        }
+    const getMove = (gameBoard, possibleMoves, currentPlayer) => {
 
-        // TODO: Add AI logic for finding the best possible move using the Mini Max algorithm
+        // Initialise variables
+        let accuracyRoll = Math.random(),
+            easyAccuracy = 0.10,
+            mediumAccuracy = 0.50,
+            hardAccuracy = 0.80
 
-        return move
-    }
-
-    const setPrecision = (mode) => {
-        switch(mode) {
+        // Obtain a move based on AI difficulty setting  ---  CAN POSSIBLY REFACTOR THIS SWITCH FUNCTION
+        switch (currentPlayer.difficulty()) {
             case 'easy':
-                val = 0
+                if (accuracyRoll > easyAccuracy) {
+                    move = getRandomMove(possibleMoves)
+                } else {
+                    move = getBestMove(gameBoard, possibleMoves, currentPlayer)
+                }
+                break
+
+            case 'medium':
+                if (accuracyRoll > mediumAccuracy) {
+                    move = getRandomMove(possibleMoves)
+                } else {
+                    move = getBestMove(gameBoard, possibleMoves, currentPlayer)
+                }
                 break
 
             case 'hard':
-                val = 0.5
+                if (accuracyRoll > hardAccuracy) {
+                    move = getRandomMove(possibleMoves)
+                } else {
+                    move = getBestMove(gameBoard, possibleMoves, currentPlayer)
+                }
                 break
 
             case 'impossible':
-                val = 0.75
+                move = getBestMove(gameBoard, possibleMoves, currentPlayer)
                 break
         }
-        return val
+
+        // Return move to findMove
+        return move
+    }
+
+    const getRandomMove = (possibleMoves) => {
+        arrayIndex = Math.floor(Math.random() * possibleMoves.length)
+        move = array[arrayIndex]
+
+        return move
+    }
+
+    const getBestMove = (gameBoard, possibleMoves, currentPlayer) => {
+
+        let bestScore = -Infinity,
+            bestMove
+
+        possibleMoves.forEach(possibleMove => {
+            let score,
+                move = possibleMove - 1,                // possibleMove is 1-9 whereas array indexing is 0-8
+                cloneBoard = Array.from(gameBoard)      // clone the current game state
+  
+            cloneBoard[move] = currentPlayer.sign()     // Assign the current iteration to create the new game state
+            score = minimax(cloneBoard)                 // Evaluate the score for the current iteration using minimax algorithm
+            if (score > bestScore) {
+                bestScore = score
+                bestMove = move
+            }
+        })
+
+        return bestMove
+    }
+
+    const minimax = (gameBoard) => {
+        /*
+            - gameBoard is the CURRENT STATE of the game (the top of the minimax tree diagram)
+            - currentPlayer has (possibleMoves.length) possible moves to play; each move is a branch of the tree
+            - nextPlayer has (possibleMoves.length - 1) possible moves to play; each of those moves is a branch of each currentPlayer node
+            - ... eventually you get to a board where there is only 1 move left - those boards can be considered as TERMINAL STATES
+            - of those terminal states, currentPlayer wins some, and currentPlayer loses some
+            - These 'terminal states' are assigned scores.
+                - currentPlayer wins: score = +1
+                - currentPlayer ties: score = 0
+                - currentPlayer loses: score = -1
+            - The scores ripple back up the tree to help currentPlayer decide on the best possible move! 
+                - ... for the MAX player (X), the best move is the branch with the highest score
+                - ... for the MIN player (O), the best move is the branch with the lowest score
+            - When the scores have rippled back to the top-level node, the currentPlayer is able to make an accurate decision
+        */
+
+
+
     }
 
     return {
