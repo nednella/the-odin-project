@@ -1,12 +1,7 @@
 // JavaScript
 
-let minimaxCount = 0
-
 const game = (() => {
     let gameBoard = Array(9).fill(undefined)
-    // let gameBoard = ['❤️', '❤️', undefined,
-    //                  '💚', '💚', undefined, 
-    //                  '❤️', '💚', undefined ]
 
     const resetGameBoard = () => gameBoard.forEach((element, index) => gameBoard[index] = undefined)
     const setGameBoard = (i, sign) => gameBoard[i - 1] = sign
@@ -143,27 +138,44 @@ const aiLogic = (() => {
     const getRandomMove = (possibleMoves) => {
         arrayIndex = Math.floor(Math.random() * possibleMoves.length)
         move = possibleMoves[arrayIndex]
-        // console.log("Random array index value: " + arrayIndex)
-        // console.log("Random move: " + move)
         return move
     }
 
     const getBestMove = (gameBoard, possibleMoves, currentPlayer, opponentPlayer) => {
 
-        /*
+        /*  MINIMAX ALGORITHM - BASIC IMPLEMENTATION
+
             - gameBoard is the CURRENT STATE of the game (the top of the minimax tree diagram)
             - currentPlayer has (possibleMoves.length) possible moves to play; each move is a branch of the tree
             - nextPlayer has (possibleMoves.length - 1) possible moves to play; each of those moves is a branch of each currentPlayer node
             - ... eventually you get to a board where there is only 1 move left - those boards can be considered as TERMINAL STATES
             - of those terminal states, currentPlayer wins some, and currentPlayer loses some
             - These 'terminal states' are assigned scores.
-                - currentPlayer wins: score = +1
+                - currentPlayer wins: score = +10
                 - currentPlayer ties: score = 0
-                - currentPlayer loses: score = -1
-            - The scores ripple back up the tree to help currentPlayer decide on the best possible move! 
+                - currentPlayer loses: score = -10
+            - The scores ripple back up the tree to help currentPlayer decide on the best possible move
                 - ... for the MAX player (currentPlayer), the best move is the branch with the highest score
                 - ... for the MIN player (opposingPlayer), the best move is the branch with the lowest score
-            - When the scores have rippled back to the top-level node, the currentPlayer is able to make an accurate decision
+            - When the scores have rippled back to the top-level node, currentPlayer is able to make an calculated decision
+            - on the best move to pick out of the available positions
+
+
+            
+            TODO: MINIMAX WITH DEPTH
+
+            As opposed to every terminal state being given a score of +10 / 0 / -10, the score applied to a terminal state 
+            increases/reduces by 1 for every extra "layer " reached within the tree.
+
+            - Terminal states found at the lowest levels will have the smallest score handed back to the top
+            - The algorithm can now choose more efficient pathing to reach a favourable terminal state
+
+
+
+            TODO: MINIMAX WITH DEPTH AND ALPHA-BETA PRUNING
+
+            Allows the algorithm to determine if a specific branch is worth searching entirely or not, creating 
+            a faster and more efficient algorithm
         */
 
         let bestScore = -Infinity,
@@ -193,7 +205,6 @@ const aiLogic = (() => {
     }
 
     const minimax = (gameBoard, currentPlayer, opponentPlayer, isCurrentPlayersTurn) => {
-        minimaxCount++                                                      // Temporary 
         let result = checkBoard(gameBoard, currentPlayer, opponentPlayer)   
         if (result !== null) {
             return minimaxScoring[result]                    
@@ -214,7 +225,6 @@ const aiLogic = (() => {
 
                 bestScore = Math.min(score, bestScore)
             })
-
             return bestScore
         }  
 
@@ -231,7 +241,6 @@ const aiLogic = (() => {
 
                 bestScore = Math.max(score, bestScore)
             })
-
             return bestScore
         }
 
@@ -255,7 +264,6 @@ const aiLogic = (() => {
 
     const checkWin = (gameBoard, currentPlayer) => {
         sign = currentPlayer.sign()
-        // console.log(`Checking if ${sign} has won`)
         return false
             // Rows
             || (gameBoard[0] == sign && gameBoard[1] == sign && gameBoard[2] == sign)
@@ -268,18 +276,6 @@ const aiLogic = (() => {
             // Diagonals
             || (gameBoard[0] == sign && gameBoard[4] == sign && gameBoard[8] == sign)
             || (gameBoard[2] == sign && gameBoard[4] == sign && gameBoard[6] == sign)
-
-        // if ((gameBoard[0] == sign && gameBoard[1] == sign && gameBoard[2] == sign)
-        //     || (gameBoard[3] == sign && gameBoard[4] == sign && gameBoard[5] == sign)
-        //     || (gameBoard[6] == sign && gameBoard[7] == sign && gameBoard[8] == sign)
-        //     // Columns
-        //     || (gameBoard[0] == sign && gameBoard[3] == sign && gameBoard[6] == sign)
-        //     || (gameBoard[1] == sign && gameBoard[4] == sign && gameBoard[7] == sign)
-        //     || (gameBoard[2] == sign && gameBoard[5] == sign && gameBoard[8] == sign)
-        //     // Diagonals
-        //     || (gameBoard[0] == sign && gameBoard[4] == sign && gameBoard[8] == sign)
-        //     || (gameBoard[2] == sign && gameBoard[4] == sign && gameBoard[6] == sign))
-        // return true
     }
 
     // const minimaxScoring = {
@@ -289,10 +285,6 @@ const aiLogic = (() => {
     // }
 
     const minimaxScoring = [10, -10, 0]
-
-
-
-
 
     return {
         findMove,
