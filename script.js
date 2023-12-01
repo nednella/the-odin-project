@@ -1,7 +1,12 @@
 // JavaScript
 
+let minimaxCount = 0
+
 const game = (() => {
     let gameBoard = Array(9).fill(undefined)
+    // let gameBoard = ['❤️', '❤️', undefined,
+    //                  '💚', '💚', undefined, 
+    //                  '❤️', '💚', undefined ]
 
     const resetGameBoard = () => gameBoard.forEach((element, index) => gameBoard[index] = undefined)
     const setGameBoard = (i, sign) => gameBoard[i - 1] = sign
@@ -68,7 +73,7 @@ const player = (sign, icon, isCurrent, isHuman, aiMode) => {
 
 const aiLogic = (() => {
 
-    const findMove = (currentPlayer) => {
+    const findMove = (currentPlayer, opponentPlayer) => {
         if (!currentPlayer && currentPlayer.isHuman()) return // function call failsafe
 
         // Obtain current game state
@@ -76,18 +81,14 @@ const aiLogic = (() => {
         let possibleMoves = game.getGameBoardEmptyFields()
 
         // Determine a move
-        move = getMove(gameBoard, possibleMoves, currentPlayer)
-
-        //console.log(`\n\nFINDING BEST MOVE w/ MINIMAX...\n\n`)
-        //move = getBestMove(gameBoard, possibleMoves, currentPlayer)
-
-
+        move = getMove(gameBoard, possibleMoves, currentPlayer, opponentPlayer)
+        console.log(`AI has Chosen a move of... ${move}`)
 
         // Return move to game controller
         return move
     }
 
-    const getMove = (gameBoard, possibleMoves, currentPlayer) => {
+    const getMove = (gameBoard, possibleMoves, currentPlayer, opponentPlayer) => {
 
         // Initialise variables
         let accuracyRoll = Math.random(),
@@ -99,30 +100,39 @@ const aiLogic = (() => {
         switch (currentPlayer.difficulty()) {
             case 'easy':
                 if (accuracyRoll > easyAccuracy) {
+                    console.log(`Current AI Difficulty: EASY... \n` + `Accuracy roll MISSED -> Executing getRandomMove()...\n`)
                     move = getRandomMove(possibleMoves)
                 } else {
-                    move = getBestMove(gameBoard, possibleMoves, currentPlayer)
+                    console.log(`Current AI Difficulty: EASY... \n` + `Accuracy roll HIT -> Executing getBestMove()...\n`)
+                    move = getBestMove(gameBoard, possibleMoves, currentPlayer, opponentPlayer)
                 }
                 break
 
             case 'medium':
                 if (accuracyRoll > mediumAccuracy) {
+                    console.log(`Current AI Difficulty: MEDIUM... \n` + `Accuracy roll MISSED -> Executing getRandomMove()...\n`)
                     move = getRandomMove(possibleMoves)
                 } else {
-                    move = getBestMove(gameBoard, possibleMoves, currentPlayer)
+                    console.log(`Current AI Difficulty: MEDIUM... \n` + `Accuracy roll HIT -> Executing getBestMove()...\n`)
+                    move = getBestMove(gameBoard, possibleMoves, currentPlayer, opponentPlayer)
                 }
                 break
 
             case 'hard':
                 if (accuracyRoll > hardAccuracy) {
+                    console.log(`Current AI Difficulty: HARD... \n` + `Accuracy roll MISSED -> Executing getRandomMove()...\n`)
                     move = getRandomMove(possibleMoves)
                 } else {
-                    move = getBestMove(gameBoard, possibleMoves, currentPlayer)
+                    console.log(`Current AI Difficulty: HARD... \n` + `Accuracy roll HIT -> Executing getBestMove()...\n`)
+                    move = getBestMove(gameBoard, possibleMoves, currentPlayer, opponentPlayer)
                 }
                 break
 
             case 'impossible':
-                move = getBestMove(gameBoard, possibleMoves, currentPlayer)
+                console.log(`Current AI Difficulty: IMPOSSIBLE... \n` +  `Executing getBestMove()...\n`)
+                move = getBestMove(gameBoard, possibleMoves, currentPlayer, opponentPlayer)
+                
+                if (move == undefined) { move = getRandomMove(possibleMoves), console.log(`bestMove returned undefined, executing randomMove()`) }
                 break
         }
 
@@ -132,33 +142,14 @@ const aiLogic = (() => {
 
     const getRandomMove = (possibleMoves) => {
         arrayIndex = Math.floor(Math.random() * possibleMoves.length)
-        move = array[arrayIndex]
-
+        move = possibleMoves[arrayIndex]
+        // console.log("Random array index value: " + arrayIndex)
+        // console.log("Random move: " + move)
         return move
     }
 
-    const getBestMove = (gameBoard, possibleMoves, currentPlayer) => {
+    const getBestMove = (gameBoard, possibleMoves, currentPlayer, opponentPlayer) => {
 
-        let bestScore = -Infinity,
-            bestMove
-
-        possibleMoves.forEach(possibleMove => {
-            let score,
-                move = possibleMove - 1,                // possibleMove is 1-9 whereas array indexing is 0-8
-                cloneBoard = Array.from(gameBoard)      // clone the current game state
-  
-            cloneBoard[move] = currentPlayer.sign()     // Assign the current iteration to create the new game state
-            score = minimax(cloneBoard)                 // Evaluate the score for the current iteration using minimax algorithm
-            if (score > bestScore) {
-                bestScore = score
-                bestMove = move
-            }
-        })
-
-        return bestMove
-    }
-
-    const minimax = (gameBoard) => {
         /*
             - gameBoard is the CURRENT STATE of the game (the top of the minimax tree diagram)
             - currentPlayer has (possibleMoves.length) possible moves to play; each move is a branch of the tree
@@ -170,14 +161,138 @@ const aiLogic = (() => {
                 - currentPlayer ties: score = 0
                 - currentPlayer loses: score = -1
             - The scores ripple back up the tree to help currentPlayer decide on the best possible move! 
-                - ... for the MAX player (X), the best move is the branch with the highest score
-                - ... for the MIN player (O), the best move is the branch with the lowest score
+                - ... for the MAX player (currentPlayer), the best move is the branch with the highest score
+                - ... for the MIN player (opposingPlayer), the best move is the branch with the lowest score
             - When the scores have rippled back to the top-level node, the currentPlayer is able to make an accurate decision
         */
 
+        let bestScore = -Infinity,
+            bestMove,
+            scoresArray = []
 
+        possibleMoves.forEach(possibleMove => {
+            let score,
+                move = possibleMove - 1                                         // possibleMove is 1-9 whereas array indexing is 0-8
 
+            gameBoard[move] = currentPlayer.sign()                              // Assign the current iteration to enable scoring of the game state
+            score = minimax(gameBoard, currentPlayer, opponentPlayer, false)    // Obtain a score for the current iteration
+            
+            gameBoard[move] = undefined
+
+            if (score > bestScore) {
+                bestScore = score
+                bestMove = possibleMove
+            }
+            scoresArray.push(score)                                             // Temporary 
+        })
+        console.log(`bestScore final value: ${bestScore}`)
+        console.log(`Minimax Count: ${minimaxCount}`)
+        console.log(`Scores Array: ${scoresArray}`)
+
+        return bestMove
     }
+
+    const minimax = (gameBoard, currentPlayer, opponentPlayer, isCurrentPlayersTurn) => {
+        minimaxCount++                                                      // Temporary 
+        let result = checkBoard(gameBoard, currentPlayer, opponentPlayer)   
+        if (result !== null) {
+            return minimaxScoring[result]                    
+        }
+
+        possibleMoves = game.getGameBoardEmptyFields()
+        
+        const min = () => {
+            let bestScore = Infinity
+
+            possibleMoves.forEach(possibleMove => {
+                let score,
+                    move = possibleMove - 1 
+                
+                gameBoard[move] = opponentPlayer.sign()
+                score = minimax(gameBoard, currentPlayer, opponentPlayer, true)
+                gameBoard[move] = undefined
+
+                bestScore = Math.min(score, bestScore)
+            })
+
+            return bestScore
+        }  
+
+        const max = () => {
+            let bestScore = -Infinity
+
+            possibleMoves.forEach(possibleMove => {
+                let score,
+                    move = possibleMove - 1 
+
+                gameBoard[move] = currentPlayer.sign() 
+                score = minimax(gameBoard, currentPlayer, opponentPlayer, false)                   
+                gameBoard[move] = undefined
+
+                bestScore = Math.max(score, bestScore)
+            })
+
+            return bestScore
+        }
+
+        if (isCurrentPlayersTurn) return max()
+        else return min()
+    }
+
+    const checkBoard = (gameBoard, currentPlayer, opponentPlayer) => {
+        let currentPlayerWin = checkWin(gameBoard, currentPlayer),
+            opponentPlayerWin = checkWin(gameBoard, opponentPlayer),
+            emptyFields = game.getGameBoardEmptyFields()
+
+        if (currentPlayerWin) {
+            return 0
+        } else if (opponentPlayerWin) {
+            return 1
+        } else if (emptyFields.length == 0) {
+            return 2
+        } else return null
+    }
+
+    const checkWin = (gameBoard, currentPlayer) => {
+        sign = currentPlayer.sign()
+        // console.log(`Checking if ${sign} has won`)
+        return false
+            // Rows
+            || (gameBoard[0] == sign && gameBoard[1] == sign && gameBoard[2] == sign)
+            || (gameBoard[3] == sign && gameBoard[4] == sign && gameBoard[5] == sign)
+            || (gameBoard[6] == sign && gameBoard[7] == sign && gameBoard[8] == sign)
+            // Columns
+            || (gameBoard[0] == sign && gameBoard[3] == sign && gameBoard[6] == sign)
+            || (gameBoard[1] == sign && gameBoard[4] == sign && gameBoard[7] == sign)
+            || (gameBoard[2] == sign && gameBoard[5] == sign && gameBoard[8] == sign)
+            // Diagonals
+            || (gameBoard[0] == sign && gameBoard[4] == sign && gameBoard[8] == sign)
+            || (gameBoard[2] == sign && gameBoard[4] == sign && gameBoard[6] == sign)
+
+        // if ((gameBoard[0] == sign && gameBoard[1] == sign && gameBoard[2] == sign)
+        //     || (gameBoard[3] == sign && gameBoard[4] == sign && gameBoard[5] == sign)
+        //     || (gameBoard[6] == sign && gameBoard[7] == sign && gameBoard[8] == sign)
+        //     // Columns
+        //     || (gameBoard[0] == sign && gameBoard[3] == sign && gameBoard[6] == sign)
+        //     || (gameBoard[1] == sign && gameBoard[4] == sign && gameBoard[7] == sign)
+        //     || (gameBoard[2] == sign && gameBoard[5] == sign && gameBoard[8] == sign)
+        //     // Diagonals
+        //     || (gameBoard[0] == sign && gameBoard[4] == sign && gameBoard[8] == sign)
+        //     || (gameBoard[2] == sign && gameBoard[4] == sign && gameBoard[6] == sign))
+        // return true
+    }
+
+    // const minimaxScoring = {
+    //     currentPlayer: 10,          // minimaxScoring[0] if currentPlayer wins
+    //     opponentPlayer: -10,        // minimaxScoring[1] if opponentPlayer wins
+    //     tie: 0                      // minimaxScoring[2] if nobody wins
+    // }
+
+    const minimaxScoring = [10, -10, 0]
+
+
+
+
 
     return {
         findMove,
@@ -186,7 +301,7 @@ const aiLogic = (() => {
 
 const defaultConfig = (() => {
     const playerX = player('X', '❤️', false, true, )
-    const playerO = player('O', '💚', false, false, 'easy')
+    const playerO = player('O', '💚', false, false, 'impossible')
     return {
         playerX,
         playerO,
@@ -198,7 +313,7 @@ const ttt = (() => {
 
     const playerX = defaultConfig.playerX
     const playerO = defaultConfig.playerO
-    let currentPlayer, currentRound, isGameOver, gameStatus
+    let currentPlayer, opponentPlayer, currentRound, isGameOver, gameStatus
 
     const newGame = () => {
         console.clear()
@@ -214,6 +329,7 @@ const ttt = (() => {
 
     const resetGame = () => {
         currentPlayer = ''
+        opponentPlayer = ''
         isGameOver  = ''
         gameStatus = ''
         game.resetGameBoard()
@@ -261,9 +377,7 @@ const ttt = (() => {
                     }
                 } while (game.getGameBoardAtIndex(move) !== undefined)       
             } else {
-                console.log(`currentPlayer (${currentPlayer.name()}) is not Human`)
-                // TODO: Add CPU player functionality
-                move = aiLogic.findMove(currentPlayer)
+                move = aiLogic.findMove(currentPlayer, opponentPlayer)
             }
             
             game.setGameBoard(move, currentPlayer.sign())
@@ -292,8 +406,8 @@ const ttt = (() => {
             }
     
             const setPlayer = () => {
-                if (playerX.isCurrent()) currentPlayer = playerX
-                else  currentPlayer = playerO
+                if (playerX.isCurrent()) { currentPlayer = playerX, opponentPlayer = playerO }
+                else  { currentPlayer = playerO, opponentPlayer = playerX }
             }
     
             const setGameStatus = (result) => {
