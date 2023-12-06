@@ -60,19 +60,20 @@ const player = (sign, icon, isHuman, aiMode) => {
     const getPlayerName = () => { return player_Name }
     const getPlayerSign = () => { return player_Sign }
     const isPlayerHuman = () => { return player_isHuman }
-    const isAiDifficulty = () => { return ai_difficulty }
+    const getAiDifficulty = () => { return ai_difficulty }
 
     return {
         name: getPlayerName,
         sign: getPlayerSign,
         isHuman: isPlayerHuman,
-        difficulty: isAiDifficulty,
+        difficulty: getAiDifficulty,
     }
 }
 
 const defaultConfig = (() => {
-    const playerX = player('X', '❤️', false, true, )
-    const playerO = player('O', '💚', false, false, 'impossible')
+    const playerX = player('X', '❤️', true, )
+    const playerO = player('O', '💚', true, )
+
     return {
         playerX,
         playerO,
@@ -80,132 +81,105 @@ const defaultConfig = (() => {
 })()
 
 const gameController = (() => {
-    const playerX = defaultConfig.playerX
-    const playerO = defaultConfig.playerO
+    const playerX = defaultConfig.playerX,
+          playerO = defaultConfig.playerO
+    
     let currentPlayer, opponentPlayer, currentRound, isGameOver, gameStatus
-
-    const newGame = () => {
-        console.clear()
-        console.log('%cWelcome to JS Tic Tac Toe (Browser Console Version)', 'font-size: x-large')
-        game.displayGameBoard()
-        currentRound = 0
-        do {
-            currentRound++
-            playRound()
-        } while (!isGameOver)
-        gameOver()
-    }
-
+        
     const resetGame = () => {
-        currentPlayer = ''
-        opponentPlayer = ''
-        isGameOver  = ''
+        currentPlayer = playerX
+        opponentPlayer = playerO
+
+        currentRound = 0
+        isGameOver = false
         gameStatus = ''
+
         game.resetGameBoard()
-        playerX.unsetCurrent()
-        playerO.unsetCurrent()
+        displayController.renderGameMessage(`It's ${currentPlayer.name()}'s turn...`)
     }
 
-    const playRound = () => {
-        gameLogic.newTurn()
-        gameLogic.handleMove()
-        gameLogic.checkBoard()
-        if (gameStatus !== 'quit') {
-            console.log('%cCurrent Round: ' + currentRound, 'font-weight: bold')
-            game.displayGameBoard()    
+    const play = (pos) => {
+        if (!isGameOver) {
+            validMove = gameLogic.checkValidMove(pos)
+            if (validMove) {
+                gameLogic.playRound(pos)
+            }
         }
-    }
-
-    const gameOver = () => {
-        console.log(`%cGame Over...`, 'font-size: x-large')
-         if (gameStatus == 'win') {
-            console.log(`%c${currentPlayer.name()} (${currentPlayer.sign()}) Wins!`, 'font-size: x-large')
-        } else if (gameStatus == 'tie') {
-            console.log(`%cIt's a Tie!`, 'font-size: x-large')
-        } else console.log(`%cGame has been cancelled.`, 'font-size: x-large')
-        resetGame()
+        if (!isGameOver && !opponentPlayer.isHuman()) {
+            setTimeout(() => {
+                gameLogic.playRound()
+            }, 300)   
+        }
     }
 
     const gameLogic = (() => {
-        const newTurn = () => {
-            if (currentRound == 0) {
-                playerX.setCurrent()
-            }
-            if (playerX.isCurrent()) { playerX.unsetCurrent(), playerO.setCurrent() } 
-            else { playerO.unsetCurrent(), playerX.setCurrent() }
-            helperFns.setPlayer()
+        const checkValidMove = (move) => {
+            return game.getGameBoardAtIndex(move) == undefined ? true : false
         }
 
-        const handleMove = () => {
-            if (currentPlayer.isHuman()) {
-                do {
-                    move = window.prompt(`Enter where you'd like to place your marker (1 - 9) ["C" to Quit]`)
-                    if ( move == 'C') {
-                        helperFns.setGameStatus('quit')
-                        break
-                    }
-                } while (game.getGameBoardAtIndex(move) !== undefined)       
-            } else {
-                move = aiLogic.findMove(currentPlayer, opponentPlayer)
-            }
-            
+        const playRound = (pos) => {
+            currentRound++
+            newTurn()
+            handleMove(pos)
+            checkBoard()
+    
+            isGameOver
+                ? setGameOver()
+                : displayController.renderGameMessage(`It's ${opponentPlayer.name()}'s turn...`)
+        } 
+
+        const newTurn = () => {
+            if (currentRound !== 1) {
+                currentPlayer == playerX
+                    ? (currentPlayer = playerO, opponentPlayer = playerX)
+                    : (currentPlayer = playerX, opponentPlayer = playerO)
+            } 
+            return
+        }
+
+        const handleMove = (pos) => {
+            currentPlayer.isHuman()
+                ? move = pos
+                : move = aiLogic.findMove(currentPlayer, opponentPlayer)
+
             game.setGameBoard(move, currentPlayer.sign())
+            displayController.renderGameBoard(game.getGameBoard())
+            return
         }
 
         const checkBoard = () => {
-            if (helperFns.checkWin(currentPlayer.sign())) helperFns.setGameStatus('win')
-            else if (currentRound == 9) helperFns.setGameStatus('tie')
+            result = game.checkGameBoard(currentPlayer.sign())
+
+            if (result == 'win' || result == 'tie') {
+                setGameStatus(result)
+            } else return
         }
 
-        const helperFns = (() => {
-            const checkWin = (sign) => {
-                gameBoard = game.getGameBoard()
-                return false
-                    // Rows
-                    || (gameBoard[0] == sign && gameBoard[1] == sign && gameBoard[2] == sign)
-                    || (gameBoard[3] == sign && gameBoard[4] == sign && gameBoard[5] == sign)
-                    || (gameBoard[6] == sign && gameBoard[7] == sign && gameBoard[8] == sign)
-                    // Columns
-                    || (gameBoard[0] == sign && gameBoard[3] == sign && gameBoard[6] == sign)
-                    || (gameBoard[1] == sign && gameBoard[4] == sign && gameBoard[7] == sign)
-                    || (gameBoard[2] == sign && gameBoard[5] == sign && gameBoard[8] == sign)
-                    // Diagonals
-                    || (gameBoard[0] == sign && gameBoard[4] == sign && gameBoard[8] == sign)
-                    || (gameBoard[2] == sign && gameBoard[4] == sign && gameBoard[6] == sign)
-            }
-    
-            const setPlayer = () => {
-                if (playerX.isCurrent()) { currentPlayer = playerX, opponentPlayer = playerO }
-                else  { currentPlayer = playerO, opponentPlayer = playerX }
-            }
-    
-            const setGameStatus = (result) => {
-                gameStatus = result
-                setGameOver()  
-            }
-    
-            const setGameOver = () => {
-                return isGameOver = true
-            }
+        const setGameStatus = (result) => {
+            gameStatus = result
+            return isGameOver = true
+        }
 
-            return {
-                checkWin,
-                setPlayer,
-                setGameStatus
-            }
-        })()
+        const setGameOver = () => {
+            message = 'Game over, '
+
+            gameStatus == 'win'
+                ? message += ` ${currentPlayer.name()} wins!`
+                : message += ` it's a tie!`
+
+            console.log(message)
+            return displayController.renderGameMessage(message)
+        }
 
         return {
-            newTurn,
-            handleMove,
-            checkBoard,
+            checkValidMove,
+            playRound,
         }
-
     })()
 
     return {
-        newGame,
         resetGame,
+        play,
     }
 })()
 
@@ -254,35 +228,20 @@ const displayController = (() => {
         restartButton.addEventListener('click', () => tmpFnName.newGame())      // Restart
 
         gridItems.forEach(item => {                                             // Handle Move
-            item.addEventListener('click', () => {
-                
-                move = item.dataset.gridPos
-                console.log(move)
-
-                if (selectedGameMode == 1) {
-                    gameController.playRound(move)           // Human round
-                    // TODO: add delay between rounds played
-                    gameController.playRound()               // AI round
-                } else {
-                    gameController.playRound(move)
+            item.addEventListener('click', () => { 
+                if (item.innerText == '') {
+                    gameController.play(item.dataset.gridPos)   
                 }
             })
         })
     })()
 
-
-
-    // TODO: integrate UI render functions into gameController
-
     const renderGameBoard = (gameBoard) => {
         for (i = 0; i < gridItems.length; i++) {
-            if (gameBoard[i] !== undefined) { // combine into 1 if statement
-                if (gridItems[i] !== '') {
-                    gridItems[i].innerText = gameBoard[i]    
-                }
+            if (gameBoard[i] !== undefined && gridItems[i].innerText == '') {
+                gridItems[i].innerText = gameBoard[i]     
             }
         }
-        // TODO: only render elements that aren't already rendered, so that I can add a fade-in animation for new moves
     }
 
     const renderGameMessage = (message) => {
@@ -311,7 +270,7 @@ const displayController = (() => {
             ui.clearScorecards()
 
             /* Game Resets */
-            gameController.resetGame()
+            gameController.resetGame(selectedGameMode, selectedDifficulty)
         }
 
         const setGameMode = (input) => {
@@ -325,18 +284,28 @@ const displayController = (() => {
             ui.changeElementColour(input)
 
 
+
             // TODO: Add config supplier function to supply the selected game mode to the gameController
-            return
+            // defaultConfig().setOpponentMode(input)
+
+
+            
+            return selectedGameMode = input
         }
 
         const setDifficulty = (input) => {
             if (input == 'easy' || input == 'medium'
              || input == 'hard' || input == 'impossible') {
                 console.log(`AI Difficulty: ${input}`)
-                selectedDifficulty = input
+
+
 
                 // TODO: Add config supplier function to supply the selected difficulty to the gameController
-                return
+                // defaultConfig().setOpponentDifficulty(input)
+                
+
+
+                return selectedDifficulty = input
              }
         }
 
@@ -424,7 +393,6 @@ const displayController = (() => {
 })()
 
 const aiLogic = (() => {
-
     const findMove = (currentPlayer, opponentPlayer) => {
         if (!currentPlayer && currentPlayer.isHuman()) return // function call failsafe
 
@@ -555,7 +523,6 @@ const aiLogic = (() => {
             scoresArray.push(score)                                             // Temporary 
         })
         console.log(`bestScore final value: ${bestScore}`)
-        console.log(`Minimax Count: ${minimaxCount}`)
         console.log(`Scores Array: ${scoresArray}`)
 
         return bestMove
