@@ -4,11 +4,86 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
     <title>Tic Tac Toe</title>
 </head>
     <body>
-        
+        <div class="content">
+            <div id="title-container" class="title-display-1" >
+                <h1 class="title-header">
+                    Tic Tac Toe
+                </h1>
+                <div class="title-buttons">
+                    <button id="gameMode1" data-gameMode="1">vs AI</button>
+                    <button id="gameMode2" data-gameMode="2">vs Player</button>
+                </div>
+            </div>
+            
+            <div id="game-container" class="hidden">
+
+                <form action="#" class="difficultyForm hide">
+                    <select name="difficulty" id="difficultySelector">
+                        <option value="easy" selected>Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard">Hard</option>
+                        <option value="impossible">Impossible</option>
+                    </select>    
+                </form>
+
+                <div class="game-grid">
+                    <div id="grid-1" data-grid-pos="1" class="grid-item variableColour"></div>
+                    <div id="grid-2" data-grid-pos="2" class="grid-item variableColour"></div>
+                    <div id="grid-3" data-grid-pos="3" class="grid-item variableColour"></div>
+                    <div id="grid-4" data-grid-pos="4" class="grid-item variableColour"></div>
+                    <div id="grid-5" data-grid-pos="5" class="grid-item variableColour"></div>
+                    <div id="grid-6" data-grid-pos="6" class="grid-item variableColour"></div>
+                    <div id="grid-7" data-grid-pos="7" class="grid-item variableColour"></div>
+                    <div id="grid-8" data-grid-pos="8" class="grid-item variableColour"></div>
+                    <div id="grid-9" data-grid-pos="9" class="grid-item variableColour"></div>
+                </div>
+    
+                <button id="game-restart" class="variableColour">Restart</button>
+                <span id="game-info">Some game text here</span>
+                
+            </div>
+
+            <div id="left-scorecard" class="hidden">
+                <h2 class="scorecard-player">
+                    Player One
+                </h2>
+
+                <h2 class="scorecard-name">
+                    Dave
+                </h2>
+
+                <h2 class="scorecard-symbol">
+                    X
+                </h2>
+
+                <h2 class="scorecard-score">
+                    0
+                </h2>
+            </div>
+
+            <div id="right-scorecard" class="hidden">
+                <h2 class="scorecard-player">
+                    Player Two
+                </h2>
+
+                <h2 class="scorecard-name">
+                    Rodger
+                </h2>
+
+                <h2 class="scorecard-symbol">
+                    O
+                </h2>
+
+                <h2 class="scorecard-score">
+                    0
+                </h2>
+            </div>
+        </div> 
     </body>
 </html>

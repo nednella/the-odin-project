@@ -1,5 +1,206 @@
 // JavaScript
 
+const displayController = (() => {
+    titleContainer = document.getElementById('title-container')
+    gameContainer = document.getElementById('game-container')
+    gridItems = document.querySelectorAll('.grid-item')
+    gameInfo = document.getElementById('game-info')
+    leftScorecard = document.getElementById('left-scorecard')
+    rightScorecard = document.getElementById('right-scorecard')
+    variableColourElements = document.querySelectorAll('.variableColour')
+    restartButton = document.getElementById('game-restart')
+    difficultySelector = document.getElementById('difficultySelector')
+    
+    gameMode1 = document.getElementById('gameMode1')    // vs AI
+    gameMode2 = document.getElementById('gameMode2')    // vs Player
+    gameModes = [gameMode1, gameMode2]
+
+    let gameInitialised = false,
+        selectedGameMode,
+        selectedDifficulty
+
+    const init = (() => {
+
+        gameModes.forEach(button => {                                           // Game Mode
+            button.addEventListener('click', (e) => {
+                input = e.target.getAttribute("data-gameMode")
+                if (!gameInitialised) tmpFnName.initialiseGame()
+                if (selectedGameMode == input) return
+                else {
+                    tmpFnName.setGameMode(input)
+                    tmpFnName.newGame()
+                }
+            })
+        })
+        
+        difficultySelector.addEventListener('click', () => {                    // AI Difficulty
+            input = difficultySelector.value
+            if (selectedDifficulty == input) return
+            else {
+                tmpFnName.setDifficulty(input)
+                tmpFnName.newGame()
+            }
+        })
+
+        restartButton.addEventListener('click', () => tmpFnName.newGame())      // Restart
+
+        gridItems.forEach(item => {                                             // Handle Move
+        item.addEventListener('click', () => {
+            console.log(item.dataset.gridPos)
+
+            // TODO: Implement game integration using gridPos dataset values
+
+            })
+        })
+    })()
+
+
+
+    // TODO: integrate UI render functions into gameController
+
+    const renderGameBoard = (gameBoard) => {
+        for (i = 0; i < gridItems.length; i++) {
+            if (gameBoard[i] !== undefined) {
+                if (gridItems[i] !== '') {
+                    gridItems[i].innerText = gameBoard[i]    
+                }
+            }
+        }
+        // TODO: only render elements that aren't already rendered, so that I can add a fade-in animation for new moves
+    }
+
+    const renderGameMessage = (message) => {
+        return gameInfo.innerText = message
+    }
+
+    const renderScorecards = () => {
+        // TODO: implement scoreboard feature with multi-game scoring
+        // IDEA: implement fade-out function for non-current player, and remove the game message feature
+    }
+
+
+
+    // TODO: suitably name this cluster of functions
+    const tmpFnName = (() => {
+        const initialiseGame = () => {
+            console.log('Game initialised.')
+            ui.titleAnimation()
+            ui.unhideElements()
+            return gameInitialised = true
+        }
+
+        const newGame = () => {
+            /* UI Resets */
+            ui.clearGrid()
+            ui.clearScorecards()
+
+            /* Game Resets */
+            ttt.resetGame()
+        }
+
+        const setGameMode = (input) => {
+            if (input == 1) console.log('Game Mode: vs AI')
+            else console.log('Game Mode: vs Player')
+
+            if (input == 1) setDifficulty(difficultySelector.value)
+            else unsetDifficulty()
+
+            ui.toggleDifficultySelector(input)
+            ui.changeElementColour(input)
+
+
+            // TODO: Add config supplier function to supply the selected game mode to the gameController
+            return
+        }
+
+        const setDifficulty = (input) => {
+            if (input == 'easy' || input == 'medium'
+             || input == 'hard' || input == 'impossible') {
+                console.log(`AI Difficulty: ${input}`)
+                selectedDifficulty = input
+
+                // TODO: Add config supplier function to supply the selected difficulty to the gameController
+                return
+             }
+        }
+
+        const unsetDifficulty = () => {
+            return selectedDifficulty = undefined
+        }
+
+        return {
+            initialiseGame,
+            newGame,
+            setGameMode,
+            setDifficulty,
+            unsetDifficulty,
+        }
+
+    })()
+
+    const ui = (() => {
+        const titleAnimation = () => {
+            if(titleContainer.classList.contains('title-display-1')) {
+                titleContainer.style.animation = 'title-container .7s'
+                titleContainer.classList.remove('title-display-1')
+                titleContainer.classList.add('title-display-2')
+            } else return
+        }
+
+        const unhideElements = () => {
+            leftScorecard.classList.remove('hidden')
+            rightScorecard.classList.remove('hidden')
+            setTimeout(() => {
+                gameContainer.classList.remove('hidden')
+            }, 150)
+        }
+
+        const toggleDifficultySelector = (selectedGameMode) => {
+            const form = document.querySelector('.difficultyForm')
+            if (selectedGameMode == 1) {
+                form.classList.remove('hide')
+                difficultySelector.removeAttribute('disabled', '')
+            } else {
+                form.classList.add('hide')
+                difficultySelector.setAttribute('disabled', '')
+            }
+        }
+
+        const changeElementColour = (selectedGameMode) => {
+            if (selectedGameMode == 1) {
+                variableColourElements.forEach(element => {
+                    element.style.color = 'white'
+                    element.style.backgroundColor = 'var(--colour-primary)'
+                })
+            } else {
+                variableColourElements.forEach(element => {
+                    element.style.color = 'black'
+                    element.style.backgroundColor = 'var(--colour-secondary)'
+                })
+            }
+        }
+
+        const clearGrid = () => {
+            gridItems.forEach(item => {
+                item.innerText = ''
+            })
+        }
+
+        const clearScorecards = () => {
+            // TODO: implement function
+        }
+
+        return {
+            titleAnimation,
+            unhideElements,
+            toggleDifficultySelector,
+            changeElementColour,
+            clearGrid,
+            clearScorecards,
+        }
+    })()
+})()
+
 const game = (() => {
     let gameBoard = Array(9).fill(undefined)
 

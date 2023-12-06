@@ -1,3 +1,312 @@
 /* CSS */
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root[data-theme= "dark"] {
+
+}
+
+:root[data-theme= "light"] {
+
+}
+
+:root {
+    --title-container-height: 240px;
+    --title-container-width: 640px;
+    --game-container-height: 518px;
+    --game-container-width: 458px;
+    --scorecard-width: 240px;
+
+    --game-element-top-offset: 55%;
+
+    --colour-primary: rgb(15, 42, 94);
+    --colour-secondary: rgb(122, 188, 206);
+
+    --colour-background: #eeeeee;
+}
+
+/* ==================== ICON CUSTOMISATION ==================== */
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 300,
+    'GRAD' 0,
+    'opsz' 0;
+}
+
+.fa-github {
+    font-size: 22px;
+    width: 24px;
+    display: block;
+    text-align: center;
+}
+
+/* ==================== DEFAULT STYLING ==================== */
+body {
+    font-size: 16px;
+    font-weight: 300;
+    font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+    font-size: 5rem;
+    font-weight: 800;
+}
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: 400;
+}
+
+/* h3 {
+    font-size: 0.87rem;
+    font-weight: 400;
+    transition: all 200ms ease;
+} */
+
+button {
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+    opacity: 0;
+}
+
+.hide {
+    opacity: 0;
+}
+
+
+
+/* ==================== TITLE POSITIONS ==================== */
+.title-display-1 {
+    top: 40%;
+    transform: translate(-50%, -50%);
+} 
+
+.title-display-2 {
+    top: 40px;
+    transform: translate(-50%, 0);
+}
+
+
+
+/* ==================== ANIMATION ==================== */
+
+@keyframes title-container {
+    from {
+        top: 40%;
+        transform: translate(-50%, -50%);
+    }
+    to {
+        top: 40px;
+        transform: translate(-50%, 0);
+    }
+}
+
+@keyframes game-elements-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 100;
+    }
+}
+
+/* @keyframes game-elements-out {
+    from {
+        opacity: 100;
+    }
+    to {
+        opacity: 0;
+    }
+} */
+
+
+
+/* ==================== CONTENT ==================== */
+.content {
+    height: 100vh;
+    width: 100%;
+    background-color: var(--colour-background);
+}
+
+
+
+/* ==================== TITLE CONTAINER ==================== */
+#title-container {
+    position: absolute;
+    left: 50%;
+    height: var(--title-container-height);
+    width: var(--title-container-width);
+}
+
+    #title-container > * {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+
+    .title-header {
+        top: 32px;
+        font-family: 'Montserrat Alternates', sans-serif;
+        color: var(--colour-primary);
+        text-shadow: 4px 2px var(--colour-secondary);
+        width: max-content;
+    }
+
+    .title-buttons {
+        top: 144px;
+        width: max-content;
+        display: flex;
+        gap: 2rem;
+    }
+
+    #gameMode1,
+    #gameMode2 {
+        height: 48px;
+        width: 144px;
+    }
+
+    #gameMode1 {
+        background-color: var(--colour-primary);
+    }
+
+        #gameMode1:hover {
+            color: var(--colour-primary);
+            background-color: white;
+        }
+    
+    #gameMode2 {
+        background-color: var(--colour-secondary);
+    }
+
+        #gameMode2:hover {
+            color: var(--colour-secondary);
+            background-color: white;
+        }
+
+
+
+/* ==================== GAME CONTAINER ==================== */
+#game-container {
+    position: absolute;
+    top: var(--game-element-top-offset);
+    left: 50%;
+    height: var(--game-container-height);
+    width: var(--game-container-width);
+    transform: translate(-50%, -50%);
+    animation: game-elements-in 1.5s;
+}
+
+#game-container > * {
+    position: absolute; 
+}
+
+    form {
+        top: -60px;
+        left: 0;
+        transition: ease-in-out .5s;
+    }
+
+        form select {
+            appearance: auto;
+            background: transparent;
+            height: 32px;
+            width: 96px;
+            font-size: 1rem;
+            border-bottom: 2px solid black;
+        }
+
+    .game-grid {  
+        height: var(--game-container-width);
+        width: var(--game-container-width);
+        display: grid;
+        grid-template-columns: repeat(3, minmax(150px, 1fr));
+        grid-template-rows: repeat(3, minmax(150px, 1fr));
+        gap: 0.25rem;
+    }
+
+        .game-grid > * {
+            cursor: pointer;
+            transition: all .5s;
+
+            font-size: 9rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: none;
+        }
+
+    #game-restart {
+        left: 0;
+        bottom: 0;
+        height: 32px;
+        width: 96px;
+        transition: all .5s;
+    }
+
+    #game-info {
+        right: 0;
+        bottom: 0;
+        height: max-content;
+        width: max-content;
+        padding-right: 2px;
+        font-size: 1.2rem;
+        font-weight: bold;  
+    }
+
+
+
+/* ==================== SCORECARD ELEMENTS ==================== */
+#left-scorecard,
+#right-scorecard {
+    position: absolute;
+    top: var(--game-element-top-offset);
+    height: var(--game-container-height);
+    width: var(--scorecard-width);
+    transform: translate(0, -50%);
+
+    background-color: rgb(175, 77, 77);
+    animation: game-elements-in 1s;
+}
+
+#left-scorecard {
+    left: 40px;
+
+}
+
+#right-scorecard {
+    right: 40px;
+    text-align: right;
+}
+
+    #left-scorecard > *,
+    #right-scorecard > * {
+        /* position: absolute; */
+        
+    }
+
+    .scorecard-player {
+        
+    }
+
+    .scorecard-name {
+
+    }
+
+    .scorecard-symbol {
+
+    }
+
+    .scorecard-score {
+
+    }
 
