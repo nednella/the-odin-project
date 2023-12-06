@@ -71,29 +71,58 @@ const player = (sign, icon, isHuman, aiMode) => {
 }
 
 const defaultConfig = (() => {
-    const playerX = player('X', '❤️', true, )
-    const playerO = player('O', '💚', true, )
+    let playerX,
+        playerO,
+        isHuman,
+        difficulty
+
+    const setOpponentMode = (input) => {
+        input == 1
+            ? isHuman = false
+            : isHuman = true
+    }
+
+    const setOpponentDifficulty = (input) => {
+        return difficulty = input
+    }
+
+    const generatePlayers = () => {
+        playerX = player('X', '❤️', true, )
+        playerO = player('O', '💚', isHuman, difficulty)
+
+        return [playerX, playerO]
+    }
 
     return {
         playerX,
         playerO,
+        setOpponentMode,
+        setOpponentDifficulty,
+        generatePlayers
     }
 })()
 
 const gameController = (() => {
-    const playerX = defaultConfig.playerX,
-          playerO = defaultConfig.playerO
-    
-    let currentPlayer, opponentPlayer, currentRound, isGameOver, gameStatus
+    let playerX, playerO,
+        currentPlayer, opponentPlayer,
+        currentRound, isGameOver, gameStatus
         
-    const resetGame = () => {
+    const resetGame = (mode, difficulty) => {
+        console.log('Game reset.')
+        defaultConfig.setOpponentMode(mode)
+        defaultConfig.setOpponentDifficulty(difficulty)
+    
+        let players = defaultConfig.generatePlayers()
+        playerX = players[0]
+        playerO = players[1]
+    
         currentPlayer = playerX
         opponentPlayer = playerO
-
+    
         currentRound = 0
         isGameOver = false
         gameStatus = ''
-
+    
         game.resetGameBoard()
         displayController.renderGameMessage(`It's ${currentPlayer.name()}'s turn...`)
     }
@@ -402,7 +431,7 @@ const aiLogic = (() => {
 
         // Determine a move
         move = getMove(gameBoard, possibleMoves, currentPlayer, opponentPlayer)
-        console.log(`AI has Chosen a move of... ${move}`)
+        console.log(`AI move: ${move}`)
 
         // Return move to game controller
         return move
@@ -420,36 +449,36 @@ const aiLogic = (() => {
         switch (currentPlayer.difficulty()) {
             case 'easy':
                 if (accuracyRoll > easyAccuracy) {
-                    console.log(`Current AI Difficulty: EASY... \n` + `Accuracy roll MISSED -> Executing getRandomMove()...\n`)
+                    console.log(`AI Difficulty: EASY\n` + `AI Accuracy: ${easyAccuracy * 100}%\n` + `Accuracy roll MISSED -> Executing getRandomMove()...\n`)
                     move = getRandomMove(possibleMoves)
                 } else {
-                    console.log(`Current AI Difficulty: EASY... \n` + `Accuracy roll HIT -> Executing getBestMove()...\n`)
+                    console.log(`AI Difficulty: EASY\n` + `AI Accuracy: ${easyAccuracy * 100}%\n` + `Accuracy roll HIT -> Executing getBestMove()...\n`)
                     move = getBestMove(gameBoard, possibleMoves, currentPlayer, opponentPlayer)
                 }
                 break
 
             case 'medium':
                 if (accuracyRoll > mediumAccuracy) {
-                    console.log(`Current AI Difficulty: MEDIUM... \n` + `Accuracy roll MISSED -> Executing getRandomMove()...\n`)
+                    console.log(`AI Difficulty: MEDIUM\n` + `AI Accuracy: ${mediumAccuracy * 100}%\n` + `Accuracy roll MISSED -> Executing getRandomMove()...\n`)
                     move = getRandomMove(possibleMoves)
                 } else {
-                    console.log(`Current AI Difficulty: MEDIUM... \n` + `Accuracy roll HIT -> Executing getBestMove()...\n`)
+                    console.log(`AI Difficulty: MEDIUM\n` + `AI Accuracy: ${mediumAccuracy * 100}%\n` + `Accuracy roll HIT -> Executing getBestMove()...\n`)
                     move = getBestMove(gameBoard, possibleMoves, currentPlayer, opponentPlayer)
                 }
                 break
 
             case 'hard':
                 if (accuracyRoll > hardAccuracy) {
-                    console.log(`Current AI Difficulty: HARD... \n` + `Accuracy roll MISSED -> Executing getRandomMove()...\n`)
+                    console.log(`AI Difficulty: HARD\n` + `AI Accuracy: ${hardAccuracy * 100}%\n` + `Accuracy roll MISSED -> Executing getRandomMove()...\n`)
                     move = getRandomMove(possibleMoves)
                 } else {
-                    console.log(`Current AI Difficulty: HARD... \n` + `Accuracy roll HIT -> Executing getBestMove()...\n`)
+                    console.log(`AI Difficulty: HARD\n` + `AI Accuracy: ${hardAccuracy * 100}%\n` + `Accuracy roll HIT -> Executing getBestMove()...\n`)
                     move = getBestMove(gameBoard, possibleMoves, currentPlayer, opponentPlayer)
                 }
                 break
 
             case 'impossible':
-                console.log(`Current AI Difficulty: IMPOSSIBLE... \n` +  `Executing getBestMove()...\n`)
+                console.log(`AI Difficulty: IMPOSSIBLE\n` +  `Executing getBestMove()...\n`)
                 move = getBestMove(gameBoard, possibleMoves, currentPlayer, opponentPlayer)
                 
                 if (move == undefined) { move = getRandomMove(possibleMoves), console.log(`bestMove returned undefined, executing randomMove()`) }
@@ -522,7 +551,6 @@ const aiLogic = (() => {
             }
             scoresArray.push(score)                                             // Temporary 
         })
-        console.log(`bestScore final value: ${bestScore}`)
         console.log(`Scores Array: ${scoresArray}`)
 
         return bestMove
