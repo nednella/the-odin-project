@@ -228,14 +228,21 @@ button {
         height: var(--game-container-width);
         width: var(--game-container-width);
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(3, 1fr);
+        grid-template-columns: repeat(3, minmax(150px, 1fr));
+        grid-template-rows: repeat(3, minmax(150px, 1fr));
         gap: 0.25rem;
     }
 
         .game-grid > * {
             cursor: pointer;
-            transition: background-color .5s;
+            transition: all .5s;
+
+            font-size: 9rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: none;
         }
 
     #game-restart {
@@ -243,7 +250,7 @@ button {
         bottom: 0;
         height: 32px;
         width: 96px;
-        transition: background-color .5s;
+        transition: all .5s;
     }
 
     #game-info {

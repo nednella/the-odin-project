@@ -25,12 +25,12 @@
 
                 <form action="#" class="difficultyForm hide">
                     <select name="difficulty" id="difficultySelector">
-                        <option value="easy">Easy</option>
+                        <option value="easy" selected>Easy</option>
                         <option value="medium">Medium</option>
                         <option value="hard">Hard</option>
+                        <option value="impossible">Impossible</option>
                     </select>    
                 </form>
-                
 
                 <div class="game-grid">
                     <div id="grid-1" data-grid-pos="1" class="grid-item variableColour"></div>
@@ -46,6 +46,7 @@
     
                 <button id="game-restart" class="variableColour">Restart</button>
                 <span id="game-info">Some game text here</span>
+                
             </div>
 
             <div id="left-scorecard" class="hidden">
