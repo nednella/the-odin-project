@@ -1,5 +1,217 @@
 // JavaScript
 
+const game = (() => {
+    let gameBoard = Array(9).fill(undefined)
+
+    const resetGameBoard = () => gameBoard.forEach((element, index) => gameBoard[index] = undefined)
+    const setGameBoard = (i, sign) => gameBoard[i - 1] = sign
+    const getGameBoard = () => gameBoard
+    const getGameBoardAtIndex = (i) => gameBoard[i - 1]
+    const getGameBoardEmptyFields = () => {
+        let emptyFields = []
+
+        gameBoard.forEach((element, index) => {
+            if (element == undefined) {
+                emptyFields.push(index + 1)
+            }
+        })
+
+        return emptyFields
+    }
+    const checkGameBoard = (sign) => {
+        if (checkWin(sign)) return 'win'
+        else if (checkTie()) return 'tie'
+        else return null
+    }
+    const checkWin = (sign) => {
+        return false
+            // Rows
+            || (gameBoard[0] == sign && gameBoard[1] == sign && gameBoard[2] == sign)
+            || (gameBoard[3] == sign && gameBoard[4] == sign && gameBoard[5] == sign)
+            || (gameBoard[6] == sign && gameBoard[7] == sign && gameBoard[8] == sign)
+            // Columns
+            || (gameBoard[0] == sign && gameBoard[3] == sign && gameBoard[6] == sign)
+            || (gameBoard[1] == sign && gameBoard[4] == sign && gameBoard[7] == sign)
+            || (gameBoard[2] == sign && gameBoard[5] == sign && gameBoard[8] == sign)
+            // Diagonals
+            || (gameBoard[0] == sign && gameBoard[4] == sign && gameBoard[8] == sign)
+            || (gameBoard[2] == sign && gameBoard[4] == sign && gameBoard[6] == sign)
+    }
+    const checkTie = () => {
+        return !gameBoard.includes(undefined)
+    }
+
+    return {
+        resetGameBoard,
+        setGameBoard,
+        getGameBoard,
+        getGameBoardAtIndex,
+        getGameBoardEmptyFields,
+        checkGameBoard,
+    }
+})()
+
+const player = (sign, icon, isHuman, aiMode) => {
+    let player_Name = `Player ${sign}`
+    let player_Sign = icon
+    let player_isHuman = isHuman
+    let ai_difficulty = aiMode
+
+    const getPlayerName = () => { return player_Name }
+    const getPlayerSign = () => { return player_Sign }
+    const isPlayerHuman = () => { return player_isHuman }
+    const getAiDifficulty = () => { return ai_difficulty }
+
+    return {
+        name: getPlayerName,
+        sign: getPlayerSign,
+        isHuman: isPlayerHuman,
+        difficulty: getAiDifficulty,
+    }
+}
+
+const defaultConfig = (() => {
+    let playerX,
+        playerO,
+        isHuman,
+        difficulty
+
+    const setOpponentMode = (input) => {
+        input == 1
+            ? isHuman = false
+            : isHuman = true
+    }
+
+    const setOpponentDifficulty = (input) => {
+        return difficulty = input
+    }
+
+    const generatePlayers = () => {
+        playerX = player('X', '❤️', true, )
+        playerO = player('O', '💚', isHuman, difficulty)
+
+        return [playerX, playerO]
+    }
+
+    return {
+        playerX,
+        playerO,
+        setOpponentMode,
+        setOpponentDifficulty,
+        generatePlayers
+    }
+})()
+
+const gameController = (() => {
+    let playerX, playerO,
+        currentPlayer, opponentPlayer,
+        currentRound, isGameOver, gameStatus
+        
+    const resetGame = (mode, difficulty) => {
+        console.log('Game reset.')
+        defaultConfig.setOpponentMode(mode)
+        defaultConfig.setOpponentDifficulty(difficulty)
+    
+        let players = defaultConfig.generatePlayers()
+        playerX = players[0]
+        playerO = players[1]
+    
+        currentPlayer = playerX
+        opponentPlayer = playerO
+    
+        currentRound = 0
+        isGameOver = false
+        gameStatus = ''
+    
+        game.resetGameBoard()
+        displayController.renderGameMessage(`It's ${currentPlayer.name()}'s turn...`)
+    }
+
+    const play = (pos) => {
+        if (!isGameOver) {
+            validMove = gameLogic.checkValidMove(pos)
+            if (validMove) {
+                gameLogic.playRound(pos)
+            }
+        }
+        if (!isGameOver && !opponentPlayer.isHuman()) {
+            setTimeout(() => {
+                gameLogic.playRound()
+            }, 300)   
+        }
+    }
+
+    const gameLogic = (() => {
+        const checkValidMove = (move) => {
+            return game.getGameBoardAtIndex(move) == undefined ? true : false
+        }
+
+        const playRound = (pos) => {
+            currentRound++
+            newTurn()
+            handleMove(pos)
+            checkBoard()
+    
+            isGameOver
+                ? setGameOver()
+                : displayController.renderGameMessage(`It's ${opponentPlayer.name()}'s turn...`)
+        } 
+
+        const newTurn = () => {
+            if (currentRound !== 1) {
+                currentPlayer == playerX
+                    ? (currentPlayer = playerO, opponentPlayer = playerX)
+                    : (currentPlayer = playerX, opponentPlayer = playerO)
+            } 
+            return
+        }
+
+        const handleMove = (pos) => {
+            currentPlayer.isHuman()
+                ? move = pos
+                : move = aiLogic.findMove(currentPlayer, opponentPlayer)
+
+            game.setGameBoard(move, currentPlayer.sign())
+            displayController.renderGameBoard(game.getGameBoard())
+            return
+        }
+
+        const checkBoard = () => {
+            result = game.checkGameBoard(currentPlayer.sign())
+
+            if (result == 'win' || result == 'tie') {
+                setGameStatus(result)
+            } else return
+        }
+
+        const setGameStatus = (result) => {
+            gameStatus = result
+            return isGameOver = true
+        }
+
+        const setGameOver = () => {
+            message = 'Game over, '
+
+            gameStatus == 'win'
+                ? message += ` ${currentPlayer.name()} wins!`
+                : message += ` it's a tie!`
+
+            console.log(message)
+            return displayController.renderGameMessage(message)
+        }
+
+        return {
+            checkValidMove,
+            playRound,
+        }
+    })()
+
+    return {
+        resetGame,
+        play,
+    }
+})()
+
 const displayController = (() => {
     titleContainer = document.getElementById('title-container')
     gameContainer = document.getElementById('game-container')
@@ -45,28 +257,20 @@ const displayController = (() => {
         restartButton.addEventListener('click', () => tmpFnName.newGame())      // Restart
 
         gridItems.forEach(item => {                                             // Handle Move
-        item.addEventListener('click', () => {
-            console.log(item.dataset.gridPos)
-
-            // TODO: Implement game integration using gridPos dataset values
-
+            item.addEventListener('click', () => { 
+                if (item.innerText == '') {
+                    gameController.play(item.dataset.gridPos)   
+                }
             })
         })
     })()
 
-
-
-    // TODO: integrate UI render functions into gameController
-
     const renderGameBoard = (gameBoard) => {
         for (i = 0; i < gridItems.length; i++) {
-            if (gameBoard[i] !== undefined) {
-                if (gridItems[i] !== '') {
-                    gridItems[i].innerText = gameBoard[i]    
-                }
+            if (gameBoard[i] !== undefined && gridItems[i].innerText == '') {
+                gridItems[i].innerText = gameBoard[i]     
             }
         }
-        // TODO: only render elements that aren't already rendered, so that I can add a fade-in animation for new moves
     }
 
     const renderGameMessage = (message) => {
@@ -95,7 +299,7 @@ const displayController = (() => {
             ui.clearScorecards()
 
             /* Game Resets */
-            ttt.resetGame()
+            gameController.resetGame(selectedGameMode, selectedDifficulty)
         }
 
         const setGameMode = (input) => {
@@ -109,18 +313,28 @@ const displayController = (() => {
             ui.changeElementColour(input)
 
 
+
             // TODO: Add config supplier function to supply the selected game mode to the gameController
-            return
+            // defaultConfig().setOpponentMode(input)
+
+
+            
+            return selectedGameMode = input
         }
 
         const setDifficulty = (input) => {
             if (input == 'easy' || input == 'medium'
              || input == 'hard' || input == 'impossible') {
                 console.log(`AI Difficulty: ${input}`)
-                selectedDifficulty = input
+
+
 
                 // TODO: Add config supplier function to supply the selected difficulty to the gameController
-                return
+                // defaultConfig().setOpponentDifficulty(input)
+                
+
+
+                return selectedDifficulty = input
              }
         }
 
@@ -199,76 +413,15 @@ const displayController = (() => {
             clearScorecards,
         }
     })()
-})()
-
-const game = (() => {
-    let gameBoard = Array(9).fill(undefined)
-
-    const resetGameBoard = () => gameBoard.forEach((element, index) => gameBoard[index] = undefined)
-    const setGameBoard = (i, sign) => gameBoard[i - 1] = sign
-    const getGameBoard = () => gameBoard
-    const getGameBoardAtIndex = (i) => gameBoard[i - 1]
-    const getGameBoardEmptyFields = () => {
-        let emptyFields = []
-
-        gameBoard.forEach((element, index) => {
-            if (element == undefined) {
-                emptyFields.push(index + 1)
-            }
-        })
-
-        return emptyFields
-    }
-    const displayGameBoard = () => {
-        let tmp = ''
-        tmp += (' ' + '\n')
-        tmp += (' ' + (gameBoard[0] || '1 ') + ' | ' + (gameBoard[1] || ' 2 ') + ' | ' + (gameBoard[2] || ' 3 ') + '\n')
-        tmp += ('---------------' + '\n')
-        tmp += (' ' + (gameBoard[3] || '4 ') + ' | ' + (gameBoard[4] || ' 5 ') + ' | ' + (gameBoard[5] || ' 6 ') + '\n')
-        tmp += ('---------------'  + '\n')
-        tmp += (' ' + (gameBoard[6] || '7 ') + ' | ' + (gameBoard[7] || ' 8 ') + ' | ' + (gameBoard[8] || ' 9 ') + '\n')
-        tmp += (' ')
-        console.log(tmp)
-    }
 
     return {
-        resetGameBoard,
-        setGameBoard,
-        getGameBoard,
-        getGameBoardAtIndex,
-        getGameBoardEmptyFields,
-        displayGameBoard,
+        renderGameBoard,
+        renderGameMessage,
+        renderScorecards,
     }
 })()
-
-const player = (sign, icon, isCurrent, isHuman, aiMode) => {
-    let player_Name = `Player ${sign}`
-    let player_Sign = icon
-    let player_isCurrent = isCurrent
-    let player_isHuman = isHuman
-    let ai_difficulty = aiMode
-
-    const getPlayerName = () => { return player_Name }
-    const getPlayerSign = () => { return player_Sign }
-    const isPlayerCurrent = () => { return player_isCurrent }
-    const setPlayerCurrent = () => { return player_isCurrent = true }
-    const unsetPlayerCurrent = () => { return player_isCurrent = false }
-    const isPlayerHuman = () => { return player_isHuman }
-    const isAiDifficulty = () => { return ai_difficulty }
-
-    return {
-        name: getPlayerName,
-        sign: getPlayerSign,
-        isCurrent: isPlayerCurrent,
-        setCurrent: setPlayerCurrent,
-        unsetCurrent: unsetPlayerCurrent,
-        isHuman: isPlayerHuman,
-        difficulty: isAiDifficulty,
-    }
-}
 
 const aiLogic = (() => {
-
     const findMove = (currentPlayer, opponentPlayer) => {
         if (!currentPlayer && currentPlayer.isHuman()) return // function call failsafe
 
@@ -278,7 +431,7 @@ const aiLogic = (() => {
 
         // Determine a move
         move = getMove(gameBoard, possibleMoves, currentPlayer, opponentPlayer)
-        console.log(`AI has Chosen a move of... ${move}`)
+        console.log(`AI move: ${move}`)
 
         // Return move to game controller
         return move
@@ -296,36 +449,36 @@ const aiLogic = (() => {
         switch (currentPlayer.difficulty()) {
             case 'easy':
                 if (accuracyRoll > easyAccuracy) {
-                    console.log(`Current AI Difficulty: EASY... \n` + `Accuracy roll MISSED -> Executing getRandomMove()...\n`)
+                    console.log(`AI Difficulty: EASY\n` + `AI Accuracy: ${easyAccuracy * 100}%\n` + `Accuracy roll MISSED -> Executing getRandomMove()...\n`)
                     move = getRandomMove(possibleMoves)
                 } else {
-                    console.log(`Current AI Difficulty: EASY... \n` + `Accuracy roll HIT -> Executing getBestMove()...\n`)
+                    console.log(`AI Difficulty: EASY\n` + `AI Accuracy: ${easyAccuracy * 100}%\n` + `Accuracy roll HIT -> Executing getBestMove()...\n`)
                     move = getBestMove(gameBoard, possibleMoves, currentPlayer, opponentPlayer)
                 }
                 break
 
             case 'medium':
                 if (accuracyRoll > mediumAccuracy) {
-                    console.log(`Current AI Difficulty: MEDIUM... \n` + `Accuracy roll MISSED -> Executing getRandomMove()...\n`)
+                    console.log(`AI Difficulty: MEDIUM\n` + `AI Accuracy: ${mediumAccuracy * 100}%\n` + `Accuracy roll MISSED -> Executing getRandomMove()...\n`)
                     move = getRandomMove(possibleMoves)
                 } else {
-                    console.log(`Current AI Difficulty: MEDIUM... \n` + `Accuracy roll HIT -> Executing getBestMove()...\n`)
+                    console.log(`AI Difficulty: MEDIUM\n` + `AI Accuracy: ${mediumAccuracy * 100}%\n` + `Accuracy roll HIT -> Executing getBestMove()...\n`)
                     move = getBestMove(gameBoard, possibleMoves, currentPlayer, opponentPlayer)
                 }
                 break
 
             case 'hard':
                 if (accuracyRoll > hardAccuracy) {
-                    console.log(`Current AI Difficulty: HARD... \n` + `Accuracy roll MISSED -> Executing getRandomMove()...\n`)
+                    console.log(`AI Difficulty: HARD\n` + `AI Accuracy: ${hardAccuracy * 100}%\n` + `Accuracy roll MISSED -> Executing getRandomMove()...\n`)
                     move = getRandomMove(possibleMoves)
                 } else {
-                    console.log(`Current AI Difficulty: HARD... \n` + `Accuracy roll HIT -> Executing getBestMove()...\n`)
+                    console.log(`AI Difficulty: HARD\n` + `AI Accuracy: ${hardAccuracy * 100}%\n` + `Accuracy roll HIT -> Executing getBestMove()...\n`)
                     move = getBestMove(gameBoard, possibleMoves, currentPlayer, opponentPlayer)
                 }
                 break
 
             case 'impossible':
-                console.log(`Current AI Difficulty: IMPOSSIBLE... \n` +  `Executing getBestMove()...\n`)
+                console.log(`AI Difficulty: IMPOSSIBLE\n` +  `Executing getBestMove()...\n`)
                 move = getBestMove(gameBoard, possibleMoves, currentPlayer, opponentPlayer)
                 
                 if (move == undefined) { move = getRandomMove(possibleMoves), console.log(`bestMove returned undefined, executing randomMove()`) }
@@ -398,8 +551,6 @@ const aiLogic = (() => {
             }
             scoresArray.push(score)                                             // Temporary 
         })
-        console.log(`bestScore final value: ${bestScore}`)
-        console.log(`Minimax Count: ${minimaxCount}`)
         console.log(`Scores Array: ${scoresArray}`)
 
         return bestMove
@@ -489,146 +640,5 @@ const aiLogic = (() => {
 
     return {
         findMove,
-    }
-})()
-
-const defaultConfig = (() => {
-    const playerX = player('X', '❤️', false, true, )
-    const playerO = player('O', '💚', false, false, 'impossible')
-    return {
-        playerX,
-        playerO,
-    }
-})()
-
-const ttt = (() => {
-    console.log('%cTo play a game, type "ttt.newGame()"', 'font-size: x-large')
-
-    const playerX = defaultConfig.playerX
-    const playerO = defaultConfig.playerO
-    let currentPlayer, opponentPlayer, currentRound, isGameOver, gameStatus
-
-    const newGame = () => {
-        console.clear()
-        console.log('%cWelcome to JS Tic Tac Toe (Browser Console Version)', 'font-size: x-large')
-        game.displayGameBoard()
-        currentRound = 0
-        do {
-            currentRound++
-            playRound()
-        } while (!isGameOver)
-        gameOver()
-    }
-
-    const resetGame = () => {
-        currentPlayer = ''
-        opponentPlayer = ''
-        isGameOver  = ''
-        gameStatus = ''
-        game.resetGameBoard()
-        playerX.unsetCurrent()
-        playerO.unsetCurrent()
-    }
-
-    const playRound = () => {
-        gameLogic.newTurn()
-        gameLogic.handleMove()
-        gameLogic.checkBoard()
-        if (gameStatus !== 'quit') {
-            console.log('%cCurrent Round: ' + currentRound, 'font-weight: bold')
-            game.displayGameBoard()    
-        }
-    }
-
-    const gameOver = () => {
-        console.log(`%cGame Over...`, 'font-size: x-large')
-         if (gameStatus == 'win') {
-            console.log(`%c${currentPlayer.name()} (${currentPlayer.sign()}) Wins!`, 'font-size: x-large')
-        } else if (gameStatus == 'tie') {
-            console.log(`%cIt's a Tie!`, 'font-size: x-large')
-        } else console.log(`%cGame has been cancelled.`, 'font-size: x-large')
-        resetGame()
-    }
-
-    const gameLogic = (() => {
-        const newTurn = () => {
-            if (currentRound == 0) {
-                playerX.setCurrent()
-            }
-            if (playerX.isCurrent()) { playerX.unsetCurrent(), playerO.setCurrent() } 
-            else { playerO.unsetCurrent(), playerX.setCurrent() }
-            helperFns.setPlayer()
-        }
-
-        const handleMove = () => {
-            if (currentPlayer.isHuman()) {
-                do {
-                    move = window.prompt(`Enter where you'd like to place your marker (1 - 9) ["C" to Quit]`)
-                    if ( move == 'C') {
-                        helperFns.setGameStatus('quit')
-                        break
-                    }
-                } while (game.getGameBoardAtIndex(move) !== undefined)       
-            } else {
-                move = aiLogic.findMove(currentPlayer, opponentPlayer)
-            }
-            
-            game.setGameBoard(move, currentPlayer.sign())
-        }
-
-        const checkBoard = () => {
-            if (helperFns.checkWin(currentPlayer.sign())) helperFns.setGameStatus('win')
-            else if (currentRound == 9) helperFns.setGameStatus('tie')
-        }
-
-        const helperFns = (() => {
-            const checkWin = (sign) => {
-                gameBoard = game.getGameBoard()
-                return false
-                    // Rows
-                    || (gameBoard[0] == sign && gameBoard[1] == sign && gameBoard[2] == sign)
-                    || (gameBoard[3] == sign && gameBoard[4] == sign && gameBoard[5] == sign)
-                    || (gameBoard[6] == sign && gameBoard[7] == sign && gameBoard[8] == sign)
-                    // Columns
-                    || (gameBoard[0] == sign && gameBoard[3] == sign && gameBoard[6] == sign)
-                    || (gameBoard[1] == sign && gameBoard[4] == sign && gameBoard[7] == sign)
-                    || (gameBoard[2] == sign && gameBoard[5] == sign && gameBoard[8] == sign)
-                    // Diagonals
-                    || (gameBoard[0] == sign && gameBoard[4] == sign && gameBoard[8] == sign)
-                    || (gameBoard[2] == sign && gameBoard[4] == sign && gameBoard[6] == sign)
-            }
-    
-            const setPlayer = () => {
-                if (playerX.isCurrent()) { currentPlayer = playerX, opponentPlayer = playerO }
-                else  { currentPlayer = playerO, opponentPlayer = playerX }
-            }
-    
-            const setGameStatus = (result) => {
-                gameStatus = result
-                setGameOver()  
-            }
-    
-            const setGameOver = () => {
-                return isGameOver = true
-            }
-
-            return {
-                checkWin,
-                setPlayer,
-                setGameStatus
-            }
-        })()
-
-        return {
-            newTurn,
-            handleMove,
-            checkBoard,
-        }
-
-    })()
-
-    return {
-        newGame,
-        resetGame,
     }
 })()
