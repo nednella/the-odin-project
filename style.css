@@ -16,7 +16,7 @@
     --title-container-width: 640px;
     --game-container-height: 518px;
     --game-container-width: 458px;
-    --scorecard-width: 240px;
+    --scorecard-width: 180px;
 
     --game-element-top-offset: 55%;
 
@@ -274,39 +274,40 @@ button {
     width: var(--scorecard-width);
     transform: translate(0, -50%);
 
-    background-color: rgb(175, 77, 77);
-    animation: game-elements-in 1s;
+    animation: game-elements-in 1s; 
 }
 
 #left-scorecard {
-    left: 40px;
-
+    left: 100px;
+    text-align: right;
 }
 
 #right-scorecard {
-    right: 40px;
-    text-align: right;
+    right: 100px;
+    
 }
 
     #left-scorecard > *,
     #right-scorecard > * {
-        /* position: absolute; */
-        
+        position: absolute;
+        font-family: 'Montserrat Alternates', sans-serif;
+        font-size: 2rem;
+        font-weight: 500;
+    }
+
+    #left-scorecard > * {
+        right: 10px;
+    }
+
+    #right-scorecard > * {
+        left: 10px;
     }
 
     .scorecard-player {
-        
-    }
-
-    .scorecard-name {
-
-    }
-
-    .scorecard-symbol {
 
     }
 
     .scorecard-score {
-
+        top: 80px;
+        font-size: 2.5rem;
     }
-
