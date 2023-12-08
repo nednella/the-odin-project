@@ -92,8 +92,8 @@ const defaultConfig = (() => {
     }
 
     const generatePlayers = () => {
-        playerX = player('X', '❤️', true, )
-        playerO = player('O', '💚', isHuman, difficulty)
+        playerX = player('X', 'X', true, ) //'❤️'
+        playerO = player('O', 'O', isHuman, difficulty) //'💚'
 
         return [playerX, playerO]
     }
@@ -205,10 +205,10 @@ const gameController = (() => {
             message = 'Game over, '
 
             gameStatus == 'win'
-                ? message += ` ${currentPlayer.name()} wins!`
+                ? (message += ` ${currentPlayer.name()} wins!`,
+                   currentPlayer.won())
                 : message += ` it's a tie!`
 
-            currentPlayer.won()
             console.log(message)
             
             displayController.renderScorecards(playerX, playerO)
@@ -300,20 +300,12 @@ const displayController = (() => {
     }
 
     const renderScorecards = (playerX, playerO) => {
-        for (i = 0; i < leftScorecardElements.length; i++) {
-            if (i == 0) {
-                continue
-            } else if (i == 1) {
-                leftScorecardElements[i].innerText = playerX.name()
-                rightScorecardElements[i].innerText = playerO.name()
-            } else if (i == 2) {
-                leftScorecardElements[i].innerText = playerX.sign()
-                rightScorecardElements[i].innerText = playerO.sign()
-            } else if (i == 3) {
-                leftScorecardElements[i].innerText = playerX.wins()
-                rightScorecardElements[i].innerText = playerO.wins()
-            } else return  
-        }
+        leftScorecardElements[0].innerText = `Player ${playerX.sign()}`
+        leftScorecardElements[1].innerText = playerX.wins()
+
+        rightScorecardElements[0].innerText = `Player ${playerO.sign()}`
+        rightScorecardElements[1].innerText = playerO.wins()
+  
     }
 
     const renderRestartButton = (isGameOver) => {
