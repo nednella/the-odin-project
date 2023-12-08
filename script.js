@@ -52,21 +52,26 @@ const game = (() => {
 })()
 
 const player = (sign, icon, isHuman, aiMode) => {
-    let player_Name = `Player ${sign}`
-    let player_Sign = icon
-    let player_isHuman = isHuman
-    let ai_difficulty = aiMode
+    let player_Name = `Player ${sign}`,
+        player_Sign = icon,
+        player_isHuman = isHuman,
+        ai_difficulty = aiMode,
+        win = 0
 
-    const getPlayerName = () => { return player_Name }
-    const getPlayerSign = () => { return player_Sign }
-    const isPlayerHuman = () => { return player_isHuman }
-    const getAiDifficulty = () => { return ai_difficulty }
+    const getPlayerName = () => { return player_Name },
+          getPlayerSign = () => { return player_Sign },
+          isPlayerHuman = () => { return player_isHuman },
+          getAiDifficulty = () => { return ai_difficulty },
+          setWin = () => { return win++ },
+          getWin = () => { return win }
 
     return {
         name: getPlayerName,
         sign: getPlayerSign,
         isHuman: isPlayerHuman,
         difficulty: getAiDifficulty,
+        won: setWin,
+        wins: getWin,
     }
 }
 
@@ -116,15 +121,22 @@ const gameController = (() => {
         playerX = players[0]
         playerO = players[1]
     
+        newGame()
+    }
+
+    const newGame = () => {
         currentPlayer = playerX
         opponentPlayer = playerO
-    
+
         currentRound = 0
         isGameOver = false
         gameStatus = ''
-    
+
         game.resetGameBoard()
+
+        displayController.renderScorecards(playerX, playerO)
         displayController.renderGameMessage(`It's ${currentPlayer.name()}'s turn...`)
+        displayController.renderRestartButton(isGameOver)
     }
 
     const play = (pos) => {
@@ -151,7 +163,7 @@ const gameController = (() => {
             newTurn()
             handleMove(pos)
             checkBoard()
-    
+
             isGameOver
                 ? setGameOver()
                 : displayController.renderGameMessage(`It's ${opponentPlayer.name()}'s turn...`)
@@ -196,8 +208,12 @@ const gameController = (() => {
                 ? message += ` ${currentPlayer.name()} wins!`
                 : message += ` it's a tie!`
 
+            currentPlayer.won()
             console.log(message)
-            return displayController.renderGameMessage(message)
+            
+            displayController.renderScorecards(playerX, playerO)
+            displayController.renderGameMessage(message)
+            displayController.renderRestartButton(isGameOver)
         }
 
         return {
@@ -208,20 +224,26 @@ const gameController = (() => {
 
     return {
         resetGame,
+        newGame,
         play,
     }
 })()
 
 const displayController = (() => {
     titleContainer = document.getElementById('title-container')
+
     gameContainer = document.getElementById('game-container')
     gridItems = document.querySelectorAll('.grid-item')
     gameInfo = document.getElementById('game-info')
-    leftScorecard = document.getElementById('left-scorecard')
-    rightScorecard = document.getElementById('right-scorecard')
-    variableColourElements = document.querySelectorAll('.variableColour')
     restartButton = document.getElementById('game-restart')
     difficultySelector = document.getElementById('difficultySelector')
+
+    leftScorecard = document.getElementById('left-scorecard')
+    rightScorecard = document.getElementById('right-scorecard')
+    leftScorecardElements = document.querySelectorAll('#left-scorecard > *')
+    rightScorecardElements = document.querySelectorAll('#right-scorecard > *')
+
+    variableColourElements = document.querySelectorAll('.variableColour')
     
     gameMode1 = document.getElementById('gameMode1')    // vs AI
     gameMode2 = document.getElementById('gameMode2')    // vs Player
@@ -236,11 +258,11 @@ const displayController = (() => {
         gameModes.forEach(button => {                                           // Game Mode
             button.addEventListener('click', (e) => {
                 input = e.target.getAttribute("data-gameMode")
-                if (!gameInitialised) tmpFnName.initialiseGame()
+                if (!gameInitialised) settings.initialiseGame()
                 if (selectedGameMode == input) return
                 else {
-                    tmpFnName.setGameMode(input)
-                    tmpFnName.newGame()
+                    settings.setGameMode(input)
+                    settings.resetGame()
                 }
             })
         })
@@ -249,12 +271,12 @@ const displayController = (() => {
             input = difficultySelector.value
             if (selectedDifficulty == input) return
             else {
-                tmpFnName.setDifficulty(input)
-                tmpFnName.newGame()
+                settings.setDifficulty(input)
+                settings.resetGame()
             }
         })
 
-        restartButton.addEventListener('click', () => tmpFnName.newGame())      // Restart
+        restartButton.addEventListener('click', () => settings.newGame())      // Restart
 
         gridItems.forEach(item => {                                             // Handle Move
             item.addEventListener('click', () => { 
@@ -277,15 +299,30 @@ const displayController = (() => {
         return gameInfo.innerText = message
     }
 
-    const renderScorecards = () => {
-        // TODO: implement scoreboard feature with multi-game scoring
-        // IDEA: implement fade-out function for non-current player, and remove the game message feature
+    const renderScorecards = (playerX, playerO) => {
+        for (i = 0; i < leftScorecardElements.length; i++) {
+            if (i == 0) {
+                continue
+            } else if (i == 1) {
+                leftScorecardElements[i].innerText = playerX.name()
+                rightScorecardElements[i].innerText = playerO.name()
+            } else if (i == 2) {
+                leftScorecardElements[i].innerText = playerX.sign()
+                rightScorecardElements[i].innerText = playerO.sign()
+            } else if (i == 3) {
+                leftScorecardElements[i].innerText = playerX.wins()
+                rightScorecardElements[i].innerText = playerO.wins()
+            } else return  
+        }
     }
 
+    const renderRestartButton = (isGameOver) => {
+        isGameOver
+            ? restartButton.innerText = 'Play Again'
+            : restartButton.innerText = 'Restart'
+    }
 
-
-    // TODO: suitably name this cluster of functions
-    const tmpFnName = (() => {
+    const settings = (() => {
         const initialiseGame = () => {
             console.log('Game initialised.')
             ui.titleAnimation()
@@ -293,13 +330,14 @@ const displayController = (() => {
             return gameInitialised = true
         }
 
-        const newGame = () => {
-            /* UI Resets */
+        const resetGame = () => {
             ui.clearGrid()
-            ui.clearScorecards()
-
-            /* Game Resets */
             gameController.resetGame(selectedGameMode, selectedDifficulty)
+        }
+
+        const newGame = () => {
+            ui.clearGrid()
+            gameController.newGame()
         }
 
         const setGameMode = (input) => {
@@ -311,13 +349,6 @@ const displayController = (() => {
 
             ui.toggleDifficultySelector(input)
             ui.changeElementColour(input)
-
-
-
-            // TODO: Add config supplier function to supply the selected game mode to the gameController
-            // defaultConfig().setOpponentMode(input)
-
-
             
             return selectedGameMode = input
         }
@@ -326,13 +357,6 @@ const displayController = (() => {
             if (input == 'easy' || input == 'medium'
              || input == 'hard' || input == 'impossible') {
                 console.log(`AI Difficulty: ${input}`)
-
-
-
-                // TODO: Add config supplier function to supply the selected difficulty to the gameController
-                // defaultConfig().setOpponentDifficulty(input)
-                
-
 
                 return selectedDifficulty = input
              }
@@ -344,6 +368,7 @@ const displayController = (() => {
 
         return {
             initialiseGame,
+            resetGame,
             newGame,
             setGameMode,
             setDifficulty,
@@ -369,17 +394,6 @@ const displayController = (() => {
             }, 150)
         }
 
-        const toggleDifficultySelector = (selectedGameMode) => {
-            const form = document.querySelector('.difficultyForm')
-            if (selectedGameMode == 1) {
-                form.classList.remove('hide')
-                difficultySelector.removeAttribute('disabled', '')
-            } else {
-                form.classList.add('hide')
-                difficultySelector.setAttribute('disabled', '')
-            }
-        }
-
         const changeElementColour = (selectedGameMode) => {
             if (selectedGameMode == 1) {
                 variableColourElements.forEach(element => {
@@ -394,23 +408,29 @@ const displayController = (() => {
             }
         }
 
+        const toggleDifficultySelector = (selectedGameMode) => {
+            const form = document.querySelector('.difficultyForm')
+            if (selectedGameMode == 1) {
+                form.classList.remove('hide')
+                difficultySelector.removeAttribute('disabled', '')
+            } else {
+                form.classList.add('hide')
+                difficultySelector.setAttribute('disabled', '')
+            }
+        }    
+
         const clearGrid = () => {
             gridItems.forEach(item => {
                 item.innerText = ''
             })
         }
 
-        const clearScorecards = () => {
-            // TODO: implement function
-        }
-
         return {
             titleAnimation,
             unhideElements,
-            toggleDifficultySelector,
             changeElementColour,
+            toggleDifficultySelector,
             clearGrid,
-            clearScorecards,
         }
     })()
 
@@ -418,6 +438,7 @@ const displayController = (() => {
         renderGameBoard,
         renderGameMessage,
         renderScorecards,
+        renderRestartButton,
     }
 })()
 
