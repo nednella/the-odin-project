@@ -2,6 +2,17 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
+:root {
+    --header-height: 90px;
+    --footer-height: 90px;
+    --accent-colour: #cc9c54;
+    --accent-colour: rgb(200, 160, 140);
+    --nav-background-colour: rgba(0, 0, 0, 0.55);
+    --menu-items: 8;
+}
+
+
+
 /* ==================== REMOVE BROWSER STYLING ==================== */
 * {
     margin: 0;
@@ -17,76 +28,217 @@
 
 /* ==================== DEFAULT STYLING ==================== */
 body {
-    height: 100vh;
+    font-size: 16px;
+    font-weight: 300;
     font-family: 'Roboto', sans-serif;
-    
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    background-image: url(/src/img/background.jpg);
+    background-size: cover;
+    color: white;
+}
+
+button {
+    cursor: pointer;
 }
 
 
 
-/* ==================== TEMPLATE ==================== */
 
-header {
-    position: fixed;
-    height: 200px;
+
+/* ==================== HTML TEMPLATE ==================== */
+#grid-container {
+    height: 100vh;
     width: 100%;
-    background-color: rgb(31, 31, 31);
+    display: grid;
+    grid-template-rows: var(--header-height) 1fr var(--footer-height);
+    grid-template-areas:
+        "header"
+        "content"
+        "footer";
+}
+
+    header {
+        grid-area: header;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 36px 0;
+        opacity: 0.8;
+        backdrop-filter: blur(10px);
+        background-color: black;
+    }
+
+        nav {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+            nav > * {
+                display: flex;
+                color: white;
+                font-weight: 400;
+            }
+
+            .nav-left, .nav-right {
+                width: 240px;
+            }
+
+            .nav-left {
+                justify-content: start;
+            }
+
+            .nav-right {
+                justify-content: end;
+            }
+
+            .nav-center {
+                justify-content: center;
+                gap: 3rem;
+            }
+            
+                .nav-btn {
+                    height: 45px;
+                    font-size: 16px;
+                    font-weight: 400;
+                    color: white;
+                    background-color: transparent;
+                }
+
+                    .nav-btn.active {
+                        border-bottom: 2px solid white;
+                    }
+
+                    .nav-btn:hover {
+                        border-bottom: 2px solid var(--accent-colour);
+                    }
+
+                .reserve-btn {
+                    height: 45px;
+                    width: 200px;
+                    font-size: 16px;
+                    font-weight: 400;
+                    color: white;
+                    background-color: transparent;
+                    border: 1px solid var(--accent-colour);
+                }
+
+    footer {
+        grid-area: footer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+        footer p {
+            font-size: 16px;
+            cursor: default;
+            user-select: none;
+        }
+
+        footer a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+            .fa-github {
+                font-size: 22px;
+                transition: transform 0.3s ease-in-out;
+            }
+        
+            .fa-github:hover {
+                transform: rotate(360deg) scale(1.2);
+            }
+
+
+
+/* ==================== CONTENT CONTAINER ==================== */
+#content {
+    grid-area: content;
+    height: calc(100vh - var(--header-height) - var(--footer-height));
+    overflow-y: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
-    
+    justify-content: center;
 }
 
-    h1.title {
-        color: red;
-        font-size: 72px;
-    }
-
-    nav {
-        display: flex;
-        justify-content: center;
-    }
-
-        .nav-option {
-
-        }
-
-
-#content {
-    position: fixed;
-    top: 200px;
-    overflow: scroll;
-}
-
-
-footer {
-    position: fixed;
-    bottom: 5%;
+#content > * {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: center;
 }
 
-    footer p {
-        font-size: 20px;
-        cursor: default;
-        user-select: none;
+
+
+/* ==================== HOME ==================== */
+.home {
+    height: 100%;
+    width: 100%;
+    gap: 1rem;
+}
+
+    .home-name {
+        margin-top: -240px;
+    }  
+
+    hr {
+        margin-bottom: 10px;
+        width: 250px;
+        border: 1px solid var(--accent-colour);
     }
 
-    footer a {
-        text-decoration: none;
+    .home-buttons {
+        display: flex;
+        flex-direction: row;
+        gap: 2rem;
+    }
+
+        .home-name > h1 {
+            color: var(--accent-colour);
+            font-size: 72px;
+            text-shadow: 1px 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .home-name > h2 {
+            margin-top: -30px;
+            margin-left: 50px;
+            color: white;
+            font-size: 48px;
+        }
+
+    .home-button {
+        padding: 12px 24px 12px 24px;
+        border-radius: 24px;
         color: inherit;
+        font-size: inherit;
+        font-weight: 700;
+        background-color: var(--accent-colour);
+        box-shadow: 1px 5px 15px rgba(0, 0, 0, 0.5);
     }
 
-        .fa-github {
-            font-size: 24px;
-            transition: transform 0.3s ease-in-out;
+        .home-button:hover {
+            transform: scale(1.02);
         }
-    
-        .fa-github:hover {
-            transform: rotate(360deg) scale(1.2);
-        }
+
+
+
+/* ==================== MENU ==================== */
+.menu {
+
+}
+
+
+/* ==================== ABOUT ==================== */
+.about {
+
+}
+
+
+
+/* ==================== CONTACT ==================== */ 
+.contact {
+
+}
