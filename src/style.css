@@ -164,7 +164,7 @@ button {
     justify-content: center;
 }
 
-#content > * {
+#content > *:not(.menu-nav):not(.menu-scroll) {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -226,9 +226,95 @@ button {
 
 
 /* ==================== MENU ==================== */
-.menu {
-
+.menu-nav {
+    grid-area: nav;
+    width: 650px;
+    padding: 0 72px 0;
+    display: flex;
+    justify-content: space-evenly;
 }
+
+    .menu-nav-option {
+        height: 45px;
+        font-size: 16px;
+        font-weight: 400;
+        color: white;
+        background-color: transparent;
+    }
+
+    .menu-nav-option:hover {
+        color: var(--accent-colour);
+    }
+
+.menu-scroll {
+    height: 750px;
+    width: 650px;
+    box-shadow: 1px 5px 15px rgba(0, 0, 0);
+    overflow-y: auto;
+}
+
+.menu-scroll::-webkit-scrollbar {
+    width: 10px;
+}
+
+.menu-scroll::-webkit-scrollbar-thumb {
+    background-color: white;
+}
+
+    .menu {
+        padding: 25px 0;
+        opacity: 0.8;
+        backdrop-filter: blur(5px);
+        background: linear-gradient(
+            to right,
+            white 0%,
+            white 30%,
+            var(--accent-colour) 30%,
+            var(--accent-colour) 100%
+        );
+    }
+
+    .menu-items {
+        display: grid;
+        grid-auto-rows: 1fr;
+        gap: 2rem;
+    }
+
+        .menu-item {
+            display: grid;
+            grid-template-columns: 30% 1fr 10%;
+            grid-template-rows: max-content 1fr;
+            grid-template-areas:
+                "image name price"
+                "image description description";
+        }
+
+            .item-image {
+                grid-area: image;
+                justify-self: center;
+                height: 120px;
+                width: 120px;
+                border-radius: 12px;
+                background-color: rgb(190, 190, 190);
+            }
+
+            .item-name {
+                grid-area: name;
+                padding-left: 24px;
+                font-weight: 700;
+            }
+
+            .item-price {
+                grid-area: price;
+                font-weight: 700;             
+            }
+
+            .item-description {
+                grid-area: description;
+                padding-top: 12px;
+                padding-left: 24px;
+            }
+
 
 
 /* ==================== ABOUT ==================== */
