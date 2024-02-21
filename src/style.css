@@ -158,13 +158,14 @@ button {
     grid-area: content;
     height: calc(100vh - var(--header-height) - var(--footer-height));
     overflow-y: hidden;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-#content > *:not(.menu-nav):not(.menu-scroll) {
+#content > *:not(.menu-nav):not(.menu-scroll):not(.contact) {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -180,9 +181,22 @@ button {
     gap: 1rem;
 }
 
-    .home-name {
-        margin-top: -240px;
-    }  
+    .home-title {
+        
+    }
+
+        .home-title > h1 {
+            color: var(--accent-colour);
+            font-size: 72px;
+            text-shadow: 1px 5px 15px rgba(0, 0, 0, 0.8);
+        }
+
+        .home-title > h2 {
+            margin-top: -30px;
+            margin-left: 50px;
+            color: white;
+            font-size: 48px;
+        }
 
     hr {
         margin-bottom: 10px;
@@ -196,32 +210,20 @@ button {
         gap: 2rem;
     }
 
-        .home-name > h1 {
-            color: var(--accent-colour);
-            font-size: 72px;
-            text-shadow: 1px 5px 15px rgba(0, 0, 0, 0.5);
+        .home-button {
+            padding: 12px 24px 12px 24px;
+            border-radius: 24px;
+            color: inherit;
+            font-size: inherit;
+            font-weight: 700;
+            background-color: var(--accent-colour);
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+            box-shadow: 1px 5px 15px rgba(0, 0, 0, 0.5);
         }
 
-        .home-name > h2 {
-            margin-top: -30px;
-            margin-left: 50px;
-            color: white;
-            font-size: 48px;
-        }
-
-    .home-button {
-        padding: 12px 24px 12px 24px;
-        border-radius: 24px;
-        color: inherit;
-        font-size: inherit;
-        font-weight: 700;
-        background-color: var(--accent-colour);
-        box-shadow: 1px 5px 15px rgba(0, 0, 0, 0.5);
-    }
-
-        .home-button:hover {
-            transform: scale(1.02);
-        }
+            .home-button:hover {
+                transform: scale(1.02);
+            }
 
 
 
@@ -319,8 +321,29 @@ button {
 
 /* ==================== ABOUT ==================== */
 .about {
-
+    /* margin-top: 120px; */
 }
+
+    .about-title > h1 {
+        color: var(--accent-colour);
+        font-size: 72px;
+        text-shadow: 1px 5px 15px rgba(0, 0, 0, 0.8);
+    }
+
+    .about-title > h2 {
+        margin-top: -30px;
+        margin-left: 50px;
+        color: white;
+        font-size: 48px;
+    }
+
+    .about > p {
+        width: 60%;
+        margin-top: 24px;
+        font-size: 18px;
+        text-align: center;
+    }
+
 
 
 
