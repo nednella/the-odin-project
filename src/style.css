@@ -349,5 +349,109 @@ button {
 
 /* ==================== CONTACT ==================== */ 
 .contact {
-
+    height: 550px;
+    width: 650px;
+    display: grid;
+    grid-template-columns: 40% 60%;
+    grid-template-areas:
+        "info message";
+    gap: 2rem;
 }
+
+    .contact > * {
+        padding: 24px;
+        opacity: 0.8;
+        box-shadow: 1px 5px 15px rgba(0, 0, 0);
+        backdrop-filter: blur(10px);  
+    }
+
+    .info {
+        grid-area: info;
+        background-color: white;
+        color: black;
+        position: relative;
+    }
+
+        .info > :nth-child(2),
+        .info > :nth-child(3) {
+            margin-top: 3rem;
+        }
+
+            .info > *:not(:nth-child(4)) > *:not(:first-child) {
+                margin-left: 0.5rem;
+            }
+
+            .info > *:not(:nth-child(4)) > :nth-child(2) {
+                margin-top: 0.5rem;
+            }
+
+        .socials {
+            position: absolute;
+            bottom: 32px;
+            left: 130px;
+            transform: translate(-50%, 0);
+            height: 42px;
+            font-size: 24px;
+            gap: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .socials > *:hover {
+                cursor: pointer;
+            }
+
+    .message {
+        grid-area: message;
+        background-color: var(--accent-colour);
+        position: relative;
+        display: grid;
+        grid-template-rows: max-content 1fr;
+    }
+        form {
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+            .form-input {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+                .form-input > label {
+                    font-weight: 700;
+                }
+
+                .form-input > input {
+                    border-radius: 10px;
+                    padding: 10px;
+                    background-color: white;
+                    font-size: 14px;
+                }
+
+                #message {
+                    height: 180px;
+                    border-radius: 10px;
+                    padding: 10px;
+                    background-color: white;
+                    font-size: 14px;
+                    font-family: inherit;
+                }
+            
+            form > button {
+                position: absolute;
+                bottom: 32px;
+                left: 195px;
+                transform: translate(-50%, 0);
+                border-radius: 24px;
+                padding: 12px 24px 12px 24px;
+                font-size: inherit;
+                font-weight: 700;
+                color: black;
+                background-color: white;
+                box-shadow: 1px 5px 15px rgba(0, 0, 0, 0.5);
+            }
