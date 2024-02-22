@@ -7,8 +7,6 @@
     --footer-height: 90px;
     --accent-colour: #cc9c54;
     --accent-colour: rgb(200, 160, 140);
-    --nav-background-colour: rgba(0, 0, 0, 0.55);
-    --menu-items: 8;
 }
 
 
@@ -158,7 +156,6 @@ button {
     grid-area: content;
     height: calc(100vh - var(--header-height) - var(--footer-height));
     overflow-y: hidden;
-
     display: flex;
     flex-direction: column;
     align-items: center;
