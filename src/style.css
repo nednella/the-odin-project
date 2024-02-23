@@ -40,8 +40,6 @@ button {
 
 
 
-
-
 /* ==================== HTML TEMPLATE ==================== */
 #grid-container {
     height: 100vh;
@@ -207,7 +205,7 @@ button {
         gap: 2rem;
     }
 
-        .home-button {
+        .home-buttons > button {
             padding: 12px 24px 12px 24px;
             border-radius: 24px;
             color: inherit;
@@ -218,9 +216,9 @@ button {
             box-shadow: 1px 5px 15px rgba(0, 0, 0, 0.5);
         }
 
-            .home-button:hover {
-                transform: scale(1.02);
-            }
+        .home-buttons > button:hover {
+            transform: scale(1.02);
+        }
 
 
 
@@ -233,7 +231,7 @@ button {
     justify-content: space-evenly;
 }
 
-    .menu-nav-option {
+    .menu-nav > button {
         height: 45px;
         font-size: 16px;
         font-weight: 400;
@@ -241,7 +239,7 @@ button {
         background-color: transparent;
     }
 
-    .menu-nav-option:hover {
+    .menu-nav > button:hover {
         color: var(--accent-colour);
     }
 
@@ -271,9 +269,6 @@ button {
             var(--accent-colour) 30%,
             var(--accent-colour) 100%
         );
-    }
-
-    .menu-items {
         display: grid;
         grid-auto-rows: 1fr;
         gap: 2rem;
@@ -318,7 +313,7 @@ button {
 
 /* ==================== ABOUT ==================== */
 .about {
-    /* margin-top: 120px; */
+    
 }
 
     .about-title > h1 {
@@ -338,9 +333,11 @@ button {
         width: 60%;
         margin-top: 24px;
         font-size: 18px;
+        font-weight: 400;
         text-align: center;
+        line-height: 1.5;
+        text-shadow: 1px 5px 5px rgba(0, 0, 0, 0.8);
     }
-
 
 
 
