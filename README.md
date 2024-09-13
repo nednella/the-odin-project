@@ -1,6 +1,6 @@
 The Odin Project: Foundations
 
-Implement a sketchpad/etch-a-sketch style toy using JS/HTML/CSS
+Implement a sketchpad/etch-a-sketch style toy using JS, CSS and HTML.
 
 Based on the lesson(s):
 
