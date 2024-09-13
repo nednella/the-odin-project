@@ -2,7 +2,7 @@
 
 The Odin Project: JavaScript Course
 
-Implement a Tic Tac Toe game using HTML, CSS and JS
+Implement a Tic Tac Toe game using JS, CSS and HTML.
 
 Based on the lesson(s):
 
