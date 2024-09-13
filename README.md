@@ -2,7 +2,7 @@
 
 The Odin Project: JavaScript Course
 
-Implement a to-do list app using JS, CSS and HTML. Built with Webpack.
+Implement a to-do list app using JS, SASS and HTML. Built with Webpack.
 
 Based on the lesson(s):
 
