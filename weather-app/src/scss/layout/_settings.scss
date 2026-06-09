@@ -1,0 +1,73 @@
+// Settings modal
+
+#settings {
+    position: fixed;
+    left: calc(100% - 390px);
+    height: 100vh;
+    width: 390px;
+
+    > * {
+        user-select: none;
+        height: 100%;
+        width: 100%;
+        background-color: var(--bg-secondary);
+
+        > * {
+            padding: 0 2em;
+        }
+    }
+
+    .header {
+        height: $grid-header-height;
+        color: var(--font-primary);
+        background-color: var(--bg-primary);
+
+        display: grid;
+        grid-template-columns: 1fr max-content;
+        grid-template-areas: 'search close';
+        align-items: center;
+
+        > .search {
+            grid-area: search;
+            display: none;
+        }
+
+        > span {
+            grid-area: close;
+            cursor: pointer;
+            font-size: 2em;
+        }
+    }
+
+    .content {
+        > * {
+            padding-top: 2em;
+        }
+
+        #favourites {
+            > * {
+                padding-top: 12px;
+            }
+            .favourite-item {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 1em;
+
+                p,
+                span {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
+
+#settings:modal {
+    max-height: 100vh;
+    max-width: 100vh;
+}
+
+#settings::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}

@@ -1,0 +1,20 @@
+// Forecast
+
+.dashboard.active {
+    display: grid !important;
+    grid-template-rows: repeat(6, max-content);
+    gap: 2em;
+
+    > :first-child {
+        margin-top: 2em;
+    }
+
+    > * {
+        min-height: 0;
+        min-width: 0;
+        max-width: 1000px;
+        width: 100%;
+        padding: 0 2em;
+        margin: 0 auto;
+    }
+}

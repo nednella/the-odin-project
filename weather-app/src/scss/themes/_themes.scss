@@ -1,0 +1,10 @@
+// Credit for implementing SCSS themes: https://medium.com/@dmitriy.borodiy/easy-color-theming-with-scss-bc38fd5734d1
+
+$light-theme: (
+    'bg-primary': #222236,
+    'font-primary': #fff,
+    'bg-secondary': #fafafa,
+    'font-secondary': #2b2b2b,
+);
+
+$dark-theme: ();

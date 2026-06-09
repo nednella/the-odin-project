@@ -1,0 +1,94 @@
+// Media Queries
+
+@media only screen and (max-width: 768px) {
+    header {
+        .settingsOpen {
+            right: 32px !important;
+        }
+        .search {
+            display: none !important;
+        }
+    }
+
+    #settings {
+        .header > .search {
+            display: block !important;
+        }
+    }
+
+    .current-weather > .details-container {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+
+    .day-card > .current-card > div > :first-child {
+        display: none;
+    }
+
+    .carousel__container {
+        --carousel-items: 5 !important;
+    }
+
+    .carousel__wrapper {
+        width: 85% !important;
+    }
+}
+
+@media only screen and (max-width: 640px) {
+    .day-card > .icon-container > span {
+        display: none;
+    }
+
+    .carousel__container {
+        --carousel-items: 4 !important;
+    }
+}
+
+@media only screen and (max-width: 540px) {
+    .popular-locations {
+        display: none;
+    }
+
+    .current-location {
+        padding-top: 1em !important;
+    }
+
+    .current-weather {
+        > .icon-container {
+            justify-self: center !important;
+        }
+        #currentTemp {
+            font-size: 4rem !important;
+        }
+        > .details-container {
+            grid-template-columns: repeat(2, 1fr) !important;
+        }
+    }
+
+    .carousel__wrapper {
+        width: 80% !important;
+    }
+
+    .carousel__container {
+        --carousel-items: 3 !important;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    #settings {
+        left: 0 !important;
+        width: 100% !important;
+        min-width: 375px;
+    }
+    .day-card > .current-card {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 440px) {
+    .carousel__wrapper {
+        width: 70% !important;
+    }
+    .carousel__container {
+        --carousel-items: 2 !important;
+    }
+}

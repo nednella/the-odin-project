@@ -1,0 +1,29 @@
+// Popular locations scroll content
+
+.popular-locations > .scroller__container {
+    padding-bottom: 0.5em;
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    white-space: nowrap;
+    mask: linear-gradient(90deg, transparent, white 10%, white 90%, transparent);
+    -webkit-mask: linear-gradient(90deg, transparent, white 10%, white 90%, transparent);
+
+    > .scroller__inner-scroll {
+        width: max-content;
+        display: flex;
+        animation: scroll linear 60s infinite;
+
+        > * {
+            user-select: none;
+            cursor: pointer;
+            margin: 0 1.5em;
+        }
+    }
+}
+
+@keyframes scroll {
+    to {
+        transform: translateX(-50%);
+    }
+}
