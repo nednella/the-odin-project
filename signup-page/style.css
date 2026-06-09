@@ -1,0 +1,229 @@
+/* CSS */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://fonts.gstatic.com/s/materialicons/v140/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
+}
+
+:root {
+    --left-font-colour: black;
+    --right-font-colour: white;
+    --invalid-font-colour: rgb(200, 0, 0);
+    --right-bg-colour: rgba(0, 0, 0, 0.7);
+    --input-border-focus: rgb(50, 120, 255);
+    --input-border-valid: rgb(0, 140, 0);
+    --input-border-invalid: rgb(200, 0, 0);
+    --accent-colour: rgb(160, 0, 130);
+    --hover-colour: white;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    }
+
+    .background {
+        height: 100vh;
+        width: 100%;
+        position: fixed;
+        left: 0;
+        right: 0;
+        background-size: cover;
+        background-position: calc(50% - 250px) 50%;
+        background-image: linear-gradient(rgba(0, 0, 0, 0), rgb(100, 0, 80)), url(./static/background.jpg);
+        filter: blur(1px);
+        transform: scale(1.1);
+    }
+
+    .content {
+        height: 100vh;
+        width: 100%;
+        position: fixed;
+        left: 0;
+        right: 0;
+        display: flex;
+    }
+
+        .left {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 40%;
+            font-family: 'Roboto', sans-serif;
+            color: var(--left-font-colour);
+            }
+
+            .left img {
+                padding: 32px 0 0 8px; 
+                width: 180px;
+            }
+            
+            .credit {
+                margin-bottom: 16px;
+                padding-left: 16px;
+                color: var(--left-font-colour);
+                font-size: 16px;
+            }
+
+                .credit a {
+                    color: inherit
+                }
+
+        .right {
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: space-between;
+            width: 60%;
+            font-family: 'Roboto', sans-serif;
+            color: var(--right-font-colour);
+            background-color: var(--right-bg-colour);
+            }
+
+            .hero {
+                width: 70%;
+                padding-top: 240px;
+                padding-left: 48px;
+                }
+
+                .hero-subheader {
+                    margin-bottom: 24px;
+                    font-size: 24px;
+                }
+
+                .hero-header {
+                    font-size: 96px;
+                    font-weight: 700;
+                }
+            
+            .form-container {
+                display: flex;
+                flex-direction: column;
+                gap: 24px;
+                padding: 0 0 48px 48px;
+                margin-top: -48px;
+                }
+
+                .form-header {
+                    font-size: 24px;
+                    font-weight: 700;
+                }
+
+                form {
+                    display: flex;
+                    flex-flow: row wrap;
+                    gap: 24px;
+                    }
+
+                    .formInput {
+                        display: flex;
+                        flex-flow: column nowrap;
+                        gap: 2px;
+                        width: 35%;
+                        }
+
+                        label {
+                            font-size: 13px;
+                            font-weight: 400;
+                            letter-spacing: 1px;
+                        }
+
+                        input {
+                            font-family: inherit;
+                            color: inherit;
+                            height: 24px;
+                            padding: 2px 8px 2px 8px;
+                            border: 1px solid white;
+                            border-radius: 3px;
+                            background-color: rgba(0, 0, 0, 0);
+                            font-size: 14px;
+                            font-weight: 400;
+                        }
+
+                            input:focus {
+                                box-shadow: var(--shadow-colour) 1px 3px 5px;
+                                border: 1px solid var(--input-border-focus);
+                                outline: none;
+                            }
+
+                            .valid {
+                                border: 1px solid var(--input-border-valid);
+                                outline: none;
+                            }
+    
+                            .invalid {
+                                border: 1px solid var(--input-border-invalid);
+                                outline: none;
+                            }
+
+                        .errorMsg {
+                            color: var(--invalid-font-colour);
+                            font-size: 14px;
+                        }     
+
+                #register {
+                    width: 200px;
+                    min-width: 100px;
+                    padding: 12px;
+                    border: 0;
+                    border-radius: 5px;
+                    background-color: var(--accent-colour);
+                    color: inherit;
+                    font-family: inherit;
+                    font-size: 16px;
+                    font-weight: 700;
+                }
+
+                    #register:hover {
+                        background-color: var(--hover-colour);
+                        color: var(--accent-colour);
+                    }
+
+                    #register:active {
+                        background-color: var(--hover-colour);
+                        color: var(--accent-colour);
+                        transform: scale(1.02);
+                    }
+
+                .form-container a {
+                    color: var(--accent-colour);
+                    font-weight: bold;
+                }
+
+                    .form-container a:hover {
+                        color: var(--hover-colour);
+                    }
+
+                    .form-container a:active {
+                        font-size: 17px;
+                    }
+            
+            .footer {
+                display: flex;
+                padding-left: 48px;
+            }
+
+            .footer p {
+                cursor: default;
+                user-select: none;
+            }
+
+            .footer a {
+                padding-top: 12px;
+                margin-left: 6px;
+                text-decoration: none;
+                color: var(--accent-colour);
+            }
+
+                .fa-github {
+                    font-size: 24px;
+                    transition: transform 0.3s ease-in-out;
+                    }
+                
+                    .fa-github:hover {
+                        color: white;
+                        transform: scale(1.1);
+                    }
