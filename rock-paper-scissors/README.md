@@ -1,12 +1,7 @@
-# odin-rps
-The Odin Project: Foundations
+# Rock Paper Scissors
 
-Project Outline: 
+The classic game, played against the computer in the browser. Built with HTML, CSS and JavaScript.
 
-Implement a Rock Paper Scissors in which the user competes against the computer
+Part of [The Odin Project](https://www.theodinproject.com/) (Foundations course) · [project lesson](https://www.theodinproject.com/lessons/foundations-rock-paper-scissors)
 
-Based on the lesson(s):
-1. https://www.theodinproject.com/lessons/foundations-rock-paper-scissors
-2. https://www.theodinproject.com/lessons/foundations-revisiting-rock-paper-scissors
-
-Live at: https://nednella.github.io/odin-rps/
+Built May–July 2023.

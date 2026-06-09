@@ -1,12 +1,9 @@
-# odin-signup
-The Odin Project: Intermediate HTML and CSS
+# Sign-up Form
 
-Implement a sign-up form using HTML, CSS and JS
+A styled sign-up form with client-side validation. Built with HTML, CSS and JavaScript.
 
-Based on the lesson(s):
+Part of [The Odin Project](https://www.theodinproject.com/) (Intermediate HTML and CSS course) · [project lesson](https://www.theodinproject.com/lessons/node-path-intermediate-html-and-css-sign-up-form)
 
-1. https://www.theodinproject.com/lessons/node-path-intermediate-html-and-css-sign-up-form
+Built October 2023.
 
-Live at: https://nednella.github.io/odin-signup/
-
-![sign-up-demo](https://github.com/nednella/odin-signup/assets/119449811/ef3bc157-46fc-4e3d-a4cb-5e8ffb3555e2)
+![demo](demo.png)

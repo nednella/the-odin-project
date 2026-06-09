@@ -1,13 +1,9 @@
-# odin-library
+# Library
 
-The Odin Project: JavaScript Course
+A small app for keeping track of books and whether you've read them. Built with HTML, CSS and JavaScript.
 
-Implement a Library app using JS
+Part of [The Odin Project](https://www.theodinproject.com/) (JavaScript course) · [project lesson](https://www.theodinproject.com/lessons/node-path-javascript-library)
 
-Based on the lesson(s):
+Built November 2023.
 
-1. https://www.theodinproject.com/lessons/node-path-javascript-library
-
-Live at: https://nednella.github.io/odin-library/
-
-![demo](https://github.com/nednella/odin-library/assets/119449811/ac7374ab-2432-4f76-aba4-660a4d6a8ccf)
+![demo](demo.png)

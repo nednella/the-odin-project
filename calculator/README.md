@@ -1,12 +1,9 @@
-# odin-calc
-The Odin Project: Foundations
+# Calculator
 
-Implement a calculator using JS/HTML/CSS
+A working on-screen calculator for the four basic operations. Built with HTML, CSS and JavaScript.
 
-Based on the lesson(s):
+Part of [The Odin Project](https://www.theodinproject.com/) (Foundations course) · [project lesson](https://www.theodinproject.com/lessons/foundations-calculator)
 
-1. https://www.theodinproject.com/lessons/foundations-calculator
+Built August 2023.
 
-Live at: https://nednella.github.io/odin-calc/
-
-![demo](https://github.com/nednella/odin-calc/assets/119449811/7e902cd0-25a8-439f-8b04-c19ff95282cf)
+![demo](demo.png)

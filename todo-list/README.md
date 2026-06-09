@@ -1,13 +1,9 @@
-# odin-todolist
+# To-Do List
 
-The Odin Project: JavaScript Course
+A to-do app that organises tasks into projects and saves them to localStorage. Built with JavaScript and Sass, bundled with Webpack.
 
-Implement a to-do list app using JS, SASS and HTML. Built with Webpack.
+Part of [The Odin Project](https://www.theodinproject.com/) (JavaScript course) · [project lesson](https://www.theodinproject.com/lessons/node-path-javascript-todo-list)
 
-Based on the lesson(s):
+Built February–April 2024.
 
-1. https://www.theodinproject.com/lessons/node-path-javascript-todo-list
-
-Live at: https://nednella.github.io/odin-todolist/
-
-![demo](https://github.com/nednella/odin-todolist/assets/119449811/05af92c2-8a36-449f-8859-5e9040de3ffc)
+![demo](demo.png)

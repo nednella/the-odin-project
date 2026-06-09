@@ -1,11 +1,9 @@
-The Odin Project: Foundations
+# Etch-a-Sketch
 
-Implement a sketchpad/etch-a-sketch style toy using JS, CSS and HTML.
+A browser drawing pad on a configurable grid — drag across the cells to draw. Built with HTML, CSS and JavaScript.
 
-Based on the lesson(s):
+Part of [The Odin Project](https://www.theodinproject.com/) (Foundations course) · [project lesson](https://www.theodinproject.com/lessons/foundations-etch-a-sketch)
 
-1. https://www.theodinproject.com/lessons/foundations-etch-a-sketch
+Built July–August 2023.
 
-Live at: https://nednella.github.io/odin-etchasketch/
-
-![demo](https://github.com/nednella/odin-etchasketch/assets/119449811/70afa0f1-a03b-48d9-9cce-5286d58a0434)
+![demo](demo.png)

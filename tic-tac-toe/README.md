@@ -1,13 +1,9 @@
-# odin-tictactoe
+# Tic Tac Toe
 
-The Odin Project: JavaScript Course
+Two-player Tic Tac Toe, built around factory functions and the module pattern. HTML, CSS and JavaScript.
 
-Implement a Tic Tac Toe game using JS, CSS and HTML.
+Part of [The Odin Project](https://www.theodinproject.com/) (JavaScript course) · [project lesson](https://www.theodinproject.com/lessons/node-path-javascript-tic-tac-toe)
 
-Based on the lesson(s):
+Built November–December 2023.
 
-1. https://www.theodinproject.com/lessons/node-path-javascript-tic-tac-toe
-
-Live at: https://nednella.github.io/odin-tictactoe/
-
-![demo](https://github.com/user-attachments/assets/5dd4420c-5e93-4c70-9d90-dc1a6f0cdb97)
+![demo](demo.png)

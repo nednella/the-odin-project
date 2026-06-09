@@ -1,13 +1,7 @@
-# odin-recipes
-The Odin Project: Foundations
+# Recipes
 
-Project outline:
+A small multi-page recipe site — an index page linking out to a handful of individual recipe pages. Built with HTML and CSS.
 
-Create a website that consists of at least 4 pages. the first "index" page should link to the remaining 3. The theme for the website
-is a collection of recipes, whether they are personal recipes or found on the web.
+Part of [The Odin Project](https://www.theodinproject.com/) (Foundations course) · [project lesson](https://www.theodinproject.com/lessons/foundations-recipes)
 
-Based on the lesson(s):
-
-1. https://www.theodinproject.com/lessons/foundations-recipes
-
-Live site: https://benallenden.github.io/odin-recipes/
+Built April 2023.

@@ -1,11 +1,9 @@
-The Odin Project: JavaScript Course
+# Weather App
 
-Implement a weather app using JS, SASS and HTML. Built with Webpack.
+A weather app that pulls live forecasts from a weather API. Built with JavaScript and Sass, bundled with Webpack.
 
-Based on the lesson(s):
+Part of [The Odin Project](https://www.theodinproject.com/) (JavaScript course) · [project lesson](https://www.theodinproject.com/lessons/node-path-javascript-weather-app)
 
-1. https://www.theodinproject.com/lessons/node-path-javascript-weather-app
+Built April–May 2024.
 
-Live at: https://nednella.github.io/odin-weatherapp/
-
-![demo](https://github.com/nednella/odin-weatherapp/assets/119449811/93a0ae54-652d-4b2f-af99-28ef6f66114f)
+![demo](demo.png)
