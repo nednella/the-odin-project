@@ -1,0 +1,702 @@
+/* CSS */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+:root {
+    --top-nav-height: 4.5rem;
+    --side-nav-width: 12rem;
+
+    --font-colour-primary: white;
+    --font-colour-secondary: rgb(180, 180, 180);
+    
+    --bg-colour-primary: rgb(20, 20, 20);
+    --bg-colour-secondary: rgb(31, 31, 31);
+    --bg-colour-accent: rgb(170, 136, 84);
+
+    --colour-border: rgb(65, 65, 65);
+
+    --grid-gap: 2rem;
+    --card-border-radius: 1.25rem;
+    --card-padding: 1rem;
+}
+
+/* ==================== ICON CUSTOMISATION ==================== */
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 300,
+    'GRAD' 0,
+    'opsz' 0;
+}
+
+.fa-github {
+    font-size: 22px;
+    width: 24px;
+    display: block;
+    text-align: center;
+}
+
+
+/* ==================== REMOVE BROWSER STYLING ==================== */
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    border: 0;
+    appearance: none;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+
+
+/* ==================== DEFAULT STYLING ==================== */
+body {
+    font-size: 16px;
+    font-weight: 300;
+    font-family: 'Roboto', sans-serif;
+    color: var(--font-colour-primary);
+    background-color: var(--bg-colour-secondary);
+}
+
+.active {
+    color: var(--font-colour-primary);
+}
+
+a {
+    color: var(--font-colour-secondary);
+}
+
+img {
+    display: block;
+    width: 100%;
+}
+
+h1 {
+    font-size: 1.8rem;
+    font-weight: 800;
+}
+
+h2 {
+    font-size: 1.2rem;
+    font-weight: 400;
+}
+
+h3 {
+    font-size: 0.87rem;
+    font-weight: 400;
+    transition: all 200ms ease;
+}
+
+.logo-colour {
+    color: var(--bg-colour-accent);
+}
+
+.card-border {
+    border: 1px solid var(--colour-border);
+}
+
+.content-card {
+    display: grid;
+    grid-template-rows: max-content 1fr;     
+}
+
+.content-header {
+    padding: 0 4px 12px 4px;
+}
+
+.main-content > * > *:not(.content-header):not(.cards):not(#send-money) {
+    background-color: var(--bg-colour-primary);
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+}
+
+
+
+/* ==================== GRID CONTAINER ==================== */
+.grid-container {
+    height: 100vh;
+    width: 100%;
+    display: grid;
+    grid-template-columns: var(--side-nav-width) 1fr;
+    grid-template-rows: var(--top-nav-height) 1fr;
+    grid-template-areas:
+        "logo top-nav"
+        "side-nav main-content";
+} 
+
+    /* ==================== LOGO ==================== */
+    .logo {
+        grid-area: logo;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: var(--top-nav-height);
+        width: var(--side-nav-width);
+        background-color: var(--bg-colour-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .logo > a {
+            color: var(--font-colour-primary)
+        }
+
+
+
+    /* ==================== SIDE NAV ==================== */
+    .side-nav {
+        grid-area: side-nav;
+        position: fixed;
+        top: var(--top-nav-height);
+        left: 0;
+        height: calc(100vh - var(--top-nav-height));
+        width: var(--side-nav-width);
+        color: var(--font-colour-primary);
+        background-color: var(--bg-colour-primary);
+        display: grid;
+        grid-template-rows: repeat(6, 3.7rem) 1fr repeat(3, 3.7rem); 
+    }
+
+        .side-nav a {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-left: 32px;
+            transition: all 300ms ease;
+        }
+
+        .side-nav a.active {
+            background-color: var(--bg-colour-secondary);
+            margin-left: 0;
+            padding-left: 16px;
+        }
+
+        .side-nav a:hover h3 {
+            color: var(--font-colour-primary);
+            font-size: 1rem;
+        }
+
+
+
+    /* ==================== TOP NAV ==================== */
+    .top-nav {
+        grid-area: top-nav;
+        position: sticky;
+        top: 0;
+        color: var(--font-colour-primary);
+        background-color: var(--bg-colour-primary);
+        z-index: 999;
+    }
+
+        .burger-menu {
+            position: absolute;
+            top: 14px;
+            left: 2rem;
+            font-size: 2.75rem;
+
+            display: none;
+        }
+
+        .top-nav-logo {
+            position: absolute;
+            top: 19px;
+            right: 2rem;
+
+            display: none;
+        }
+
+        .top-nav-logo > a {
+            color: var(--font-colour-primary)
+        }
+
+
+
+    /* ==================== MAIN CONTENT GRID ==================== */
+    .main-content {
+        grid-area: main-content;
+        display: grid;
+        padding: var(--grid-gap);
+        gap: var(--grid-gap);    
+
+        height: calc(100vh - var(--top-nav-height));
+        grid-template-columns: 340px minmax(485px, 1fr);
+        grid-template-rows: auto auto 1fr;
+        grid-template-areas: 
+            "my-cards expenditure"
+            "card-balance expenditure"
+            "send-money recent-activity";
+    }
+
+        .content-my-cards {
+            grid-area: my-cards;
+        }
+
+        .content-balance {
+            grid-area: card-balance;
+        }
+
+        .content-send-money {
+            grid-area: send-money;
+        }
+
+        .content-expenditure {
+            grid-area: expenditure;
+
+            /* ensures the chart container takes up its entire alloted space in the grid */
+            display: flex; 
+            flex-direction: column;
+        }
+
+        .content-recent-activity {
+            grid-area: recent-activity;
+
+            /* ensures the recent-activty table content scrolls properly - nothing pushed out of the viewport */
+            display: flex; 
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+
+
+    /* ==================== CARDS ==================== */
+    .cards-header {
+        display: flex;
+        justify-content: space-between;
+        }
+
+        .cards-header-left {
+            display: flex;
+            gap: 32px;
+        }
+
+            .cards-header-left ul {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 1rem;
+                color: var(--font-colour-secondary);
+            }
+
+            .cards-header-left ul li:first-child {
+                font-size: 1.2rem;
+                color: var(--font-colour-primary);
+            }
+
+        .cards-header-right {
+            display: flex;
+            gap: 16px;
+        }
+
+            .card-icons {
+                font-size: 1.2rem;
+            }
+
+                .card-icons:hover {
+                color: var(--font-colour-primary);
+                transition: all 300ms ease;
+            }
+
+    .cards {
+        height: 270px;
+        position: relative;
+        cursor: default;
+    }
+
+        .card-1 {
+            position: absolute;
+            overflow: hidden;
+            height: 240px;
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 15px 25px #0a0a0af0;
+            background-color: rgba(192, 98, 204, 0.5);  
+        }
+
+        .card-2 {
+            top: 18%;
+            position: absolute;   
+            overflow: hidden;
+            height: 220px;
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 5px 25px #0a0a0af0;
+            background-color: rgba(10, 82, 85, 0.95); 
+        }
+
+            .face {
+                height: 100%;
+                width: 100%;
+                padding: 24px;
+                display: grid;
+                grid-template-rows: 1fr 2fr;
+                font-weight: 500;
+            }
+
+                .face-top {
+                    display: flex;
+                    justify-content: space-between;
+                    font-size: 1.1rem;
+                }
+
+                .face-middle {
+                    z-index: 100;
+                    display: grid;
+                    grid-template-rows: 1fr 1fr 1fr;
+                    align-items: center;
+                }
+
+                    .face-number {
+                        font-family: 'Orbitron', sans-serif;
+                        font-size: 1.1rem;
+                        letter-spacing: 5px;
+                        text-shadow: 2px 4px 4px rgb(0, 0, 0);
+                    }
+
+                    .face-valid {
+                        display: grid;
+                        grid-template-columns: repeat(2, max-content);
+                        gap: var(--grid-gap);
+                        align-items: center;
+                        font-size: 0.9rem;
+                        font-weight: 300;
+                    }
+
+                .face-bottom {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    font-size: 1.1rem;
+                    letter-spacing: 1px;
+                }
+
+            .card-bg {
+                z-index: 0;
+                content: '';
+                position: absolute;
+                right: -60%;
+                bottom: -155%;
+                height: 500px;
+                width: 500px;
+                border-radius: 50%;
+                background: linear-gradient(#f00, #f0f );
+            }
+
+
+
+    /* ==================== CARD BALANCE ==================== */
+    .card-balance {
+        text-align: center;
+        font-size: 1.8rem;
+        font-weight: 200;
+    }
+
+        .balance-integer {
+            font-weight: 700;
+        }
+
+        .balance-decimal {
+            font-size: 1.3rem;
+            font-weight: 300;
+        }   
+        
+        
+
+    /* ==================== SEND MONEY ==================== */
+    #send-money {
+        display: grid;
+        grid-template-rows: repeat(4, max-content);
+        gap: 32px;
+    }
+
+        .card-select {
+            background-color: var(--bg-colour-primary);
+            border-radius: var(--card-border-radius);
+            padding: var(--card-padding);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;  
+        }
+
+            .card-select select {
+                background: none;
+                appearance: auto;
+                font-size: 1.1rem;
+                color: var(--font-colour-primary);
+                cursor: pointer;
+            }
+
+            .card-select select:invalid {
+                color: var(--font-colour-secondary)
+            }
+
+            .card-select option {
+                color: black;
+            }
+
+        .form-input {
+            background-color: var(--bg-colour-primary);
+            border-radius: var(--card-border-radius);
+            padding: var(--card-padding);
+            padding-bottom: 0.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+            .form-input label {
+                font-weight: 400;
+            }
+            
+            .form-input input {
+                height: 40px;
+                background: transparent;
+                font-size: 1rem;
+                color: var(--font-colour-secondary);
+            }
+
+                .form-input .form-amount {
+                    display: grid;
+                    grid-template-columns: 1fr max-content;
+                    align-items: center;
+                }
+
+        #send-money button {
+            height: 66px;
+            border: 0;
+            border-radius: var(--card-border-radius); /* old radius was 60px */
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--font-colour-primary);
+            background-color: var(--bg-colour-accent);
+            cursor: pointer;
+        }
+
+        #send-money button:active {
+            transform: scale(0.99);
+        }
+
+
+
+    /* ==================== EXPENDITURE ==================== */
+    .expenditure-header,
+    .recent-activity-header {
+        display: flex;
+        justify-content: space-between;
+        }
+
+    .expenditure-header ul,
+    .recent-activity-header ul {
+        display: flex;
+        align-items: center;
+        font-size: 1rem;
+    }
+
+        .expenditure-header ul li,
+        .recent-activity-header ul li {
+            padding: 0 16px;
+            text-align: center;
+        }
+
+            .expenditure-header ul li a:hover,
+            .recent-activity-header ul li a:hover {
+                color: var(--font-colour-primary);
+                transition: all 300ms ease;
+            }
+
+        .expenditure-header ul li:not(:first-child),
+        .recent-activity-header ul li:not(:first-child) {
+            border-left: 1px solid var(--colour-border);
+        }
+
+    .expenditure {
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        #expenditure-chart {
+            padding: var(--card-padding);
+            padding-left: 0;
+        }
+
+
+
+    /* ==================== RECENT ACTIVITY ==================== */
+    .recent-activity {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+
+        /* TABLE-SCROLL */
+        max-height: 100vh;
+        overflow-y: hidden;
+    }
+
+        .recent-activity .table-scroll {
+            width: 100%;
+            max-height: 100%;
+            overflow-y: auto;
+        }
+
+        .recent-activity .table-scroll::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        .recent-activity .table-scroll::-webkit-scrollbar-track {
+            background-color: var(--bg-colour-secondary);
+            border-radius: 10px;
+        }
+
+        .recent-activity .table-scroll::-webkit-scrollbar-thumb {
+            background-color: var(--colour-border);
+            border-radius: 10px;
+        }
+
+            .recent-activity .table-scroll table {
+                width: 100%;
+                padding-right: 16px;
+            }
+
+                .recent-activity .table-scroll table tbody tr {
+                    padding: 40px;
+                }
+
+                    .recent-activity .table-scroll table tbody tr td {
+                        height: 3rem;
+                        padding: 8px 8px;
+                    }
+
+                span.transaction-type {
+                    font-size: 0.75rem;
+                    font-weight: 400;
+                    color: rgb(156, 156, 156);
+                }
+
+                td.transaction-status {
+                    font-weight: 500;
+                    color: var(--bg-colour-accent);
+                    text-align: center;
+                }
+
+
+                
+            .recent-activity a:hover {
+                color: var(--font-colour-primary);
+                transition: all 300ms ease;
+            }
+
+/* ==================== MEDIA QUERIES ==================== */
+@media only screen and (max-width: 1150px) {
+
+    .main-content {
+        height: 100%;
+        grid-template-columns: minmax(340px, 1fr) minmax(340px, 1fr);
+        grid-template-rows: auto auto 550px 1fr;
+        grid-template-areas: 
+            "my-cards send-money"
+            "card-balance send-money"
+            "expenditure expenditure"
+            "recent-activity recent-activity"; 
+    }
+
+    .content-send-money {
+        display: flex;
+        flex-direction: column;
+    }
+
+        #send-money {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+    
+    .content-expenditure,
+    .content-recent-activity {
+        padding-top: 2rem;
+    }
+
+        .recent-activity {
+            max-height: 100%;
+        }
+}  
+
+@media only screen and (max-width: 970px) {
+
+    /* REMOVE FIXED LOGO AND SIDEBAR */
+    .grid-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: var(--top-nav-height) 1fr;
+        grid-template-areas:
+            "top-nav"
+            "main-content";
+    }
+
+        .logo {
+            display: none;
+        }
+
+        .side-nav {
+            display: none;
+        }
+
+        .top-nav .burger-menu {
+            display: block;
+        }
+
+        .top-nav-logo {
+            display: block;
+        }
+
+    .main-content {
+        grid-template-columns: minmax(300px, 1fr) minmax(300px, 1fr);
+        grid-template-rows: auto auto 550px 1fr;
+        grid-template-areas: 
+            "my-cards send-money"
+            "card-balance send-money"
+            "expenditure expenditure"
+            "recent-activity recent-activity"; 
+    }
+} 
+
+@media only screen and (max-width: 710px) {
+
+    .main-content {
+        grid-template-columns: auto;
+        grid-template-rows: 1fr;
+        grid-template-areas: 
+            "my-cards"
+            "card-balance"
+            "send-money"
+            "expenditure"
+            "recent-activity"; 
+    }
+
+    .content-my-cards,
+    .content-balance,
+    .content-send-money {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        align-self: stretch;
+    }
+
+    .content-my-cards > *,
+    .content-balance > *,
+    .content-send-money > * {
+        width: 100%;
+        max-width: 350px;
+    }
+
+    .content-balance,
+    .content-send-money {
+        padding-top: 2rem;
+    } 
+}
