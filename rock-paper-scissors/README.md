@@ -1,0 +1,12 @@
+# odin-rps
+The Odin Project: Foundations
+
+Project Outline: 
+
+Implement a Rock Paper Scissors in which the user competes against the computer
+
+Based on the lesson(s):
+1. https://www.theodinproject.com/lessons/foundations-rock-paper-scissors
+2. https://www.theodinproject.com/lessons/foundations-revisiting-rock-paper-scissors
+
+Live at: https://nednella.github.io/odin-rps/
