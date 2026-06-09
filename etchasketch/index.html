@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="styles.css">
+        <script
+            src="https://kit.fontawesome.com/4c536a6bd5.js"
+            crossorigin="anonymous"
+        ></script>
+        <script src="script.js" defer></script>
+        <title>Digi-Sketch</title>
+        
+    </head>
+    <body>
+        <header>
+            <p>DIGI - SKETCH</p>
+            <h3>A TOP Project</h3>
+        </header>
+        <main>
+            <div id="settings">
+                <div id="colourHeader">Colour Selector</div>
+                <input id="colourSelector" type="color" value="#000000">
+
+                <button id="btn-grab" value="grab">Colour Grabber</button>
+                <button id="btn-fill" value="fill">Colour Fill</button>
+                <button id="btn-shade" value="shade">Toggle Shader</button>
+                <button id="btn-bright" value="bright">Toggle Brighten</button>
+                <button id="btn-erase" value="erase">Toggle Eraser</button>
+                
+                <div id="gridSize">16 x 16</div>
+                <input id="sizeSelector" type="range" value="16" min="1" max="80">
+
+                <button id="btn-gridlines">Toggle Grid Lines</button>
+                <button id="btn-reset">Reset</button>
+            </div>
+            <div id="grid"></div>
+        </main>
+        <footer>
+            <p>nednella</p>
+            <a href="https://github.com/nednella" target="_blank">
+                <i class="fab fa-github"></i>
+            </a> 
+        </footer>
+    </body>
+</html>
