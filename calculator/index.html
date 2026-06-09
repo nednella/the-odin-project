@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Calculator</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="script.js" defer></script>
+        <script
+            src="https://kit.fontawesome.com/4c536a6bd5.js"
+            crossorigin="anonymous"
+        ></script>
+    <body>
+        <header>
+            <div>A TOP PROJECT</div>
+            <div id='theme-toggle'>
+                <svg id="icon-sun" height="20" width="20" xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+                    <path stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M256 48v48M256 416v48M403.08 108.92l-33.94 33.94M142.86 369.14l-33.94 33.94M464 256h-48M96 256H48M403.08 403.08l-33.94-33.94M142.86 142.86l-33.94-33.94"/>
+                    <circle cx="256" cy="256" r="80" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32"/>
+                </svg>
+                <svg id="icon-moon" height="20" width="20" xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M160 136c0-30.62 4.51-61.61 16-88C99.57 81.27 48 159.32 48 248c0 119.29 96.71 216 216 216 88.68 0 166.73-51.57 200-128-26.39 11.49-57.38 16-88 16-119.29 0-216-96.71-216-216z"/>
+                </svg>
+            </div>
+        </header>
+        <main>
+            <div class="container">
+                <div class="calculator">
+                    <div class="display">
+                        <div class="previous"></div>
+                        <div class="current">0</div>
+                        <div class="error"></div>
+                    </div>
+                    <div class="keys">
+                        <div>
+                            <button type="button" class="operator accent" id="percentage">%</button>
+                            <button type="button" class="modifier accent" id="clear-entry">CE</button>
+                            <button type="button" class="modifier accent" id="clear">C</button>
+                            <button type="button" class="modifier accent material-icons" id="backspace">backspace</button>
+                        </div>
+                        <div>
+                            <button type="button" class="operator accent" id="power"><span>x<sup>y</sup></span></button>
+                            <button type="button" class="operator accent" id="root">√x</button>
+                            <button type="button" class="operator accent" id="factorial">x!</button>
+                            <button type="button" class="operator accent" id="divide">&divide;</button>
+                        </div>
+                        <div>
+                            <button type="button" class="key numpad" id="7">7</button>
+                            <button type="button" class="key numpad" id="8">8</button>
+                            <button type="button" class="key numpad" id="9">9</button>
+                            <button type="button" class="operator accent" id="multiply">&#215;</button>
+                        </div>
+                        <div>
+                            <button type="button" class="key numpad" id="4">4</button>
+                            <button type="button" class="key numpad" id="5">5</button>
+                            <button type="button" class="key numpad" id="6">6</button>
+                            <button type="button" class="operator accent" id="plus">&plus;</button>
+                        </div>
+                        <div>
+                            <button type="button" class="key numpad" id="1">1</button>
+                            <button type="button" class="key numpad" id="2">2</button>
+                            <button type="button" class="key numpad" id="3">3</button>
+                            <button type="button" class="operator accent" id="minus">&minus;</button>
+                        </div>
+                        <div>
+                            <button type="button" class="key numpad" id="0">0</button>
+                            <button type="button" class="key numpad" id=".">.</button>
+                            <button type="button" class="equal accent" id="equals">&equals;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <p>nednella</p>
+            <a href="https://github.com/nednella" target="_blank">
+                <i class="fab fa-github"></i>
+            </a> 
+        </footer> 
+    </body>
+</html>
