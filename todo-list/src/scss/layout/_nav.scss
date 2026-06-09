@@ -1,0 +1,184 @@
+// Nav Modal
+
+$nav-header-height: 70px;
+$nav-add-project-height: 60px;
+
+#nav {
+    position: fixed;
+    z-index: 1;
+    top: 0%;
+    left: 0%;
+    height: 100vh;
+    min-height: 100vh;
+    width: 375px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+    animation: nav-slide-in .2s ease;
+
+    > * {
+        height: 100%;   // Required for click outside of nav to close function
+        width: 100%;    // Required for click outside of nav to close function
+        padding: 0 24px 24px 24px;
+        user-select: none;
+        color: var(--modal-text);
+        background-color: var(--modal-bg);
+    }
+}
+
+#nav:modal {
+    max-height: 100vh;
+    max-width: 100vh;
+}
+
+#nav::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+@keyframes nav-slide-in {
+    0% { transform: translateX(-100%) }
+    100% { transform: translateX(0%) }
+}
+
+.nav-header {
+    height: $nav-header-height;
+    display: flex;
+    align-items: center;
+    
+    #nav-close {
+        height: 40px;
+        width: 40px;
+        border-radius: 4px;
+        font-size: 32px;
+        transition: $default-transition;
+        cursor: pointer;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    #nav-close:hover { 
+        background-color: var(--modal-option-hover);
+    }
+}
+
+.nav-links {
+    max-height: calc(100% - $nav-header-height - $nav-add-project-height - 4px);
+    display: grid;
+    grid-template-rows: repeat(2, max-content) 1fr;
+    gap: 4px;
+
+    > * {
+        transition: $default-transition;
+    }
+    .default-projects {
+        display: grid;
+        grid-auto-rows: 60px;
+        gap: 4px;
+    }
+    hr {
+        margin: 24px 0;
+        border: 1px solid rgb(220, 220, 220);  
+    }
+    .custom-projects-scroll {
+        overflow-y: hidden;    // Required for nav scrolling on overflow
+        display: flex;
+        flex-direction: column;
+
+        .custom-projects {
+            max-height: 100%;      // Required for nav scrolling on overflow
+            overflow-y: auto;      // Required for nav scrolling on overflow
+            display: grid;
+            grid-auto-rows: 60px;
+            gap: 4px;
+    
+            > * {
+                transition: $default-transition;
+            }
+        }
+    }
+    .custom-projects::-webkit-scrollbar {
+        width: 8px;
+    }
+    .custom-projects::-webkit-scrollbar-thumb {
+        background-color: var(--content-title-text);
+    }
+}
+
+.nav-item {
+    padding-left: 32px;
+    padding-right: 16px;
+    border-radius: 8px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    > * {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        pointer-events: none;
+    }
+    .project-task-count {
+        height: 32px;
+        width: 32px;
+
+        border-radius: 50%;
+        color: white;
+        background-color: var(--body-bg-gradient-top);
+        font-size: 1.17em;
+        font-weight: 400;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .project-delete {
+        display: none;
+        pointer-events: auto;
+    }
+}
+.nav-item.active {
+    padding-left: 16px;
+    background-color: var(--modal-option-hover);
+}
+.nav-item:hover {
+    background-color: var(--modal-option-hover);
+
+    .project-delete {
+        display: block;
+    }
+}
+
+#add-project {
+    height: $nav-add-project-height;
+    margin-top: 4px;
+    padding-left: 32px;
+    border-radius: 8px;
+    transition: $default-transition;
+    
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    > * {
+        height: 100%;
+        background-color: transparent;
+    }
+    span {
+        font-size: 24px;
+        font-weight: 300;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    &-input {
+        font-size: 1.17em;
+        font-weight: 400;
+        color: var(--modal-input-text);
+    }
+}
+
+#add-project:hover {
+    background-color: var(--modal-input-hover);
+}

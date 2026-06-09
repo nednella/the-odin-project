@@ -1,0 +1,93 @@
+// Header
+
+header {
+    grid-area: header;
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+
+    #nav-open {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        height: 40px;
+        width: 40px;
+        border-radius: 4px;
+        font-size: 32px;
+        color: var(--header-text);
+        transition: $default-transition;
+    }
+
+    #nav-open:hover { 
+        background-color: var(--header-btn-hover);
+    }
+
+    .title {
+        display: flex;
+        align-items: center;
+        transition: $default-transition;
+        
+        svg {
+            width: 80px;
+            fill: var(--header-text);
+            transition: $default-transition;
+        }
+
+        p {
+            margin-top: -6px;
+            font-family: "Paytone One", sans-serif;
+            font-size: 40px;
+            color: var(--header-text);
+            text-shadow: 1px 1px 15px rgba(0, 0, 0, 0.3);
+            transition: $default-transition;
+        }
+    }
+
+    #theme-toggle {
+        position: relative;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        height: 36px;
+        width: 72px;
+        border-radius: 50px;
+        padding: 8px;
+        gap: 16px;
+        transition: $default-transition;
+
+        svg {
+            z-index: 1;
+            transition: $default-transition;
+        }
+
+        #icon-sun {
+            fill: var(--icon-sun);
+            stroke: var(--icon-sun);
+        }
+
+        #icon-moon {
+            fill: var(--icon-moon);
+            stroke: var(--icon-moon);
+        }
+    }
+
+    #theme-toggle::before {
+        content: '';
+        position: absolute;
+        z-index: 0;
+        left: 0;
+        border-radius: 50px;
+        width: 28px;
+        height: 28px;
+        background-color: var(--switch-circle-bg);
+        transform: translateX(var(--switch-circle-pos));
+        transition: $default-transition;
+        }
+    
+    #theme-toggle:hover {
+        background-color: var(--header-btn-hover);
+    }      
+}

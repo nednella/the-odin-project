@@ -1,0 +1,81 @@
+// Credit for implementing SCSS themes: https://medium.com/@dmitriy.borodiy/easy-color-theming-with-scss-bc38fd5734d1
+
+$light-theme: (
+    // Body
+    'body-bg-gradient-top': #44929c,
+    'body-bg-gradient-middle': #aab9c0,
+    'body-bg-gradient-bottom': #f4d7cf,
+
+    // Header
+    'header-text': #202020,
+    'header-btn-hover': rgba(0, 0, 0, 0.3),
+
+    // Nav/Task Modal
+    'modal-text': #202020,
+    'modal-bg': #eeeeee,
+    'modal-bg-2': #e4e4e4,
+    'modal-option-active': blue,
+    'modal-option-hover': rgb(220, 220, 220, 0.6),
+    'modal-input-text': #202020,
+    'modal-input-hover': rgba(255, 255, 255, 0.9),
+
+    // Calendar
+    'calendar-bg': #eeeeee,
+    'calendar-bg-2': #e4e4e4,
+    'day-text': #777777,
+    'date-text': #000,
+    'date-faded-bg': #bbbbbb,
+    'date-faded-text': #fff,
+    'date-current-bg': rgb(40, 40, 255),
+    'date-current-text': #fff,
+
+    // Content
+    'content-title-text': #202020,
+    'content-body-text': #3c3c3c,
+
+    // Theme button colours
+    'icon-sun': #997f44,
+    'icon-moon': #b1b0b5,
+    'switch-circle-bg': #ffd371,
+    'switch-circle-pos': 4px,
+);
+
+$dark-theme: (
+    // Body
+    'body-bg-gradient-top': #191d33,
+    'body-bg-gradient-middle': #4d6068,
+    'body-bg-gradient-bottom': #ac8b80,
+
+    // Header
+    'header-text': #fff,
+    'header-btn-hover': rgba(255, 255, 255, 0.3),
+
+    // Nav/Task Modal
+    'modal-text': #fff,
+    'modal-bg': #303030,
+    'modal-bg-2': #292929,
+    'modal-option-active': white,
+    'modal-option-hover': rgba(255, 255, 255, 0.3),
+    'modal-input-text': #fff,
+    'modal-input-hover': rgba(255, 255, 255, 0.3),
+
+    // Calendar
+    'calendar-bg': #292929,
+    'calendar-bg-2': #303030,
+    'day-text': #aaaaaa,
+    'date-text': #fff,
+    'date-faded-bg': #181818,
+    'date-faded-text': #888888,
+    'date-current-bg': #c4c4c4,
+    'date-current-text': #000,
+    
+    // Content
+    'content-title-text': #fff,
+    'content-body-text': #3c3c3c,
+
+    // Theme button colours
+    'icon-sun': #b1b0b5,
+    'icon-moon': #dce3ff,
+    'switch-circle-bg': #7190ff,
+    'switch-circle-pos': 40px,
+);

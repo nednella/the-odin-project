@@ -1,0 +1,357 @@
+
+$task-header-height: 70px;
+$task-footer-height: 70px;
+
+.task-editable {
+    border-radius: 4px;
+    padding: 4px 8px;
+    background-color: transparent;
+}
+.task-editable:hover {
+    background-color: var(--modal-option-hover);
+}
+
+// Task Modal
+#task {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: calc(100% - 425px);
+    height: 100vh;
+    min-height: 100vh;
+    width: 425px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+    animation: task-slide-in .2s ease;
+
+    > * {
+        height: 100%;   // Required for click outside of nav to close function
+        width: 100%;    // Required for click outside of nav to close function
+        padding: 0 24px;
+        user-select: none;
+        color: var(--modal-text);
+        background-color: var(--modal-bg-2);
+
+        display: grid;
+        grid-template-rows: $task-header-height 1fr $task-footer-height;
+    }
+}
+
+.task-header {
+    height: $nav-header-height;
+
+    display: flex;
+    align-items: center;
+    justify-content: end;
+
+    #task-close {
+        height: 40px;
+        width: 40px;
+        border-radius: 4px;
+        font-size: 32px;
+        transition: $default-transition;
+        cursor: pointer;
+    
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    #task-close:hover { 
+        background-color: var(--modal-option-hover);
+    }
+}
+
+.task-content-scroll {
+    overflow-y: hidden; // Required for task scrolling on overflow
+
+    .task-content {
+        min-height: 100%;
+        max-height: 100%; // Required for task scrolling on overflow
+        overflow-y: auto; // Required for task scrolling on overflow
+    
+        display: grid;
+        grid-template-rows: max-content max-content minmax(120px, max-content);
+        grid-auto-rows: max-content;
+        gap: 24px;
+        grid-template-areas:
+            "title"
+            "options"
+            "note";
+
+        > *:not(.options) {
+            padding: 8px;
+            border-radius: 4px;
+            background-color: var(--modal-bg);
+        }
+        .title {
+            grid-area: title;
+
+            display: grid;
+            grid-template-columns: 44px 1fr;
+            gap: 8px;
+            grid-template-areas:
+                "checkbox title";
+
+                #task-checkbox {
+                    grid-area: checkbox;
+                    justify-self: center;
+                    height: 28px;
+                    width: 28px;
+                    margin-top: 4px;
+                    border-radius: 50%;
+                    border: 3px solid grey;
+                    background-color: white;
+                    appearance: none;
+                    -webkit-appearance: none;
+                    cursor: pointer;
+                    pointer-events: auto;
+                }
+                #task-checkbox:checked {
+                    background-color: var(--body-bg-gradient-top);
+                }
+                #task-title {
+                    grid-area: title;
+                    font-size: 20px;
+                    white-space: wrap;
+                    overflow: auto;       
+                }
+                #task-title.task-complete {
+                    color: grey;
+                    text-decoration: line-through;
+                    text-decoration-thickness: 1px;
+                }
+        }
+        .options {
+            grid-area: options;
+            display: grid;
+            grid-auto-rows: max-content;
+            gap: 8px;
+
+            > * {
+                position: relative;
+                height: 100%;
+                width: 100%;   
+                border-radius: 4px;
+            }
+            .my-day,
+            .important,
+            .due-date {
+                cursor: pointer;
+                background-color: var(--modal-bg);
+
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-auto-flow: column;
+                grid-auto-columns: 60px;
+
+                > :nth-child(2) {
+                    align-self: center;
+                    justify-self: center;
+                    font-size: 24px;
+                    color: var(--modal-text);
+                }
+            }
+            #add-my-day,
+            #add-important,
+            #add-due {
+                padding: 8px;
+
+                display: grid;
+                grid-template-columns: 44px 1fr;
+                gap: 8px;
+
+                > * {
+                    pointer-events: none;   // force pointer event to bubble to parent element
+                }
+                > :first-child {
+                    align-self: center;
+                    justify-self: center;
+                    font-size: 24px;
+                }
+                > :nth-child(2) {
+                    margin-top: 3px;
+                    padding: 4px 8px;
+                    font-size: 18px;
+                }
+            }
+        }
+        .note {
+            grid-area: note;
+            overflow: hidden;
+
+            #task-note {
+                resize: none;
+                height: 100%;
+                width: 100%;
+                font-size: 18px;
+                font-weight: 300;
+                color: var(--modal-input-text);
+                white-space: pre-wrap;
+            }
+            #task-note.placeholder:empty::before {
+                content: attr(placeholder);
+                color: grey;
+            }
+        }
+    }
+    .task-content::-webkit-scrollbar {
+        width: 8px;
+    }
+    .task-content::-webkit-scrollbar-thumb {
+        background-color: var(--content-title-text);
+    }
+}
+
+.task-footer {
+    display: grid;
+    grid-template-columns: 1fr 44px;
+
+    > * {
+        align-self: center;
+        justify-self: center;
+    }
+    #task-creation {
+        font-size: 18px;
+
+    }
+    #task-delete {
+        height: 40px;
+        width: 40px;
+        border-radius: 4px;
+        font-size: 32px;
+        transition: $default-transition;
+        cursor: pointer;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    #task-delete:hover { 
+        background-color: var(--modal-option-hover);
+    }
+}
+
+#task:modal {
+    max-height: 100vh;
+    max-width: 100vh;
+}
+
+#task::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+@keyframes task-slide-in {
+    0% { transform: translateX(100%) }
+    100% { transform: translateX(0%) }
+}
+
+#due-menu {
+    position: absolute;
+    top: 60px;
+    left: calc(377px / 2);
+    transform: translateX(-50%);
+
+    height: max-content;
+    width: 280px;
+    color: var(--modal-text);
+    background-color: var(--modal-bg);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+
+    > .menu-option {
+        cursor: pointer;
+        height: 60px;
+        padding: 8px;
+
+        display: grid;
+        grid-template-columns: 44px 1fr 44px;
+        gap: 8px;
+
+        > * {
+            pointer-events: none; // force pointer event to bubble to parent element
+            align-self: center;
+        }
+
+        > :first-child {
+            justify-self: center;
+        }
+    }
+    > .menu-option:hover {
+        background-color: var(--modal-option-hover);
+    }
+}
+#due-menu.hidden {
+    display: none;
+}
+#date-picker {
+    cursor: default;
+    position: absolute;
+    top: 60px;
+    left: calc(377px / 2);
+    transform: translateX(-50%);
+    height: max-content;
+    width: 300px;
+    padding: 16px 8px;
+    color: var(--modal-text);
+    background-color: var(--calendar-bg);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+
+    > * {
+        width: 100%;
+    }
+    > .month-selector {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        
+        > .current-month {
+            font-size: 18px;
+            font-weight: 500;
+        }
+        > button {
+            cursor: pointer;
+            height: 32px;
+            width: 32px;
+            font-size: 32px;
+            border-radius: 4px;
+            color: var(--modal-text);
+            background-color: var(--calendar-bg-2);
+        }
+    }
+    > .calendar {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        grid-row-gap: 8px;
+
+        .day,
+        .date {
+            justify-self: center;
+            background-color: transparent;         
+        }
+        .day {
+            color: var(--day-text);
+            font-weight: 400;
+        }
+        .date {
+            cursor: pointer;
+            height: 32px;
+            width: 100%;
+            color: var(--date-text);
+            font-weight: 600;
+        }
+        .date.faded {
+            color: var(--date-faded-text);
+            background-color: var(--date-faded-bg);
+        }
+        .date.current {
+            color: var(--date-current-text);
+            background-color: var(--date-current-bg); 
+        }
+    }
+}
+#date-picker.hidden {
+    display: none;
+}
